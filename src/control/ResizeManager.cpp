@@ -1,0 +1,1 @@
+#include "ResizeManager.h"

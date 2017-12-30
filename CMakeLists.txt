@@ -12,14 +12,43 @@ if (APPLE)
     link_directories(${LINK_DIR})
 ELSEIF (UNIX)
     message("running on unix environment")
+    find_package(OpenGL REQUIRED)
     find_package(glfw3 REQUIRED)
+    find_package(Assimp REQUIRED)
 endif ()
 
+link_libraries(${ASSIMP_LIBRARIES} ${OPENGL_LIBRARIES} glfw)
 
 set(GLAD lib/glad/glad.h lib/glad.c)
+set(LINMATH lib/linmath.h)
 
-set(SOURCE_FILES main.cpp ${GLAD})
+set(SOURCE_FILES ${GLAD} ${LINMATH}
+        src/main.cpp
+        src/control/camera.h
+        src/control/cursor.h
+        src/core/Input.h
+        src/control/KeyBoard.cpp
+        src/control/KeyBoard.h
+        src/control/camera.cpp
+        src/control/cursor.cpp
+        src/component/Floor.cpp
+        src/component/Floor.h
+        src/component/Component.h
+        src/component/HumanModel.cpp
+        src/component/HumanModel.h
+        src/core/GameManager.cpp
+        src/core/GameManager.h
+        src/control/ResizeManager.cpp
+        src/control/ResizeManager.h
+        src/core/GameEntry.cpp
+        src/core/GameEntry.h
+        src/component/Fog.cpp
+        src/component/Fog.h
+        )
+
+
+include_directories(src/control)
+include_directories(src/core)
+include_directories(src/component)
 
 add_executable(demo ${SOURCE_FILES})
-
-target_link_libraries(demo glfw)
