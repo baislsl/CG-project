@@ -12,7 +12,7 @@ GameManager::GameManager(int width, int height, GLFWwindow *window)
 		  cursor(window, &camera),
 //		  keyBoard(window, &camera),
 		  resizeManager(window),
-		  shader("temp.vert", "temp.frag")
+		  shader("../res/temp.vert", "../res/temp.frag")
 {
 //	components.push_back(&floor);
 //	components.push_back(&human);
@@ -56,7 +56,7 @@ void GameManager::start()
 		float currentTime = glfwGetTime();
 		deltaTime = currentTime - lastTime;
 		lastTime = currentTime;
-
+		tob->modelMatrix = glm::rotate(tob->modelMatrix, glm::radians(deltaTime * 10), glm::vec3(0, 1, 0));
 		processInput(window);
 
 		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
@@ -67,6 +67,7 @@ void GameManager::start()
 		glm::mat4 view = camera.GetViewMatrix();
 		shader.setMat4("projection", projection);
 		shader.setMat4("view", view);
+//		setLights();
 		renderAll();
 //		drawScene(window, glfwGetTime());
 		glfwSwapBuffers(window);

@@ -25,7 +25,7 @@ void Cursor::cursorPosFun(GLFWwindow *window, double x, double y)
 void Cursor::mouseScroll(GLFWwindow *window, double xoffset, double yoffset)
 {
 	if (fov >= 1.0f && fov <= 45.0f)
-		fov -= yoffset;
+		fov += yoffset;
 	if (fov <= 1.0f)
 		fov = 1.0f;
 	if (fov >= 45.0f)

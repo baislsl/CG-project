@@ -17,7 +17,7 @@ void GameEntry::run()
 #ifdef __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
 #endif
-	GLFWwindow *window = glfwCreateWindow(width, height, "Particle Engine", NULL, NULL);
+	GLFWwindow *window = glfwCreateWindow(width, height, "Stupid Engine", NULL, NULL);
 	if (!window)
 	{
 		fprintf(stderr, "Failed to create GLFW window\n");

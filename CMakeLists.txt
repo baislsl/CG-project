@@ -53,7 +53,7 @@ set(SOURCE_FILES ${GLAD} ${LINMATH}
         src/tool/stb_image.h
         src/control/Object.cpp
         src/control/Object.h
-        )
+        src/control/Light.cpp src/control/Light.h)
 include_directories(src/control)
 include_directories(src/core)
 include_directories(src/component)
