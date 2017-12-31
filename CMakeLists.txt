@@ -13,8 +13,8 @@ if (APPLE)
 
     find_package(OpenGL REQUIRED)
     find_package(GLUT REQUIRED)
-    include_directories(${GLUT_INCLUDE_DIR} ${OPENGL_INCLUDE_DIR} )
-    link_libraries(${GLUT_LIBRARIES} ${OPENGL_LIBRARIES} )
+    include_directories(${GLUT_INCLUDE_DIR} ${OPENGL_INCLUDE_DIR})
+    link_libraries(${GLUT_LIBRARIES} ${OPENGL_LIBRARIES})
 ELSEIF (UNIX)
     message("running on unix environment")
     find_package(OpenGL REQUIRED)
@@ -24,7 +24,7 @@ endif ()
 
 link_libraries(${ASSIMP_LIBRARIES} ${OPENGL_LIBRARIES} glfw)
 
-set(GLAD lib/glad/glad.h lib/glad.c)
+set(GLAD lib/glad/glad.h lib/glad/glad.c)
 set(LINMATH lib/linmath.h)
 
 set(SOURCE_FILES ${GLAD} ${LINMATH}
@@ -34,7 +34,6 @@ set(SOURCE_FILES ${GLAD} ${LINMATH}
         src/core/Input.h
         src/control/KeyBoard.cpp
         src/control/KeyBoard.h
-        src/control/Camera.cpp
         src/control/Cursor.cpp
         src/component/Floor.cpp
         src/component/Floor.h
@@ -49,11 +48,20 @@ set(SOURCE_FILES ${GLAD} ${LINMATH}
         src/core/GameEntry.h
         src/component/Fog.cpp
         src/component/Fog.h
+        src/control/Shader.h
+        src/control/Mesh.h
+        src/control/Model.h
+        src/tool/stb_image.cpp
+        src/tool/stb_image.h
+        src/control/Object.cpp
+        src/control/Object.h
         )
-
 include_directories(src/control)
 include_directories(src/core)
 include_directories(src/component)
+include_directories(src/tool)
+include_directories(lib/glad)
+include_directories(lib/KHR)
 add_executable(demo ${SOURCE_FILES})
 if (APPLE)
     target_link_libraries(demo "/usr/local/lib/libassimp.dylib")

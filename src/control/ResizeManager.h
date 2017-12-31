@@ -5,12 +5,18 @@
 #include <GLFW/glfw3.h>
 #include <functional>
 #include <Input.h>
+#include <iostream>
 
-class ResizeManager {
+class ResizeManager
+{
 public:
-	explicit ResizeManager(GLFWwindow *window) : window(window) {}
+	explicit ResizeManager(GLFWwindow *window) : window(window)
+	{
+		std::cout << "Constructing ResizeManager." << std::endl;
+	}
 
-	void install() {
+	void install()
+	{
 		std::function<void(GLFWwindow *, int, int)> function =
 				std::bind(&ResizeManager::resizeListener,
 						  this,
@@ -20,7 +26,8 @@ public:
 		InputEngine::resizeListeners.emplace_back(function);
 	}
 
-	void resizeListener(GLFWwindow *window, int width, int height) {
+	void resizeListener(GLFWwindow *window, int width, int height)
+	{
 		glViewport(0, 0, width, height);
 		aspectRatio = height ? width / (float) height : 1.f;
 		this->width = width;

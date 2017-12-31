@@ -9,11 +9,13 @@
 
 class Camera;
 
-class KeyBoard {
+class KeyBoard
+{
 public:
 	KeyBoard(GLFWwindow *window, Camera *camera);
 
-	void install() {
+	void install()
+	{
 		std::function<void(GLFWwindow *, int, int, int, int)> function =
 				std::bind(&KeyBoard::keyCallBack,
 						  this,
@@ -29,6 +31,7 @@ public:
 private:
 	GLFWwindow *window;
 	Camera *camera;
+	float lastPressTime;
 
 	void keyCallBack(GLFWwindow *window, int key, int scancode, int action, int mods);
 

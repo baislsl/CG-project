@@ -10,9 +10,11 @@
 #include <Floor.h>
 #include <HumanModel.h>
 #include <Fog.h>
+#include <Shader.h>
+#include <Object.h>
 
-
-class GameManager {
+class GameManager
+{
 public:
 	GameManager(int width, int height, GLFWwindow *window);
 
@@ -27,12 +29,16 @@ private:
 	KeyBoard keyBoard;
 	ResizeManager resizeManager;
 
-	Floor floor;
-	Human human;
-	Fog fog;
+	Shader shader;
+//	Floor floor;
+//	Human human;
+//	Fog fog;
 	std::vector<Component *> components;
+	std::vector<Object *> objects;
 
 	void drawScene(GLFWwindow *window, double t);
+
+	void renderAll();
 
 	void setup_lights();
 

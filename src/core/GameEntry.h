@@ -1,7 +1,8 @@
 #ifndef CGPROJECT_GAMEENTRY_H
 #define CGPROJECT_GAMEENTRY_H
 
-class GameEntry {
+class GameEntry
+{
 public:
 	static void run();
 
