@@ -3,9 +3,9 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "KeyBoard.h"
-#include "camera.h"
+#include <functional>
 #include "Input.h"
+#include "Camera.h"
 
 class Camera;
 

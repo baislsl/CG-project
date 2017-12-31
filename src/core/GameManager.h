@@ -3,8 +3,8 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <camera.h>
-#include <cursor.h>
+#include <Camera.h>
+#include <Cursor.h>
 #include <ResizeManager.h>
 #include <KeyBoard.h>
 #include <Floor.h>
@@ -32,7 +32,7 @@ private:
 	Fog fog;
 	std::vector<Component *> components;
 
-	void draw_scene(GLFWwindow *window, double t);
+	void drawScene(GLFWwindow *window, double t);
 
 	void setup_lights();
 

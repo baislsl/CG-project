@@ -1,8 +1,7 @@
 
-#include "camera.h"
+#include "Camera.h"
 #include <complex>
 #include <GL/glu.h>
-#include <iostream>
 
 Camera::Camera(GLFWwindow *windows, double posX, double poxY, double posZ, double angle)
 		: windows(windows), posX(posX), posY(poxY), posZ(posZ), angle(angle) {

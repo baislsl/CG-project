@@ -1,24 +1,6 @@
 #include "GameManager.h"
-#include <getopt.h>
 #include <linmath.h>
-
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <assimp/matrix4x4.h>
-#include <assimp/scene.h>
-#include <assimp/cimport.h>
-#include <GL/glu.h>
-#include <assimp/postprocess.h>
-#include <camera.h>
-#include <iostream>
-#include <cursor.h>
-#include <KeyBoard.h>
-#include <Input.h>
-#include <Floor.h>
-#include <HumanModel.h>
-#include <ResizeManager.h>
 #include <GL/glext.h>
-#include <Fog.h>
 
 GameManager::GameManager(int width, int height, GLFWwindow *window)
 		: width(width), height(height),
@@ -57,7 +39,7 @@ void GameManager::start() {
 	glfwSetTime(0.0);
 
 	while (!glfwWindowShouldClose(window)) {
-		draw_scene(window, glfwGetTime());
+		drawScene(window, glfwGetTime());
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
@@ -66,7 +48,7 @@ void GameManager::start() {
 	exit(EXIT_SUCCESS);
 }
 
-void GameManager::draw_scene(GLFWwindow *window, double t) {
+void GameManager::drawScene(GLFWwindow *window, double t) {
 	mat4x4 projection;
 	mat4x4_perspective(projection,
 					   65.f * (float) M_PI / 180.f,

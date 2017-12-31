@@ -24,13 +24,13 @@ set(LINMATH lib/linmath.h)
 
 set(SOURCE_FILES ${GLAD} ${LINMATH}
         src/main.cpp
-        src/control/camera.h
-        src/control/cursor.h
+        src/control/Camera.h
+        src/control/Cursor.h
         src/core/Input.h
         src/control/KeyBoard.cpp
         src/control/KeyBoard.h
-        src/control/camera.cpp
-        src/control/cursor.cpp
+        src/control/Camera.cpp
+        src/control/Cursor.cpp
         src/component/Floor.cpp
         src/component/Floor.h
         src/component/Component.h

@@ -1,8 +1,5 @@
-#include "cursor.h"
-#include "camera.h"
-#include "Input.h"
-#include <functional>
-#include <iostream>
+#include "Cursor.h"
+#include "Camera.h"
 
 Cursor::Cursor(GLFWwindow *windows, Camera *camera) : windows(windows), camera(camera) {}
 

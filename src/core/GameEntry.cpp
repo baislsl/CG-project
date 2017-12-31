@@ -1,4 +1,5 @@
 #include "GameEntry.h"
+#include "GameManager.h"
 
 void GameEntry::run() {
 	int width = 640, height = 480;

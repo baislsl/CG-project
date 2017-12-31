@@ -1,7 +1,5 @@
-#include <iostream>
 #include "KeyBoard.h"
-#include "camera.h"
-#include "Input.h"
+
 
 KeyBoard::KeyBoard(GLFWwindow *window, Camera *camera) : window(window), camera(camera) {
 
