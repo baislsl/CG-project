@@ -1,7 +1,11 @@
 
 #include "Camera.h"
 #include <complex>
+#ifdef __APPLE__
+#include <OpenGL/glu.h>
+#else
 #include <GL/glu.h>
+#endif
 
 Camera::Camera(GLFWwindow *windows, double posX, double poxY, double posZ, double angle)
 		: windows(windows), posX(posX), posY(poxY), posZ(posZ), angle(angle) {

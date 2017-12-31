@@ -1,6 +1,9 @@
 #include "GameManager.h"
 #include <linmath.h>
-#include <GL/glext.h>
+//#include <OpenGL/glext.h>
+
+#define GL_LIGHT_MODEL_COLOR_CONTROL_EXT                     0x81F8
+#define GL_SEPARATE_SPECULAR_COLOR_EXT                       0x81FA
 
 GameManager::GameManager(int width, int height, GLFWwindow *window)
 		: width(width), height(height),

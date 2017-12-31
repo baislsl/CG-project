@@ -10,6 +10,11 @@ if (APPLE)
     set(LINK_DIR /usr/local/lib)
     include_directories(${INC_DIR})
     link_directories(${LINK_DIR})
+
+    find_package(OpenGL REQUIRED)
+    find_package(GLUT REQUIRED)
+    include_directories(${GLUT_INCLUDE_DIR} ${OPENGL_INCLUDE_DIR} )
+    link_libraries(${GLUT_LIBRARIES} ${OPENGL_LIBRARIES} )
 ELSEIF (UNIX)
     message("running on unix environment")
     find_package(OpenGL REQUIRED)
@@ -46,9 +51,10 @@ set(SOURCE_FILES ${GLAD} ${LINMATH}
         src/component/Fog.h
         )
 
-
 include_directories(src/control)
 include_directories(src/core)
 include_directories(src/component)
-
 add_executable(demo ${SOURCE_FILES})
+if (APPLE)
+    target_link_libraries(demo "/usr/local/lib/libassimp.dylib")
+endif ()
