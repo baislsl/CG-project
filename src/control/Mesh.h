@@ -66,7 +66,6 @@ public:
 	// render the mesh
 	void Draw(Shader shader)
 	{
-		cout << "drawing a mesh." << endl;
 		// bind appropriate textures
 		unsigned int diffuseNr = 1;
 		unsigned int specularNr = 1;

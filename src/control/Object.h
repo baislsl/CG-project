@@ -20,7 +20,6 @@ public:
 
 	void render(Shader shader)
 	{
-		cout << "rendering an object" << endl;
 		shader.setMat4("model", modelMatrix);
 		model.Draw(shader);
 	}

@@ -32,8 +32,6 @@ set(SOURCE_FILES ${GLAD} ${LINMATH}
         src/control/Camera.h
         src/control/Cursor.h
         src/core/Input.h
-        src/control/KeyBoard.cpp
-        src/control/KeyBoard.h
         src/control/Cursor.cpp
         src/component/Floor.cpp
         src/component/Floor.h

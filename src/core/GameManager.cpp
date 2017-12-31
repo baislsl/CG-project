@@ -10,7 +10,7 @@ GameManager::GameManager(int width, int height, GLFWwindow *window)
 		  window(window),
 		  camera(),
 		  cursor(window, &camera),
-		  keyBoard(window, &camera),
+//		  keyBoard(window, &camera),
 		  resizeManager(window),
 		  shader("temp.vert", "temp.frag")
 {
@@ -22,7 +22,7 @@ GameManager::GameManager(int width, int height, GLFWwindow *window)
 void GameManager::start()
 {
 	cursor.install();
-	keyBoard.install();
+//	keyBoard.install();
 	resizeManager.install();
 	InputEngine::install(window);
 
@@ -52,6 +52,13 @@ void GameManager::start()
 	tob->modelMatrix = glm::scale(tob->modelMatrix, glm::vec3(0.2f, 0.2f, 0.2f));	// it's a bit too big for our scene, so scale it down
 	while (!glfwWindowShouldClose(window))
 	{
+		static float lastTime = 0;
+		float currentTime = glfwGetTime();
+		deltaTime = currentTime - lastTime;
+		lastTime = currentTime;
+
+		processInput(window);
+
 		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		shader.use();
@@ -74,6 +81,21 @@ void GameManager::renderAll()
 {
 	for (auto &item : objects)
 		item->render(shader);
+}
+
+void GameManager::processInput(GLFWwindow *window)
+{
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, true);
+
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		camera.ProcessKeyboard(FORWARD, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		camera.ProcessKeyboard(BACKWARD, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		camera.ProcessKeyboard(LEFT, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		camera.ProcessKeyboard(RIGHT, deltaTime);
 }
 
 //void GameManager::drawScene(GLFWwindow *window, double t)

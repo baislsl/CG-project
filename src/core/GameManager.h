@@ -6,7 +6,6 @@
 #include <Camera.h>
 #include <Cursor.h>
 #include <ResizeManager.h>
-#include <KeyBoard.h>
 #include <Floor.h>
 #include <HumanModel.h>
 #include <Fog.h>
@@ -23,10 +22,10 @@ public:
 private:
 	GLFWwindow *window;
 	int width, height;
+	float deltaTime;
 
 	Camera camera;
 	Cursor cursor;
-	KeyBoard keyBoard;
 	ResizeManager resizeManager;
 
 	Shader shader;
@@ -39,6 +38,8 @@ private:
 	void drawScene(GLFWwindow *window, double t);
 
 	void renderAll();
+
+	void processInput(GLFWwindow *window);
 
 	void setup_lights();
 
