@@ -18,6 +18,7 @@ public:
 	{
 		glGenBuffers(1, &VBO);
 		glGenVertexArrays(1, &VAO);
+		std::cout << VBO << std::endl << VAO << std::endl;
 	}
 };
 

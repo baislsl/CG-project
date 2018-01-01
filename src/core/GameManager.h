@@ -11,6 +11,7 @@
 #include <Light.h>
 #include <cstring>
 #include <Cube.h>
+#include <Sphere.h>
 
 class GameManager
 {

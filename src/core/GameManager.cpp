@@ -33,7 +33,8 @@ void GameManager::start()
 	tob->material.specular = glm::vec3(0.6, 0, 0);
 	tob->material.ambient = glm::vec3(0, 0, 0.6);
 	components.push_back(tob);
-	Cube *cube = new Cube("../res/Crack.bmp");
+	Sphere *cube = new Sphere(200, 200, "../res/Crack.bmp");
+//	Cube *cube = new Cube("../res/Crack.bmp");
 	cube->material.diffuse = glm::vec3(0.5, 0.1, 0.8);
 	cube->material.specular = glm::vec3(0.5, 0.1, 0.8);
 	cube->material.ambient = glm::vec3(0.5, 0.1, 0.8);
@@ -50,7 +51,7 @@ void GameManager::start()
 		cube->modelMatrix = glm::rotate(cube->modelMatrix, glm::radians(-deltaTime * 10), glm::vec3(0, 1, 0));
 		processInput(window);
 		setLights(shader);
-		glClearColor(0.05f, 0.15f, 0.05f, 1.0f);
+		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		shader.use();
 		// view/projection transformations
@@ -70,15 +71,15 @@ void GameManager::start()
 
 void GameManager::setLights(const Shader &shader)
 {
-//	light.dirLight.direction = glm::vec3(0, -1, 0);
-//	light.dirLight.ambient = glm::vec3(0.1, 0, 0.1);
-//	light.dirLight.diffuse = glm::vec3(0.2, 0.2, 0.2);
-//	light.dirLight.specular = glm::vec3(1, 1, 1);
+	light.dirLight.direction = glm::vec3(0, -1, 0);
+	light.dirLight.ambient = glm::vec3(0.1, 0, 0.1);
+	light.dirLight.diffuse = glm::vec3(0.2, 0.2, 0.2);
+	light.dirLight.specular = glm::vec3(1, 1, 1);
 
-	light.pointLight[0].position = glm::vec3(0, 10, 10);
-	light.pointLight[0].diffuse = glm::vec3(1, 1, 1);
+	light.pointLight[0].position = glm::vec3(0, 4, 4);
+	light.pointLight[0].diffuse = glm::vec3(0.8, 0.8, 0.8);
 	light.pointLight[0].ambient = glm::vec3(0.1, 0.1, 0.1);
-	light.pointLight[0].specular = glm::vec3(1, 1, 1);
+	light.pointLight[0].specular = glm::vec3(0.1, 0.1, 0.1);
 
 	light.setup(shader);
 }
