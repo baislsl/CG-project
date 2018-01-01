@@ -46,14 +46,21 @@ void GameManager::start()
 	glEnable(GL_DEPTH_TEST);
 	glfwSetTime(0.0);
 //	for test
-	Object * tob = new Object("../res/obj/nanosuit.obj");
-	objects.push_back(tob);
-	tob->modelMatrix = glm::translate(tob->modelMatrix, glm::vec3(0.0f, -1.75f, 0.0f)); // translate it down so it's at the center of the scene
-	tob->modelMatrix = glm::scale(tob->modelMatrix, glm::vec3(0.2f, 0.2f, 0.2f));	// it's a bit too big for our scene, so scale it down
+	Object *tob = new Object("../res/obj/nanosuit.obj");
+	tob->usingTexture = false;
+	tob->material.diffuse = glm::vec3(0.5, 0.1, 0.8);
+	tob->material.specular = glm::vec3(0.6, 0, 0);
+	components.push_back(tob);
+
+
+	tob->modelMatrix = glm::translate(tob->modelMatrix, glm::vec3(0.0f, -1.75f,
+																  0.0f)); // translate it down so it's at the center of the scene
+	tob->modelMatrix = glm::scale(tob->modelMatrix,
+								  glm::vec3(0.2f, 0.2f, 0.2f));    // it's a bit too big for our scene, so scale it down
 	while (!glfwWindowShouldClose(window))
 	{
 		static float lastTime = 0;
-		float currentTime = glfwGetTime();
+		float currentTime = float(glfwGetTime());
 		deltaTime = currentTime - lastTime;
 		lastTime = currentTime;
 		tob->modelMatrix = glm::rotate(tob->modelMatrix, glm::radians(deltaTime * 10), glm::vec3(0, 1, 0));
@@ -67,7 +74,7 @@ void GameManager::start()
 		glm::mat4 view = camera.GetViewMatrix();
 		shader.setMat4("projection", projection);
 		shader.setMat4("view", view);
-//		setLights();
+		setLights();
 		renderAll();
 //		drawScene(window, glfwGetTime());
 		glfwSwapBuffers(window);
@@ -78,10 +85,25 @@ void GameManager::start()
 	exit(EXIT_SUCCESS);
 }
 
+void GameManager::setLights()
+{
+	light.dirLight.direction = glm::vec3(0, -1, 0);
+	light.dirLight.ambient = glm::vec3(0.1, 0, 0.1);
+	light.dirLight.diffuse = glm::vec3(0.2, 0.2, 0.2);
+	light.dirLight.specular = glm::vec3(1, 1, 1);
+
+	light.pointLight[0].position = glm::vec3(0, 0, 10);
+	light.pointLight[0].diffuse = glm::vec3(1, 1, 1);
+	light.pointLight[0].ambient = glm::vec3(0.1, 0.1, 0.1);
+	light.pointLight[0].specular = glm::vec3(1, 1, 1);
+
+	light.setup(shader);
+}
+
 void GameManager::renderAll()
 {
-	for (auto &item : objects)
-		item->render(shader);
+	for (auto &item : components)
+		item->render(shader, camera);
 }
 
 void GameManager::processInput(GLFWwindow *window)

@@ -6,27 +6,11 @@
 #include <Camera.h>
 #include <Cursor.h>
 #include <ResizeManager.h>
-#include <Floor.h>
-#include <HumanModel.h>
-#include <Fog.h>
 #include <Shader.h>
 #include <Object.h>
+#include <Light.h>
 #include <cstring>
 
-
-//class Light
-//{
-//public:
-//	float position[3];
-//	float ambient[3];
-//	float diffuse[3];
-//	float specular[3];
-//	float constant, linear, quadratic;
-//
-//	Light() : position({0, 0, 0}), ambient({0, 0, 0}), diffuse({0, 0, 0}), specular({0, 0, 0}), constant(0), linear(0),
-//			  quadratic(0)
-//	{}
-//};
 
 class GameManager
 {
@@ -49,8 +33,8 @@ private:
 //	Human human;
 //	Fog fog;
 	std::vector<Component *> components;
-	std::vector<Object *> objects;
-
+//	std::vector<Object *> objects;
+	Light light;
 
 	void setLights();
 

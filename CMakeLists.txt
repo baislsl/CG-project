@@ -33,19 +33,13 @@ set(SOURCE_FILES ${GLAD} ${LINMATH}
         src/control/Cursor.h
         src/core/Input.h
         src/control/Cursor.cpp
-        src/component/Floor.cpp
-        src/component/Floor.h
         src/component/Component.h
-        src/component/HumanModel.cpp
-        src/component/HumanModel.h
         src/core/GameManager.cpp
         src/core/GameManager.h
         src/control/ResizeManager.cpp
         src/control/ResizeManager.h
         src/core/GameEntry.cpp
         src/core/GameEntry.h
-        src/component/Fog.cpp
-        src/component/Fog.h
         src/control/Shader.h
         src/control/Mesh.h
         src/control/Model.h
