@@ -1,9 +1,4 @@
 #include "GameManager.h"
-#include <linmath.h>
-//#include <OpenGL/glext.h>
-
-//#define GL_LIGHT_MODEL_COLOR_CONTROL_EXT                     0x81F8
-//#define GL_SEPARATE_SPECULAR_COLOR_EXT                       0x81FA
 
 GameManager::GameManager(int width, int height, GLFWwindow *window)
 		: width(width), height(height),
@@ -14,9 +9,6 @@ GameManager::GameManager(int width, int height, GLFWwindow *window)
 		  resizeManager(window),
 		  shader("../res/temp.vert", "../res/temp.frag")
 {
-//	components.push_back(&floor);
-//	components.push_back(&human);
-//	components.push_back(&fog);
 }
 
 void GameManager::start()
@@ -26,22 +18,11 @@ void GameManager::start()
 	resizeManager.install();
 	InputEngine::install(window);
 
-//	glfwMakeContextCurrent(window);
-//	gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
 	glfwSwapInterval(1);
 
 	// Set initial aspect ratio
 	glfwGetFramebufferSize(window, &width, &height);
 	resizeManager.resizeListener(window, width, height);
-
-//	if (glfwExtensionSupported("GL_EXT_separate_specular_color"))
-//	{
-//		glLightModeli(GL_LIGHT_MODEL_COLOR_CONTROL_EXT,
-//					  GL_SEPARATE_SPECULAR_COLOR_EXT);
-//	}
-
-	// Set filled polygon mode as default (not wireframe)
-//	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	glEnable(GL_DEPTH_TEST);
 	glfwSetTime(0.0);
@@ -74,9 +55,8 @@ void GameManager::start()
 		glm::mat4 view = camera.GetViewMatrix();
 		shader.setMat4("projection", projection);
 		shader.setMat4("view", view);
-		setLights();
+		setLights(shader);
 		renderAll();
-//		drawScene(window, glfwGetTime());
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
@@ -85,7 +65,7 @@ void GameManager::start()
 	exit(EXIT_SUCCESS);
 }
 
-void GameManager::setLights()
+void GameManager::setLights(const Shader &shader)
 {
 	light.dirLight.direction = glm::vec3(0, -1, 0);
 	light.dirLight.ambient = glm::vec3(0.1, 0, 0.1);

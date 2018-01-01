@@ -11,7 +11,6 @@
 #include <Light.h>
 #include <cstring>
 
-
 class GameManager
 {
 public:
@@ -29,22 +28,17 @@ private:
 	ResizeManager resizeManager;
 
 	Shader shader;
-//	Floor floor;
-//	Human human;
-//	Fog fog;
+
 	std::vector<Component *> components;
 //	std::vector<Object *> objects;
 	Light light;
 
-	void setLights();
+	void setLights(const Shader&);
 
 	void renderAll();
 
 	void processInput(GLFWwindow *window);
 
-	void setup_lights();
-
-	void drawScene(GLFWwindow *window, double t);
 
 };
 
