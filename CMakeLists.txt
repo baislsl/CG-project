@@ -41,14 +41,14 @@ set(SOURCE_FILES ${GLAD} ${LINMATH}
         src/core/GameEntry.cpp
         src/core/GameEntry.h
         src/control/Shader.h
-        src/control/Mesh.h
-        src/control/Model.h
+        src/component/Mesh.h
+        src/component/Model.h
         src/tool/stb_image.cpp
         src/tool/stb_image.h
-        src/control/Object.cpp
-        src/control/Object.h
+        src/component/Object.cpp
+        src/component/Object.h
         src/control/Light.h
-        )
+        src/component/BaseShape.h src/component/Cube.h)
 include_directories(src/control)
 include_directories(src/core)
 include_directories(src/component)

@@ -21,7 +21,7 @@ public:
 
 	float constant, linear, quadratic;
 
-	PointLight() : constant(1), linear(0.09), quadratic(0.032), position(glm::vec3(0, 0, 0)), ambient(glm::vec3(0, 0, 0)),
+	PointLight() : constant(1), linear(0.022), quadratic(0.0019), position(glm::vec3(0, 0, 0)), ambient(glm::vec3(0, 0, 0)),
 				   diffuse(glm::vec3(0, 0, 0)), specular(glm::vec3(0, 0, 0))
 	{}
 };

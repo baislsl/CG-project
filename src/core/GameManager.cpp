@@ -31,11 +31,13 @@ void GameManager::start()
 	tob->usingTexture = false;
 	tob->material.diffuse = glm::vec3(0.5, 0.1, 0.8);
 	tob->material.specular = glm::vec3(0.6, 0, 0);
+	tob->material.ambient = glm::vec3(0, 0, 0.6);
 	components.push_back(tob);
-
-
-	tob->modelMatrix = glm::translate(tob->modelMatrix, glm::vec3(0.0f, -1.75f,
-																  0.0f)); // translate it down so it's at the center of the scene
+	Cube *cube = new Cube("../res/Crack.bmp");
+	cube->material.diffuse = glm::vec3(0.5, 0.1, 0.8);
+	cube->material.specular = glm::vec3(0.5, 0.1, 0.8);
+	cube->material.ambient = glm::vec3(0.5, 0.1, 0.8);
+	components.push_back(cube);
 	tob->modelMatrix = glm::scale(tob->modelMatrix,
 								  glm::vec3(0.2f, 0.2f, 0.2f));    // it's a bit too big for our scene, so scale it down
 	while (!glfwWindowShouldClose(window))
@@ -45,9 +47,10 @@ void GameManager::start()
 		deltaTime = currentTime - lastTime;
 		lastTime = currentTime;
 		tob->modelMatrix = glm::rotate(tob->modelMatrix, glm::radians(deltaTime * 10), glm::vec3(0, 1, 0));
+		cube->modelMatrix = glm::rotate(cube->modelMatrix, glm::radians(-deltaTime * 10), glm::vec3(0, 1, 0));
 		processInput(window);
-
-		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+		setLights(shader);
+		glClearColor(0.05f, 0.15f, 0.05f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		shader.use();
 		// view/projection transformations
@@ -55,7 +58,7 @@ void GameManager::start()
 		glm::mat4 view = camera.GetViewMatrix();
 		shader.setMat4("projection", projection);
 		shader.setMat4("view", view);
-		setLights(shader);
+
 		renderAll();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
@@ -67,12 +70,12 @@ void GameManager::start()
 
 void GameManager::setLights(const Shader &shader)
 {
-	light.dirLight.direction = glm::vec3(0, -1, 0);
-	light.dirLight.ambient = glm::vec3(0.1, 0, 0.1);
-	light.dirLight.diffuse = glm::vec3(0.2, 0.2, 0.2);
-	light.dirLight.specular = glm::vec3(1, 1, 1);
+//	light.dirLight.direction = glm::vec3(0, -1, 0);
+//	light.dirLight.ambient = glm::vec3(0.1, 0, 0.1);
+//	light.dirLight.diffuse = glm::vec3(0.2, 0.2, 0.2);
+//	light.dirLight.specular = glm::vec3(1, 1, 1);
 
-	light.pointLight[0].position = glm::vec3(0, 0, 10);
+	light.pointLight[0].position = glm::vec3(0, 10, 10);
 	light.pointLight[0].diffuse = glm::vec3(1, 1, 1);
 	light.pointLight[0].ambient = glm::vec3(0.1, 0.1, 0.1);
 	light.pointLight[0].specular = glm::vec3(1, 1, 1);

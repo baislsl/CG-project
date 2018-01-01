@@ -10,6 +10,7 @@
 #include <Object.h>
 #include <Light.h>
 #include <cstring>
+#include <Cube.h>
 
 class GameManager
 {

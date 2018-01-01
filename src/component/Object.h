@@ -15,7 +15,7 @@
 class Object : public Component
 {
 public:
-	glm::mat4 modelMatrix;
+
 	bool usingTexture;
 	explicit Object(const std::string &fileName) : modelFileName(fileName), model(fileName), usingTexture(true)
 	{}
@@ -23,14 +23,10 @@ public:
 	void render(const Shader &shader, const Camera &camera) override
 	{
 		shader.setVec3("viewPos", camera.Position);
-
-		//		for test
-//		shader.setBool("usingTexture", false);
 		shader.setVec3("material.diffuse", material.diffuse);
 		shader.setVec3("material.specular", material.specular);
 		shader.setVec3("material.ambient", material.ambient);
 		shader.setBool("usingTexture", usingTexture);
-
 		shader.setMat4("model", modelMatrix);
 		model.Draw(shader);
 	}
