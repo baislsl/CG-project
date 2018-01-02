@@ -33,7 +33,7 @@ void GameManager::start()
 	tob->material.specular = glm::vec3(0.6, 0, 0);
 	tob->material.ambient = glm::vec3(0, 0, 0.6);
 	components.push_back(tob);
-	Sphere *cube = new Sphere(200, 200, "../res/Crack.bmp");
+	Sphere *cube = new Sphere(30, 30, "../res/Crack.bmp");
 //	Cube *cube = new Cube("../res/Crack.bmp");
 	cube->material.diffuse = glm::vec3(0.5, 0.1, 0.8);
 	cube->material.specular = glm::vec3(0.5, 0.1, 0.8);
@@ -71,7 +71,7 @@ void GameManager::start()
 
 void GameManager::setLights(const Shader &shader)
 {
-	light.dirLight.direction = glm::vec3(0, -1, 0);
+	light.dirLight.direction = glm::vec3(0, -1, -2);
 	light.dirLight.ambient = glm::vec3(0.1, 0, 0.1);
 	light.dirLight.diffuse = glm::vec3(0.2, 0.2, 0.2);
 	light.dirLight.specular = glm::vec3(1, 1, 1);

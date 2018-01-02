@@ -17,7 +17,7 @@ public:
 	unsigned int EBO;
 
 //	m and n are number of slices vertically and horizontally
-	Sphere(int m = 10, int n = 10, std::string textureFileName = std::string())
+	explicit Sphere(int m = 10, int n = 10, std::string textureFileName = std::string())
 	{
 		glGenBuffers(1, &EBO);
 		if (!textureFileName.empty())

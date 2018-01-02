@@ -48,7 +48,7 @@ set(SOURCE_FILES ${GLAD} ${LINMATH}
         src/component/Object.cpp
         src/component/Object.h
         src/control/Light.h
-        src/component/BaseShape.h src/component/Cube.h src/component/Sphere.h)
+        src/component/BaseShape.h src/component/Cube.h src/component/Sphere.h src/component/Cylinder.h)
 include_directories(src/control)
 include_directories(src/core)
 include_directories(src/component)
