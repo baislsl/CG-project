@@ -48,7 +48,7 @@ namespace InputEngine
 	static void install(GLFWwindow *window)
 	{
 //		hide the cursor and limit it inside the window
-		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+//		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		glfwSetCursorPosCallback(window, InputEngine::cursorCallBack);
 //		glfwSetKeyCallback(window, InputEngine::keyBoardCallBack);
 		glfwSetScrollCallback(window, InputEngine::scrollCallback);

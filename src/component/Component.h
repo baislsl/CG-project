@@ -19,6 +19,10 @@ public:
 	Material material;
 	glm::mat4 modelMatrix;
 
+	Component() = default;
+
+	explicit Component(const glm::mat4& modelMatrix) : modelMatrix(modelMatrix){}
+
 	virtual void render(const Shader &shader, const Camera &camera) = 0;
 
 	virtual ~Component() = default;

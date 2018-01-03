@@ -61,7 +61,7 @@ set(SOURCE_FILES ${GLAD} ${LINMATH}
         src/component/Cylinder.h
         src/component/Cylinder.cpp
         src/component/Plane.h
-        src/component/Plane.cpp)
+        src/component/Plane.cpp src/component/Floor.cpp src/component/Floor.h)
 include_directories(src/control)
 include_directories(src/core)
 include_directories(src/component)
@@ -72,3 +72,5 @@ add_executable(demo ${SOURCE_FILES})
 if (APPLE)
     target_link_libraries(demo "/usr/local/lib/libassimp.dylib")
 endif ()
+
+add_executable(Test1 src/test/test.cpp)
