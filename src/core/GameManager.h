@@ -12,6 +12,7 @@
 #include <cstring>
 #include <Cube.h>
 #include <Sphere.h>
+#include <Plane.h>
 
 class GameManager
 {

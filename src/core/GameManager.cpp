@@ -33,7 +33,8 @@ void GameManager::start()
 	tob->material.specular = glm::vec3(0.6, 0, 0);
 	tob->material.ambient = glm::vec3(0, 0, 0.6);
 	components.push_back(tob);
-	Sphere *cube = new Sphere(30, 30, "../res/Crack.bmp");
+	Plane * cube = new Plane("../res/Crack.bmp");
+//	Sphere *cube = new Sphere(30, 30, "../res/Crack.bmp");
 //	Cube *cube = new Cube("../res/Crack.bmp");
 	cube->material.diffuse = glm::vec3(0.5, 0.1, 0.8);
 	cube->material.specular = glm::vec3(0.5, 0.1, 0.8);
