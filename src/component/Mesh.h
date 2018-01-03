@@ -19,8 +19,6 @@
 #include <iostream>
 #include <vector>
 
-using namespace std;
-
 struct Vertex
 {
 	// position
@@ -38,22 +36,22 @@ struct Vertex
 struct Texture
 {
 	unsigned int id;
-	string type;
-	string path;
+	std::string type;
+	std::string path;
 };
 
 class Mesh
 {
 public:
 	/*  Mesh Data  */
-	vector<Vertex> vertices;
-	vector<unsigned int> indices;
-	vector<Texture> textures;
+	std::vector<Vertex> vertices;
+	std::vector<unsigned int> indices;
+	std::vector<Texture> textures;
 	unsigned int VAO;
 
 	/*  Functions  */
 	// constructor
-	Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures);
+	Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
 
 	// render the mesh
 	void Draw(Shader shader);
