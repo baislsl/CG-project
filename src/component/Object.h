@@ -21,7 +21,7 @@ public:
 
 	void render(const Shader &shader, const Camera &camera) override;
 
-private:
+protected:
 	std::string modelFileName;
 
 	Model model;
