@@ -30,6 +30,7 @@ set(LINMATH lib/linmath.h)
 set(SOURCE_FILES ${GLAD} ${LINMATH}
         src/main.cpp
         src/control/Camera.h
+        src/control/Camera.cpp
         src/control/Cursor.h
         src/core/Input.h
         src/control/Cursor.cpp
@@ -41,14 +42,26 @@ set(SOURCE_FILES ${GLAD} ${LINMATH}
         src/core/GameEntry.cpp
         src/core/GameEntry.h
         src/control/Shader.h
+        src/control/Shader.cpp
         src/component/Mesh.h
+        src/component/Mesh.cpp
         src/component/Model.h
+        src/component/Model.cpp
         src/tool/stb_image.cpp
         src/tool/stb_image.h
         src/component/Object.cpp
         src/component/Object.h
         src/control/Light.h
-        src/component/BaseShape.h src/component/Cube.h src/component/Sphere.h src/component/Cylinder.h src/component/Plane.h)
+        src/control/Light.cpp
+        src/component/BaseShape.h
+        src/component/Cube.h
+        src/component/Cube.cpp
+        src/component/Sphere.h
+        src/component/Sphere.cpp
+        src/component/Cylinder.h
+        src/component/Cylinder.cpp
+        src/component/Plane.h
+        src/component/Plane.cpp)
 include_directories(src/control)
 include_directories(src/core)
 include_directories(src/component)

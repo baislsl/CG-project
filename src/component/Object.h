@@ -17,19 +17,9 @@ class Object : public Component
 public:
 
 	bool usingTexture;
-	explicit Object(const std::string &fileName) : modelFileName(fileName), model(fileName), usingTexture(true)
-	{}
+	explicit Object(const std::string &fileName);
 
-	void render(const Shader &shader, const Camera &camera) override
-	{
-		shader.setVec3("viewPos", camera.Position);
-		shader.setVec3("material.diffuse", material.diffuse);
-		shader.setVec3("material.specular", material.specular);
-		shader.setVec3("material.ambient", material.ambient);
-		shader.setBool("usingTexture", usingTexture);
-		shader.setMat4("model", modelMatrix);
-		model.Draw(shader);
-	}
+	void render(const Shader &shader, const Camera &camera) override;
 
 private:
 	std::string modelFileName;
