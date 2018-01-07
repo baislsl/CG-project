@@ -1,4 +1,5 @@
 #include <Floor.h>
+#include <Grass.h>
 #include "GameManager.h"
 
 GameManager::GameManager(int width, int height, GLFWwindow *window)
@@ -44,8 +45,9 @@ void GameManager::start()
 	tob->modelMatrix = glm::scale(tob->modelMatrix,
 								  glm::vec3(0.2f, 0.2f, 0.2f));    // it's a bit too big for our scene, so scale it down
 
-	Floor floor(glm::rotate(tob->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1,0,0)), 0);
-	components.push_back(&floor);
+//	Floor floor(glm::rotate(tob->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1,0,0)), 0);
+	Grass grass(glm::rotate(tob->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1,0,0)));
+	components.push_back(&grass);
 
 	while (!glfwWindowShouldClose(window))
 	{

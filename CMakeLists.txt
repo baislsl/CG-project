@@ -61,7 +61,11 @@ set(SOURCE_FILES ${GLAD} ${LINMATH}
         src/component/Cylinder.h
         src/component/Cylinder.cpp
         src/component/Plane.h
-        src/component/Plane.cpp src/component/Floor.cpp src/component/Floor.h)
+        src/component/Grass.cpp
+        src/component/Grass.h
+        src/component/Plane.cpp
+        src/component/Floor.cpp
+        src/component/Floor.h)
 include_directories(src/control)
 include_directories(src/core)
 include_directories(src/component)
