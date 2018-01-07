@@ -65,6 +65,10 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float delta)
 		Position -= Right * velocity;
 	if (direction == RIGHT)
 		Position += Right * velocity;
+	if(direction == UP)
+		Position += Up*velocity;
+	if(direction == DOWN)
+		Position -= Up*velocity;
 }
 
 void Camera::updateCameraVectors()
