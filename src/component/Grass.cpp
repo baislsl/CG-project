@@ -6,6 +6,7 @@ const static std::string grassTexturePath = "../res/Crack.bmp";
 Grass::Grass(const glm::mat4 &up, int length, int width, float size) : Component(up), length(length), width(width),
 		size(size), plane(grassTexturePath)
 {
+	// TODO color not work
 //	plane.material.diffuse = glm::vec3(0.5, 0.1, 0.8);
 //	plane.material.specular = glm::vec3(0.5, 0.1, 0.8);
 //	plane.material.ambient = glm::vec3(0.5, 0.1, 0.8);
