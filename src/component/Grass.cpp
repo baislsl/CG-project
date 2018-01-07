@@ -1,7 +1,6 @@
 #include "Grass.h"
 
-//const static std::string grassTexturePath = "../res/pic/grass.jpeg";
-const static std::string grassTexturePath = "../res/Crack.bmp";
+const static std::string grassTexturePath = "../res/pic/grass.jpeg";
 
 Grass::Grass(const glm::mat4 &up, int length, int width, float size) : Component(up), length(length), width(width),
 		size(size), plane(grassTexturePath)
@@ -21,6 +20,7 @@ void Grass::render(const Shader &shader, const Camera &camera)
 		for (int j = 0; j < width; j++)
 		{
 			plane.modelMatrix = glm::scale(mat, glm::vec3(size, size, 1));
+			plane.modelMatrix = glm::translate(plane.modelMatrix, glm::vec3(i, j, 0));
 			plane.render(shader, camera);
 		}
 	}
