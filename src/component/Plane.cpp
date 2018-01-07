@@ -34,6 +34,18 @@ void Plane::render(const Shader &shader, const Camera &camera)
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
+void Plane::setTexture(std::string textureFileName)
+{
+	usingTexture = true;
+	loadTexture(textureFileName);
+}
+
+void Plane::useTexture(unsigned tex)
+{
+	usingTexture = true;
+	texture = tex;
+}
+
 void Plane::loadTexture(std::string textureFileName)
 {
 	glGenTextures(1, &texture);
@@ -43,7 +55,8 @@ void Plane::loadTexture(std::string textureFileName)
 	{
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidth, textureHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
-	} else
+	}
+	else
 	{
 		std::cout << "Failed to load texture." << std::endl;
 	}

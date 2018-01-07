@@ -13,12 +13,13 @@ class Plane : public BaseShape
 {
 public:
 	explicit Plane(std::string textureFileName = std::string());
-
+	void setTexture(std::string textureFileName);
+	void useTexture(unsigned tex);
 	void render(const Shader &shader, const Camera &camera) override;
-
+	unsigned int texture;
 private:
 	int textureWidth{}, textureHeight{}, nrChannels{};
-	unsigned int texture{};
+
 
 	void loadTexture(std::string textureFileName);
 };
