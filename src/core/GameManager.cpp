@@ -35,18 +35,18 @@ void GameManager::start()
 	tob->material.specular = glm::vec3(0.6, 0, 0);
 	tob->material.ambient = glm::vec3(0, 0, 0.6);
 	components.push_back(tob);
-	Plane * cube = new Plane("../res/Crack.bmp");
+//	Plane *cube = new Plane("../res/Crack.bmp");
 //	Sphere *cube = new Sphere(30, 30, "../res/Crack.bmp");
 //	Cube *cube = new Cube("../res/Crack.bmp");
-	cube->material.diffuse = glm::vec3(0.5, 0.1, 0.8);
-	cube->material.specular = glm::vec3(0.5, 0.1, 0.8);
-	cube->material.ambient = glm::vec3(0.5, 0.1, 0.8);
-	components.push_back(cube);
+//	cube->material.diffuse = glm::vec3(0.5, 0.1, 0.8);
+//	cube->material.specular = glm::vec3(0.5, 0.1, 0.8);
+//	cube->material.ambient = glm::vec3(0.5, 0.1, 0.8);
+//	components.push_back(cube);
 	tob->modelMatrix = glm::scale(tob->modelMatrix,
 								  glm::vec3(0.2f, 0.2f, 0.2f));    // it's a bit too big for our scene, so scale it down
 
 //	Floor floor(glm::rotate(tob->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1,0,0)), 0);
-	Grass grass(glm::rotate(tob->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1,0,0)));
+	Grass grass(glm::rotate(tob->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1, 0, 0)));
 	components.push_back(&grass);
 
 	while (!glfwWindowShouldClose(window))
@@ -56,7 +56,7 @@ void GameManager::start()
 		deltaTime = currentTime - lastTime;
 		lastTime = currentTime;
 		tob->modelMatrix = glm::rotate(tob->modelMatrix, glm::radians(deltaTime * 10), glm::vec3(0, 1, 0));
-		cube->modelMatrix = glm::rotate(cube->modelMatrix, glm::radians(-deltaTime * 10), glm::vec3(0, 1, 0));
+//		cube->modelMatrix = glm::rotate(cube->modelMatrix, glm::radians(-deltaTime * 10), glm::vec3(0, 1, 0));
 		processInput(window);
 		setLights(shader);
 		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);

@@ -9,7 +9,7 @@ class Grass : public Component
 {
 public:
 
-	explicit Grass(const glm::mat4 &up, int length = 40, int width= 40, float size = 3.0);
+	explicit Grass(const glm::mat4 &up, int length = 1, int width= 1, float size = 3.0);
 
 	void render(const Shader& shader, const Camera& camera) override ;
 private:
