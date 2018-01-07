@@ -58,7 +58,7 @@ void GameManager::start()
 	{
 		static float lastTime = 0;
 		float currentTime = float(glfwGetTime());
-		deltaTime = currentTime - lastTime;
+		deltaTime = (currentTime - lastTime)*5;
 		lastTime = currentTime;
 		tob->modelMatrix = glm::rotate(tob->modelMatrix, glm::radians(deltaTime * 10), glm::vec3(0, 1, 0));
 		grassCube.modelMatrix = glm::rotate(grassCube.modelMatrix, glm::radians(deltaTime * 10), glm::vec3(0, 1, 0));

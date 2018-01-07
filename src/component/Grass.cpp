@@ -20,7 +20,7 @@ void Grass::render(const Shader &shader, const Camera &camera)
 		for (int j = 0; j < width; j++)
 		{
 			plane.modelMatrix = glm::scale(mat, glm::vec3(size, size, 1));
-			plane.modelMatrix = glm::translate(plane.modelMatrix, glm::vec3(i, j, 0));
+			plane.modelMatrix = glm::translate(plane.modelMatrix, glm::vec3(i - length / 2, j - length / 2, 0));
 			plane.render(shader, camera);
 		}
 	}
