@@ -14,13 +14,14 @@ class Cube : public BaseShape
 public:
 	explicit Cube(std::string textureFileName = std::string());
 
+	explicit Cube(GLuint texture);
+
 	void render(const Shader &shader, const Camera &camera) override;
 
 private:
-	int textureWidth, textureHeight, nrChannels;
 	unsigned int texture;
 
-	void loadTexture(std::string textureFileName);
+	void init();
 };
 
 #endif //CGPROJECT_CUBE_H

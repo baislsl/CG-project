@@ -1,3 +1,4 @@
+#include <TextureManager.h>
 #include "Sphere.h"
 
 Sphere::Sphere(int m, int n, std::string textureFileName)
@@ -6,7 +7,7 @@ Sphere::Sphere(int m, int n, std::string textureFileName)
 	if (!textureFileName.empty())
 	{
 		usingTexture = true;
-		loadTexture(textureFileName);
+		texture = TextureManager::getTextureManagerInstance()->load(textureFileName);
 	}
 
 	nrVert = m * n * 4;
@@ -146,20 +147,4 @@ void Sphere::render(const Shader &shader, const Camera &camera)
 	glBindVertexArray(VAO);
 //		glDrawArrays(GL_TRIANGLES, 0, nrVert);
 	glDrawElements(GL_TRIANGLES, nrVert / 2 * 3, GL_UNSIGNED_INT, 0);
-}
-
-void Sphere::loadTexture(std::string textureFileName)
-{
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
-	unsigned char *data = stbi_load(textureFileName.c_str(), &textureWidth, &textureHeight, &nrChannels, 0);
-	if (data)
-	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidth, textureHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	} else
-	{
-		std::cout << "Failed to load texture." << std::endl;
-	}
-	stbi_image_free(data);
 }

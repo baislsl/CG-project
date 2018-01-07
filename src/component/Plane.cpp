@@ -1,24 +1,18 @@
+#include <TextureManager.h>
 #include "Plane.h"
 
+
+Plane::Plane(GLuint texture) : texture(texture)
+{ init(); }
 
 Plane::Plane(std::string textureFileName)
 {
 	if (!textureFileName.empty())
 	{
 		usingTexture = true;
-		loadTexture(textureFileName);
+		texture = TextureManager::getTextureManagerInstance()->load(textureFileName);
 	}
-	float vertices[] = {-1, -1, 0, 0, 0, 1, 0, 0, -1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, -1, -1, 0, 0, 0, 1,
-						0, 0, 1, -1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1,};
-	glBindVertexArray(VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) 0);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) (3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) (6 * sizeof(float)));
-	glEnableVertexAttribArray(2);
+	init();
 }
 
 void Plane::render(const Shader &shader, const Camera &camera)
@@ -37,7 +31,7 @@ void Plane::render(const Shader &shader, const Camera &camera)
 void Plane::setTexture(std::string textureFileName)
 {
 	usingTexture = true;
-	loadTexture(textureFileName);
+	this->texture = TextureManager::getTextureManagerInstance()->load(textureFileName);
 }
 
 void Plane::useTexture(unsigned tex)
@@ -46,19 +40,17 @@ void Plane::useTexture(unsigned tex)
 	texture = tex;
 }
 
-void Plane::loadTexture(std::string textureFileName)
+void Plane::init()
 {
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
-	unsigned char *data = stbi_load(textureFileName.c_str(), &textureWidth, &textureHeight, &nrChannels, 0);
-	if (data)
-	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidth, textureHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		std::cout << "Failed to load texture." << std::endl;
-	}
-	stbi_image_free(data);
+	float vertices[] = {-1, -1, 0, 0, 0, 1, 0, 0, -1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, -1, -1, 0, 0, 0, 1,
+						0, 0, 1, -1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1,};
+	glBindVertexArray(VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) 0);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) (3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) (6 * sizeof(float)));
+	glEnableVertexAttribArray(2);
 }

@@ -1,3 +1,4 @@
+#include <TextureManager.h>
 #include "GrassCube.h"
 
 GrassCube::GrassCube() : BaseShape(true){
@@ -83,17 +84,8 @@ void GrassCube::render(const Shader &shader, const Camera &camera) {
 }
 
 void GrassCube::loadTexture() {
-	glGenTextures(3, texture);
 	for(int i = 0; i < 3;i++){
-		glBindTexture(GL_TEXTURE_2D, texture[i]);
-		unsigned char *data = stbi_load(texturePath[i].c_str(), textureWidth + i, textureHeight + i, nrChannels + i, 0);
-		if (data) {
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidth[i], textureHeight[i], 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-			glGenerateMipmap(GL_TEXTURE_2D);
-		} else {
-			std::cout << "Failed to load texture." << std::endl;
-		}
-		stbi_image_free(data);
+		texture[i] = TextureManager::getTextureManagerInstance()->load(texturePath[i]);
 	}
 
 

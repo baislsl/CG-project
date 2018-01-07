@@ -22,10 +22,7 @@ public:
 	void render(const Shader &shader, const Camera &camera) override;
 
 private:
-	int textureWidth, textureHeight, nrChannels;
 	unsigned int texture;
-
-	void loadTexture(std::string textureFileName);
 };
 
 #endif //CGPROJECT_SPHERE_H

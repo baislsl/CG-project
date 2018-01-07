@@ -31,14 +31,7 @@ public:
 
 	const TextureInfo* getTextureInfo(const std::string &path) const;
 
-	const TextureInfo* getTextureInfo(const GLuint texture) const
-	{
-		for (auto &t : textureMap)
-		{
-			if(t.second.textureId == texture) return &(t.second);
-		}
-		return nullptr;
-	}
+	const TextureInfo* getTextureInfo(const GLuint texture) const;
 
 
 private:

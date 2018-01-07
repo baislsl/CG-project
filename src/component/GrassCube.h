@@ -15,7 +15,6 @@ public:
 	void render(const Shader &shader, const Camera &camera) override;
 
 private:
-	int textureWidth[3], textureHeight[3], nrChannels[3];
 	unsigned int texture[3];
 
 	// TODO: 图片颜色搭配并不协调，可能需要另外换一张图片

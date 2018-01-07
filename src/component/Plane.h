@@ -13,15 +13,18 @@ class Plane : public BaseShape
 {
 public:
 	explicit Plane(std::string textureFileName = std::string());
+
+	explicit Plane(GLuint texture);
+
 	void setTexture(std::string textureFileName);
+
 	void useTexture(unsigned tex);
+
 	void render(const Shader &shader, const Camera &camera) override;
+
 	unsigned int texture;
 private:
-	int textureWidth{}, textureHeight{}, nrChannels{};
-
-
-	void loadTexture(std::string textureFileName);
+	void init();
 };
 
 #endif //CGPROJECT_PLANE_H
