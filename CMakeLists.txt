@@ -20,9 +20,9 @@ ELSEIF (UNIX)
     find_package(OpenGL REQUIRED)
     find_package(glfw3 REQUIRED)
     find_package(Assimp REQUIRED)
+ELSEIF (MINGW)
+    link_libraries(${OPENGL_LIBRARIES} glfw3 assimp)
 endif ()
-
-link_libraries(${ASSIMP_LIBRARIES} ${OPENGL_LIBRARIES} glfw)
 
 set(GLAD lib/glad/glad.h lib/glad/glad.c)
 set(LINMATH lib/linmath.h)
