@@ -14,7 +14,7 @@ public:
 	unsigned int VBO, VAO;
 	bool usingTexture;
 
-	BaseShape() : usingTexture(false), VAO(0), VBO(0)
+	BaseShape(bool usingTexture = false) : usingTexture(usingTexture), VAO(0), VBO(0)
 	{
 		glGenBuffers(1, &VBO);
 		glGenVertexArrays(1, &VAO);

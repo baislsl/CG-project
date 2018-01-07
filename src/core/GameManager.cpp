@@ -1,5 +1,6 @@
 #include <Floor.h>
 #include <Grass.h>
+#include <GrassCube.h>
 #include "GameManager.h"
 
 GameManager::GameManager(int width, int height, GLFWwindow *window)
@@ -42,6 +43,10 @@ void GameManager::start()
 //	cube->material.specular = glm::vec3(0.5, 0.1, 0.8);
 //	cube->material.ambient = glm::vec3(0.5, 0.1, 0.8);
 //	components.push_back(cube);
+//	components.push_back(cube);
+	GrassCube grassCube;
+	grassCube.modelMatrix = glm::translate(grassCube.modelMatrix, glm::vec3(0, 0.5, 0));
+	components.push_back(&grassCube);
 	tob->modelMatrix = glm::scale(tob->modelMatrix,
 								  glm::vec3(0.2f, 0.2f, 0.2f));    // it's a bit too big for our scene, so scale it down
 
@@ -56,6 +61,7 @@ void GameManager::start()
 		deltaTime = currentTime - lastTime;
 		lastTime = currentTime;
 		tob->modelMatrix = glm::rotate(tob->modelMatrix, glm::radians(deltaTime * 10), glm::vec3(0, 1, 0));
+		grassCube.modelMatrix = glm::rotate(grassCube.modelMatrix, glm::radians(deltaTime * 10), glm::vec3(0, 1, 0));
 //		cube->modelMatrix = glm::rotate(cube->modelMatrix, glm::radians(-deltaTime * 10), glm::vec3(0, 1, 0));
 		processInput(window);
 		setLights(shader);
@@ -111,4 +117,8 @@ void GameManager::processInput(GLFWwindow *window)
 		camera.ProcessKeyboard(LEFT, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		camera.ProcessKeyboard(RIGHT, deltaTime);
+	if(glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
+		camera.ProcessKeyboard(UP, deltaTime);
+	if(glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
+		camera.ProcessKeyboard(DOWN, deltaTime);
 }
