@@ -70,7 +70,11 @@ set(SOURCE_FILES ${GLAD} ${LINMATH}
         src/component/Floor.cpp
         src/component/Floor.h
         src/component/GrassCube.cpp
-        src/component/GrassCube.h src/control/TextureManager.cpp src/control/TextureManager.h)
+        src/component/GrassCube.h
+        src/control/TextureManager.cpp
+        src/control/TextureManager.h
+        src/component/TextureCube.cpp
+        src/component/TextureCube.h)
 include_directories(src/control)
 include_directories(src/core)
 include_directories(src/component)

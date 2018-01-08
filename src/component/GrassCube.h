@@ -4,26 +4,18 @@
 
 #include <Shader.h>
 #include <Camera.h>
-#include <stb_image.h>
 #include <array>
-#include "BaseShape.h"
+#include <TextureManager.h>
+#include "TextureCube.h"
 
-class GrassCube : public BaseShape {
+class GrassCube : public TextureCube {
 public:
-	GrassCube();
-
-	void render(const Shader &shader, const Camera &camera) override;
-
+	explicit GrassCube(GLuint top = TextureManager::getTextureManagerInstance()->load("../res/grass_square/grass.jpeg"),
+			  GLuint side = TextureManager::getTextureManagerInstance()->load("../res/grass_square/side.png"),
+			  GLuint bottom = TextureManager::getTextureManagerInstance()->load("../res/grass_square/global.png")) :
+	TextureCube(top, bottom, side, side, side, side){}
 private:
-	unsigned int texture[3];
-
 	// TODO: 图片颜色搭配并不协调，可能需要另外换一张图片
-	std::array<std::string, 3> texturePath{{
-			"../res/grass_square/grass.jpeg",
-			"../res/grass_square/side.png",
-			"../res/grass_square/global.png"}};
-
-	void loadTexture();
 };
 
 
