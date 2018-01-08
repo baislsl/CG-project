@@ -1,0 +1,11 @@
+#ifndef CGPROJECT_WORLDMAP_HPP
+#define CGPROJECT_WORLDMAP_HPP
+
+
+class WorldMap
+{
+
+};
+
+
+#endif //CGPROJECT_WORLDMAP_HPP
