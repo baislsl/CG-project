@@ -5,24 +5,12 @@
 #ifndef CGPROJECT_MODEL_H
 #define CGPROJECT_MODEL_H
 
-#include <glad/glad.h> 
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <stb_image.h>
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-
+#include <glad/glad.h>
 #include <Mesh.h>
 #include <Shader.h>
-
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-#include <map>
 #include <vector>
+#include <string>
+#include <assimp/scene.h>
 
 //unsigned int TextureFromFile(const char *path, const string &directory, bool gamma = false);
 

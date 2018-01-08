@@ -37,7 +37,7 @@ set(SOURCE_FILES ${GLAD} ${LINMATH}
         src/control/Cursor.h
         src/core/Input.h
         src/control/Cursor.cpp
-        src/component/Component.h
+        src/component/common/Component.h
         src/core/GameManager.cpp
         src/core/GameManager.h
         src/control/ResizeManager.cpp
@@ -46,17 +46,17 @@ set(SOURCE_FILES ${GLAD} ${LINMATH}
         src/core/GameEntry.h
         src/control/Shader.h
         src/control/Shader.cpp
-        src/component/Mesh.h
-        src/component/Mesh.cpp
-        src/component/Model.h
-        src/component/Model.cpp
+        src/component/common/Mesh.h
+        src/component/common/Mesh.cpp
+        src/component/common/Model.h
+        src/component/common/Model.cpp
         src/tool/stb_image.cpp
         src/tool/stb_image.h
-        src/component/Object.cpp
-        src/component/Object.h
+        src/component/common/Object.cpp
+        src/component/common/Object.h
         src/control/Light.h
         src/control/Light.cpp
-        src/component/BaseShape.h
+        src/component/common/BaseShape.h
         src/component/Cube.h
         src/component/Cube.cpp
         src/component/Sphere.h
@@ -81,6 +81,7 @@ include_directories(src/component)
 include_directories(src/tool)
 include_directories(lib/glad)
 include_directories(lib/KHR)
+include_directories(src/component/common)
 add_executable(demo ${SOURCE_FILES})
 if (APPLE)
     target_link_libraries(demo "/usr/local/lib/libassimp.dylib")

@@ -1,4 +1,13 @@
 #include "Model.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include <stb_image.h>
+#include <assimp/Importer.hpp>
+#include <assimp/postprocess.h>
+
 using namespace std;
 
 Model::Model(string const &path, bool gamma) : gammaCorrection(gamma)

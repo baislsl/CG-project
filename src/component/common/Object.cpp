@@ -1,7 +1,3 @@
-//
-// Created by QZQ on 31/12/2017.
-//
-
 #include "Object.h"
 
 Object::Object(const std::string &fileName) : modelFileName(fileName), model(fileName), usingTexture(true)

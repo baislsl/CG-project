@@ -12,7 +12,6 @@ public:
 	Material() : ambient(glm::vec3(0, 0, 0)), diffuse(glm::vec3(1, 1, 1)), specular(glm::vec3(0, 0, 0))
 	{}
 };
-
 class Component
 {
 public:
