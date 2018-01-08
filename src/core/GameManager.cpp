@@ -88,12 +88,12 @@ void GameManager::setLights(const Shader &shader)
 	light.dirLight.direction = glm::vec3(0, -1, -2);
 	light.dirLight.ambient = glm::vec3(0.1, 0, 0.1);
 	light.dirLight.diffuse = glm::vec3(0.2, 0.2, 0.2);
-	light.dirLight.specular = glm::vec3(1, 1, 1);
+//	light.dirLight.specular = glm::vec3(1, 1, 1);
 
 	light.pointLight[0].position = glm::vec3(0, 4, 4);
 	light.pointLight[0].diffuse = glm::vec3(0.8, 0.8, 0.8);
 	light.pointLight[0].ambient = glm::vec3(0.1, 0.1, 0.1);
-	light.pointLight[0].specular = glm::vec3(0.1, 0.1, 0.1);
+//	light.pointLight[0].specular = glm::vec3(0.1, 0.1, 0.1);
 
 	light.setup(shader);
 }
