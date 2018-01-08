@@ -20,7 +20,7 @@ public:
 	glm::vec3 position, ambient, diffuse, specular;
 
 	float constant, linear, quadratic;
-
+	bool use;
 	PointLight();
 };
 

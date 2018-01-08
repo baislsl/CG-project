@@ -28,6 +28,9 @@ void GameManager::start()
 	resizeManager.resizeListener(window, width, height);
 
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
 	glfwSetTime(0.0);
 //	for test
 	Object *tob = new Object("../res/obj/nanosuit.obj");
@@ -44,15 +47,18 @@ void GameManager::start()
 //	cube->material.ambient = glm::vec3(0.5, 0.1, 0.8);
 //	components.push_back(cube);
 //	components.push_back(cube);
+
+//	Floor floor(glm::rotate(tob->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1,0,0)), 0);
+//	Grass grass(glm::rotate(tob->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1, 0, 0)));
+//	components.pus/h_back(&grass);
+	Plane plane("../res/pic/x.png");
+	components.push_back(&plane);
 	GrassCube grassCube;
 	grassCube.modelMatrix = glm::translate(grassCube.modelMatrix, glm::vec3(0, 0.5, 0));
 	components.push_back(&grassCube);
 	tob->modelMatrix = glm::scale(tob->modelMatrix,
 								  glm::vec3(0.2f, 0.2f, 0.2f));    // it's a bit too big for our scene, so scale it down
 
-//	Floor floor(glm::rotate(tob->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1,0,0)), 0);
-	Grass grass(glm::rotate(tob->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1, 0, 0)));
-	components.push_back(&grass);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -61,7 +67,7 @@ void GameManager::start()
 		deltaTime = (currentTime - lastTime)*5;
 		lastTime = currentTime;
 		tob->modelMatrix = glm::rotate(tob->modelMatrix, glm::radians(deltaTime * 10), glm::vec3(0, 1, 0));
-		grassCube.modelMatrix = glm::rotate(grassCube.modelMatrix, glm::radians(deltaTime * 10), glm::vec3(0, 1, 0));
+//		grassCube.modelMatrix = glm::rotate(grassCube.modelMatrix, glm::radians(deltaTime * 10), glm::vec3(0, 1, 0));
 //		cube->modelMatrix = glm::rotate(cube->modelMatrix, glm::radians(-deltaTime * 10), glm::vec3(0, 1, 0));
 		processInput(window);
 		setLights(shader);
@@ -85,15 +91,16 @@ void GameManager::start()
 
 void GameManager::setLights(const Shader &shader)
 {
-	light.dirLight.direction = glm::vec3(0, -1, 0);
-	light.dirLight.ambient = glm::vec3(0.1, 0.1, 0.1);
-	light.dirLight.diffuse = glm::vec3(0.5, 0.5, 0.5);
+	light.dirLight.direction = glm::vec3(-1, -1, -1);
+	light.dirLight.ambient = glm::vec3(0.05, 0.05, 0.05);
+	light.dirLight.diffuse = glm::vec3(1, 1, 1);
 	light.dirLight.specular = glm::vec3(1, 1, 1);
 
 	light.pointLight[0].position = glm::vec3(0, 4, 4);
-	light.pointLight[0].diffuse = glm::vec3(0.8, 0.8, 0.8);
+	light.pointLight[0].diffuse = glm::vec3(1, 1, 1);
 	light.pointLight[0].ambient = glm::vec3(0.1, 0.1, 0.1);
-	light.pointLight[0].specular = glm::vec3(1, 1, 1);
+	light.pointLight[0].use = false;
+//	light.pointLight[0].specular = glm::vec3(1, 1, 1);
 
 	light.setup(shader);
 }

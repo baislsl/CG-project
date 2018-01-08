@@ -28,6 +28,7 @@ struct PointLight {
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
+    bool use;
 };
 #define NR_POINT_LIGHTS 4
 uniform PointLight pointLights[NR_POINT_LIGHTS];
@@ -42,7 +43,7 @@ uniform DirLight dirLight;
 uniform bool usingTexture;
 uniform vec3 viewPos;
 
-vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
+vec4 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
 {
     vec3 lightDir = normalize(-light.direction);
     // 漫反射着色
@@ -51,28 +52,28 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
     vec3 reflectDir = reflect(-lightDir, normal);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
     // 合并结果
-    vec3 ambient;
-    vec3 diffuse;
-    vec3 specular;
+    vec4 ambient;
+    vec4 diffuse;
+    vec4 specular;
     if (usingTexture)
     {
-        ambient  = light.ambient  * vec3(texture(texture_diffuse1, TexCoords));
-        diffuse  = light.diffuse  * diff * vec3(texture(texture_diffuse1, TexCoords));
-        specular = light.specular * spec * vec3(texture(texture_specular1, TexCoords));
+        ambient  = vec4(light.ambient, 1)  * (texture(texture_diffuse1, TexCoords));
+        diffuse  = vec4(light.diffuse, 1) * diff * (texture(texture_diffuse1, TexCoords));
+        specular = vec4(light.specular, 1) * spec * (texture(texture_specular1, TexCoords));
     }
     else
     {
-        ambient = light.ambient * material.ambient;
-        diffuse = light.diffuse * diff * material.diffuse;
-        specular = light.specular * spec * material.specular;
+        ambient = vec4(light.ambient * material.ambient, 1);
+        diffuse = vec4(light.diffuse * diff * material.diffuse, 1);
+        specular = vec4(light.specular * spec * material.specular, 1);
     }
-    ambient = max(ambient, vec3(0, 0, 0));
-    diffuse = max(diffuse, vec3(0, 0, 0));
-    specular = max(specular, vec3(0, 0, 0));
+    ambient = max(ambient, vec4(0, 0, 0, 0));
+    diffuse = max(diffuse, vec4(0, 0, 0, 0));
+    specular = max(specular, vec4(0, 0, 0, 0));
     return (ambient + diffuse + specular);
 }
 
-vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
+vec4 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 {
     vec3 lightDir = normalize(light.position - fragPos);
     // 漫反射着色
@@ -85,24 +86,24 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     float attenuation = 1.0 / (light.constant + light.linear * distance +
                  light.quadratic * (distance * distance));
     // 合并结果
-    vec3 ambient;
-    vec3 diffuse;
-    vec3 specular;
+    vec4 ambient;
+    vec4 diffuse;
+    vec4 specular;
     if (usingTexture)
     {
-        ambient  = light.ambient  * vec3(texture(texture_diffuse1, TexCoords));
-        diffuse  = light.diffuse  * diff * vec3(texture(texture_diffuse1, TexCoords));
-        specular = light.specular * spec * vec3(texture(texture_specular1, TexCoords));
+        ambient  = vec4(light.ambient, 1.0) * (texture(texture_diffuse1, TexCoords));
+        diffuse  = vec4(light.diffuse, 1.0) * diff * (texture(texture_diffuse1, TexCoords));
+        specular = vec4(light.specular, 1.0) * spec * (texture(texture_specular1, TexCoords));
     }
     else
     {
-        ambient = light.ambient * material.ambient;
-        diffuse = light.diffuse * diff * material.diffuse;
-        specular = light.specular * spec * material.specular;
+        ambient = vec4(light.ambient * material.ambient, 1);
+        diffuse = vec4(light.diffuse * diff * material.diffuse, 1);
+        specular = vec4(light.specular * spec * material.specular, 1);
     }
-    ambient = max(ambient, vec3(0, 0, 0));
-    diffuse = max(diffuse, vec3(0, 0, 0));
-    specular = max(specular, vec3(0, 0, 0));
+    ambient = max(ambient, vec4(0, 0, 0, 0));
+    diffuse = max(diffuse, vec4(0, 0, 0, 0));
+    specular = max(specular, vec4(0, 0, 0, 0));
     ambient  *= attenuation;
     diffuse  *= attenuation;
     specular *= attenuation;
@@ -116,12 +117,16 @@ void main()
     vec3 lightDir = normalize(lightPos - fragPos);
     vec3 viewDir = normalize(viewPos - fragPos);
 //    定向光
-    vec3 result = CalcDirLight(dirLight, norm, viewDir);
-    FragColor = vec4(result, 1.0);
+//    vec3 result = CalcDirLight(dirLight, norm, viewDir);
+//    FragColor = vec4(result, 1);
+    vec4 result = CalcDirLight(dirLight, norm, viewDir);
 //    点光源
-
     for(int i = 0; i < NR_POINT_LIGHTS; i++)
-        result += CalcPointLight(pointLights[i], norm, fragPos, viewDir);
-    FragColor = vec4(result, 1.0);
+    {
+        if (pointLights[i].use == true) result += CalcPointLight(pointLights[i], norm, fragPos, viewDir);
+    }
+    FragColor = result;
+//    FragColor = texture(texture_diffuse1, TexCoords);
 }
+
 
