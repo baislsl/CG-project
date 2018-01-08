@@ -32,7 +32,7 @@ GLuint TextureManager::load(const std::string &filename, int desired_channels)
 	}
 	else
 	{
-		std::cout << "Failed to load texture." << std::endl;
+		std::cout << "Failed to load texture : " << filename << std::endl;
 	}
 	stbi_image_free(data);
 	textureMap.insert(textureMap.end(), std::pair<std::string, TextureInfo>(filename, TextureInfo(texture, width, height, nrChannels, filename)));

@@ -2,6 +2,7 @@
 #include <Grass.h>
 #include <GrassCube.h>
 #include "GameManager.h"
+#include "../game/WorldMap.hpp"
 
 GameManager::GameManager(int width, int height, GLFWwindow *window)
 		: width(width), height(height),
@@ -50,9 +51,11 @@ void GameManager::start()
 
 //	Floor floor(glm::rotate(tob->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1,0,0)), 0);
 //	Grass grass(glm::rotate(tob->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1, 0, 0)));
-//	components.pus/h_back(&grass);
-	Plane plane("../res/pic/x.png");
-	components.push_back(&plane);
+//	components.push_back(&grass);
+//	Plane plane("../res/pic/x.png");
+//	components.push_back(&plane);
+	WorldMap worldMap;
+	components.push_back(&worldMap);
 	GrassCube grassCube;
 	grassCube.modelMatrix = glm::translate(grassCube.modelMatrix, glm::vec3(0, 0.5, 0));
 	components.push_back(&grassCube);

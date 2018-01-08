@@ -75,7 +75,7 @@ set(SOURCE_FILES ${GLAD} ${LINMATH}
         src/control/TextureManager.h
         src/component/TextureCube.cpp
         src/component/TextureCube.h
-        src/game/WorldMap.cpp 
+        src/game/WorldMap.cpp
         src/game/WorldMap.hpp)
 include_directories(src/control)
 include_directories(src/core)

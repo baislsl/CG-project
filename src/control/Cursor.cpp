@@ -37,7 +37,6 @@ void Cursor::mouseScroll(GLFWwindow *window, double xoffset, double yoffset)
 
 void Cursor::mouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
 {
-	std::cout << "srcoll " << onScroll << std::endl;
 	onScroll = false;
 	if(action == GLFW_PRESS) {
 		onScroll = true;

@@ -1,1 +1,139 @@
 #include "WorldMap.hpp"
+
+bool operator==(const Position &p1, const Position &p2)
+{
+	return p1.x == p2.x && p1.y == p2.y && p1.z == p2.z && p1.isOverground == p2.isOverground;
+}
+
+bool operator!=(const Position &p1, const Position &p2)
+{
+	return !(p1 == p2);
+}
+
+WorldMap::WorldMap(float size) : size(size), textureManager(TextureManager::getTextureManagerInstance())
+{
+	overground.resize(height);
+	for (auto &i : overground)
+	{
+		i.resize(width);
+		for (auto &j : i)
+		{
+			j.resize(length);
+		}
+	}
+	underground.resize(height);
+	for (auto &i : underground)
+	{
+		i.resize(width);
+		for (auto &j : i)
+		{
+			j.resize(length);
+		}
+	}
+
+	GLuint blueTexture = textureManager->load("../res/pic/x.png");
+	waterCube = new TextureCube(blueTexture, blueTexture, blueTexture, blueTexture, blueTexture, blueTexture);
+	waterCube->modelMatrix = glm::rotate(waterCube->modelMatrix, glm::radians(static_cast<float >(90.0f)),
+										 glm::vec3(-1, 0, 0));
+	waterCube->modelMatrix = glm::translate(waterCube->modelMatrix, glm::vec3(0, 0.5, 0));
+	waterCube->modelMatrix = glm::scale(waterCube->modelMatrix, glm::vec3(size, size, size));
+
+	GLuint grassTop = textureManager->load("../res/grass_square/grass.jpeg"), grassSide = textureManager->load(
+			"../res/grass_square/side.png"), grassBottom = textureManager->load("../res/grass_square/global.png");
+	grassCube = new TextureCube(grassTop, grassBottom, grassSide, grassSide, grassSide, grassSide);
+	grassCube->modelMatrix = glm::translate(grassCube->modelMatrix, glm::vec3(0, 0.5, 0));
+	grassCube->modelMatrix = glm::rotate(grassCube->modelMatrix, glm::radians(static_cast<float >(90.0f)),
+										 glm::vec3(-1, 0, 0));
+	grassCube->modelMatrix = glm::scale(grassCube->modelMatrix, glm::vec3(size, size, size));
+
+	floor = new Grass(this->modelMatrix, length, width, size);
+	floor->modelMatrix = glm::rotate(floor->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1, 0, 0));
+	floor->modelMatrix = glm::scale(floor->modelMatrix, glm::vec3(size, size, size));
+	build();
+}
+
+void WorldMap::fill(bool isOverground, int x, int y, int z, Component *component)
+{
+	Position position(x, y, z, isOverground);
+	auto &map = isOverground ? overground : underground;
+	remove(isOverground, x, y, z);
+	map[z][x][y] = component;
+	componentMap[component].positions.emplace_back(position);
+	componentMap[component].component = component; // avoid non initialize for component
+}
+
+void WorldMap::remove(bool isOverground, int x, int y, int z)
+{
+	auto &map = isOverground ? overground : underground;
+	Component *component = map[z][x][y];
+	map[z][x][y] = nullptr;
+	if (component == nullptr)
+		return;
+	Position position(x, y, z, isOverground);
+	auto &positionList = componentMap[component].positions;
+	for (auto iter = positionList.begin(); iter != positionList.end(); ++iter)
+	{
+		if (*iter == position)
+		{
+			positionList.erase(iter);
+			if (positionList.empty())
+				componentMap.erase(component);
+
+			break;
+		}
+	}
+}
+
+void WorldMap::render(const Shader &shader, const Camera &camera)
+{
+	for (auto &iter : componentMap)
+	{
+		for (auto &position : iter.second.positions)
+		{
+			auto &component = iter.second.component;
+			auto vec = component->modelMatrix;
+			component->modelMatrix = glm::translate(component->modelMatrix, position.getVector());
+			iter.second.component->render(shader, camera);
+			component->modelMatrix = vec;
+		}
+	}
+	floor->render(shader, camera);
+}
+
+void WorldMap::build()
+{
+	putSimpleModel(overground, 0, 50, 50, 8, grassCube);
+	putSimpleModel(overground, 0, 50, 10, 8, grassCube);
+	putSimpleModel(overground, 0, 10, 50, 8, grassCube);
+	putSimpleModel(overground, 0, 10, 10, 8, grassCube);
+
+	putSimpleModel(underground, 0, 30, 30, 8, waterCube);
+	putSimpleModel(underground, 0, 70, 30, 8, waterCube);
+	putSimpleModel(underground, 0, 30, 70, 8, waterCube);
+	putSimpleModel(underground, 0, 70, 70, 8, waterCube);
+
+}
+
+void WorldMap::putSimpleModel(const WorldMap::MapType &map, int beginz, int centerx, int centery, int size,
+							  Component *target)
+{
+	int z = beginz;
+	bool isOverground = (map == overground);
+	for (; size > 0 && z < height; size -= 2, z += 1)
+	{
+		for (int x = centerx - size / 2; x < centerx + size / 2; x++)
+		{
+			for (int y = centery - size / 2; y < centery + size / 2; y++)
+			{
+				fill(isOverground, x, y, z, target);
+			}
+		}
+	}
+}
+
+WorldMap::~WorldMap()
+{
+	delete grassCube;
+	delete waterCube;
+	delete floor;
+}
