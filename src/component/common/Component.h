@@ -8,8 +8,9 @@ class Material
 {
 public:
 	glm::vec3 ambient, diffuse, specular;
+	float shininess;
 
-	Material() : ambient(glm::vec3(0, 0, 0)), diffuse(glm::vec3(1, 1, 1)), specular(glm::vec3(0, 0, 0))
+	Material() : ambient(glm::vec3(0, 0, 0)), diffuse(glm::vec3(1, 1, 1)), specular(glm::vec3(0, 0, 0)), shininess(8)
 	{}
 };
 class Component

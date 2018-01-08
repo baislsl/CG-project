@@ -1,7 +1,7 @@
 #include "Light.h"
 
 
-PointLight::PointLight() : constant(1), linear(0.022), quadratic(0.0019), position(glm::vec3(0, 0, 0)),
+PointLight::PointLight() : constant(1), linear(0.045), quadratic(0.0075), position(glm::vec3(0, 0, 0)),
 						   ambient(glm::vec3(0, 0, 0)), diffuse(glm::vec3(0, 0, 0)), specular(glm::vec3(0, 0, 0))
 {}
 

@@ -24,6 +24,7 @@ void Cube::render(const Shader &shader, const Camera &camera)
 	shader.setVec3("material.specular", material.specular);
 	shader.setVec3("material.ambient", material.ambient);
 	shader.setBool("usingTexture", usingTexture);
+	shader.setFloat("material.shininess", material.shininess);
 	if (usingTexture) glBindTexture(GL_TEXTURE_2D, texture);
 	glBindVertexArray(VAO);
 	glDrawArrays(GL_TRIANGLES, 0, 36);

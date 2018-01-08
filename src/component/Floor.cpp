@@ -50,6 +50,7 @@ void Floor::FloorSquare::renderToXY(double x, double y, const Shader &shader, co
 	shader.setVec3("material.diffuse", material.diffuse);
 	shader.setVec3("material.specular", material.specular);
 	shader.setVec3("material.ambient", material.ambient);
+	shader.setFloat("material.shininess", material.shininess);
 	shader.setBool("usingTexture", usingTexture);
 	shader.setMat4("model", glm::translate(parent.modelMatrix, glm::vec3(x, y, 0)));
 	model.Draw(shader);

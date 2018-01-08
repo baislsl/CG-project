@@ -142,6 +142,7 @@ void Sphere::render(const Shader &shader, const Camera &camera)
 	shader.setVec3("material.diffuse", material.diffuse);
 	shader.setVec3("material.specular", material.specular);
 	shader.setVec3("material.ambient", material.ambient);
+	shader.setFloat("material.shininess", material.shininess);
 	shader.setBool("usingTexture", usingTexture);
 	if (usingTexture) glBindTexture(GL_TEXTURE_2D, texture);
 	glBindVertexArray(VAO);
