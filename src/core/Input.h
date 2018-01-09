@@ -12,12 +12,22 @@ namespace InputEngine
 	static std::vector<std::function<void(GLFWwindow *, double, double)>> cursorPosListeners;
 //	static std::vector<std::function<void(GLFWwindow *, int, int, int, int)>> keyBoardListeners;
 	static std::vector<std::function<void(GLFWwindow *, int, int)>> resizeListeners;
-	static std::vector<std::function<void(GLFWwindow* , double , double)>> scrollListeners;
+	static std::vector<std::function<void(GLFWwindow *, double, double)>> scrollListeners;
+	static std::vector<std::function<void(GLFWwindow *, int, int, int) >> cursorButtonListeners;
+
 	static void cursorCallBack(GLFWwindow *window, double x, double y)
 	{
 		for (auto &listener : cursorPosListeners)
 		{
 			(listener)(window, x, y);
+		}
+	}
+
+	static void cursorButtonCallBack(GLFWwindow *window, int button, int action, int mods)
+	{
+		for (auto &listener : cursorButtonListeners)
+		{
+			(listener)(window, button, action, mods);
 		}
 	}
 
@@ -47,12 +57,11 @@ namespace InputEngine
 
 	static void install(GLFWwindow *window)
 	{
-//		hide the cursor and limit it inside the window
-		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		glfwSetCursorPosCallback(window, InputEngine::cursorCallBack);
 //		glfwSetKeyCallback(window, InputEngine::keyBoardCallBack);
 		glfwSetScrollCallback(window, InputEngine::scrollCallback);
 		glfwSetFramebufferSizeCallback(window, InputEngine::resizeCallBack);
+		glfwSetMouseButtonCallback(window, InputEngine::cursorButtonCallBack);
 	}
 
 };

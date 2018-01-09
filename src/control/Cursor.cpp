@@ -8,6 +8,7 @@ Cursor::Cursor(GLFWwindow *windows, Camera *camera) : windows(windows), camera(c
 
 void Cursor::cursorPosFun(GLFWwindow *window, double x, double y)
 {
+	 if(!onScroll) return;
 //	camera->angle += (x - prex) / 5.0;
 	if (firstMouse) // 这个bool变量初始时是设定为true的
 	{
@@ -24,6 +25,7 @@ void Cursor::cursorPosFun(GLFWwindow *window, double x, double y)
 
 void Cursor::mouseScroll(GLFWwindow *window, double xoffset, double yoffset)
 {
+	// TODO: seems useless ?
 	if (fov >= 1.0f && fov <= 45.0f)
 		fov += yoffset;
 	if (fov <= 1.0f)
@@ -31,4 +33,14 @@ void Cursor::mouseScroll(GLFWwindow *window, double xoffset, double yoffset)
 	if (fov >= 45.0f)
 		fov = 45.0f;
 	camera->Zoom = float(fov);
+}
+
+void Cursor::mouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
+{
+	std::cout << "srcoll " << onScroll << std::endl;
+	onScroll = false;
+	if(action == GLFW_PRESS) {
+		onScroll = true;
+		firstMouse = true;
+	}
 }

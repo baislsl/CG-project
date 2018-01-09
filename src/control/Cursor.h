@@ -32,6 +32,14 @@ public:
 							std::placeholders::_2,
 							std::placeholders::_3);
 		InputEngine::scrollListeners.push_back(ScrollListener);
+		std::function<void(GLFWwindow*, int, int, int)> mouseButtonListener
+				= std::bind(&Cursor::mouseButtonCallback,
+							this,
+							std::placeholders::_1,
+							std::placeholders::_2,
+							std::placeholders::_3,
+							std::placeholders::_4);
+		InputEngine::cursorButtonListeners.push_back(mouseButtonListener);
 	}
 
 private:
@@ -40,10 +48,14 @@ private:
 	double prex;
 	double prey;
 	bool firstMouse;
+	bool onScroll;
 
 	void cursorPosFun(GLFWwindow *window, double x, double y);
 
 	void mouseScroll(GLFWwindow *window, double xoffset, double yoffset);
+
+	void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+
 };
 
 
