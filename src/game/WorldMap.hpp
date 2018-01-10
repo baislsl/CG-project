@@ -24,6 +24,7 @@
  */
 
 class ComponentInfo;
+
 class Position;
 
 class WorldMap : public Component
@@ -58,6 +59,8 @@ private:
 	// 简单的搭建造一个塔形
 	void putSimpleModel(const MapType &map, int beginz, int centerx, int centery, int size, Component *target);
 
+	glm::mat4 fitMapMatrix(const glm::mat4 &matrix);
+
 };
 
 struct Position
@@ -70,10 +73,7 @@ struct Position
 	Position(int x, int y, int z, bool isOverground) : x(x), y(y), z(z), isOverground(isOverground)
 	{};
 
-	glm::vec3 getVector()
-	{
-		return glm::vec3(x, y, isOverground ? z : -z - 1);
-	}
+	glm::vec3 getVector();
 };
 
 struct ComponentInfo

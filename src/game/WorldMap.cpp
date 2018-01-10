@@ -33,33 +33,17 @@ WorldMap::WorldMap(float size) : size(size), textureManager(TextureManager::getT
 
 	GLuint blueTexture = textureManager->load("../res/pic/x.png");
 	waterCube = new TextureCube(blueTexture, blueTexture, blueTexture, blueTexture, blueTexture, blueTexture);
-	waterCube->modelMatrix = glm::rotate(waterCube->modelMatrix, glm::radians(static_cast<float >(90.0f)),
-										 glm::vec3(-1, 0, 0));
-	waterCube->modelMatrix = glm::translate(waterCube->modelMatrix, glm::vec3(0, 0.5, 0));
-	waterCube->modelMatrix = glm::scale(waterCube->modelMatrix, glm::vec3(size, size, size));
+	waterCube->modelMatrix = fitMapMatrix(waterCube->modelMatrix);
 
 	GLuint grassTop = textureManager->load("../res/grass_square/grass.jpeg"), grassSide = textureManager->load(
 			"../res/grass_square/side.png"), grassBottom = textureManager->load("../res/grass_square/global.png");
 	grassCube = new TextureCube(grassTop, grassBottom, grassSide, grassSide, grassSide, grassSide);
-	grassCube->modelMatrix = glm::translate(grassCube->modelMatrix, glm::vec3(0, 0.5, 0));
-	grassCube->modelMatrix = glm::rotate(grassCube->modelMatrix, glm::radians(static_cast<float >(90.0f)),
-										 glm::vec3(-1, 0, 0));
-	grassCube->modelMatrix = glm::scale(grassCube->modelMatrix, glm::vec3(size, size, size));
+	grassCube->modelMatrix = fitMapMatrix(grassCube->modelMatrix);
 
-
-
-    GLuint skyTop = textureManager->load("../res/skybox/siege_top.jpg"),
-            skyLeft = textureManager->load("../res/skybox/siege_left.jpg"),
-            skyRight = textureManager->load("../res/skybox/siege_right.jpg"),
-            skyFront = textureManager->load("../res/skybox/siege_front.jpg"),
-            skyBack = textureManager->load("../res/skybox/siege_back.jpg");
     skyBox = new Skybox();
-    skyBox->modelMatrix = glm::translate(grassCube->modelMatrix, glm::vec3(0, 50*size, 0));
-    skyBox->modelMatrix = glm::rotate(grassCube->modelMatrix, glm::radians(static_cast<float >(90.0f)),
-                                         glm::vec3(-1, 0, 0));
-    skyBox->modelMatrix = glm::scale(grassCube->modelMatrix, glm::vec3(100*size, 100*size, 100*size));
-
-
+	skyBox->modelMatrix = fitMapMatrix(skyBox->modelMatrix);
+    skyBox->modelMatrix = glm::translate(grassCube->modelMatrix, glm::vec3(0, 50, 0));
+    skyBox->modelMatrix = glm::scale(grassCube->modelMatrix, glm::vec3(100, 100, 100));
 
 	floor = new Grass(this->modelMatrix, length, width, size);
 	floor->modelMatrix = glm::rotate(floor->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1, 0, 0));
@@ -113,12 +97,11 @@ void WorldMap::render(const Shader &shader, const Camera &camera)
 		}
 	}
 	floor->render(shader, camera);
+	skyBox->render(shader,camera);
 }
 
 void WorldMap::build()
 {
-    fill(1, 0, 0, 0, skyBox);
-
 	putSimpleModel(overground, 0, 50, 50, 8, grassCube);
 	putSimpleModel(overground, 0, 50, 10, 8, grassCube);
 	putSimpleModel(overground, 0, 10, 50, 8, grassCube);
@@ -153,4 +136,17 @@ WorldMap::~WorldMap()
 	delete grassCube;
 	delete waterCube;
 	delete floor;
+	delete skyBox;
+}
+
+glm::mat4 WorldMap::fitMapMatrix(const glm::mat4 &matrix)
+{
+	auto m = glm::scale(matrix, glm::vec3(size, size, size));
+	m = glm::translate(m, glm::vec3(0, 0.5, 0));
+	return m;
+}
+
+glm::vec3 Position::getVector()
+{
+	return glm::vec3(x, isOverground ? z : -z - 1, y);
 }
