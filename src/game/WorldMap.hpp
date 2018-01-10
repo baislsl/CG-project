@@ -6,6 +6,7 @@
 #include <map>
 #include <TextureManager.h>
 #include <GrassCube.h>
+#include <Skybox.h>
 #include <Grass.h>
 
 /**
@@ -49,7 +50,7 @@ private:
 	MapType underground;
 	std::map<Component *, ComponentInfo> componentMap;
 	TextureManager *textureManager;
-	TextureCube *grassCube, *waterCube;
+	TextureCube *grassCube, *waterCube, *skyBox;
 	Grass* floor;
 
 	void build();

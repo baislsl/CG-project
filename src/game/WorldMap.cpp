@@ -46,6 +46,21 @@ WorldMap::WorldMap(float size) : size(size), textureManager(TextureManager::getT
 										 glm::vec3(-1, 0, 0));
 	grassCube->modelMatrix = glm::scale(grassCube->modelMatrix, glm::vec3(size, size, size));
 
+
+
+    GLuint skyTop = textureManager->load("../res/skybox/siege_top.jpg"),
+            skyLeft = textureManager->load("../res/skybox/siege_left.jpg"),
+            skyRight = textureManager->load("../res/skybox/siege_right.jpg"),
+            skyFront = textureManager->load("../res/skybox/siege_front.jpg"),
+            skyBack = textureManager->load("../res/skybox/siege_back.jpg");
+    skyBox = new Skybox();
+    skyBox->modelMatrix = glm::translate(grassCube->modelMatrix, glm::vec3(0, 50*size, 0));
+    skyBox->modelMatrix = glm::rotate(grassCube->modelMatrix, glm::radians(static_cast<float >(90.0f)),
+                                         glm::vec3(-1, 0, 0));
+    skyBox->modelMatrix = glm::scale(grassCube->modelMatrix, glm::vec3(100*size, 100*size, 100*size));
+
+
+
 	floor = new Grass(this->modelMatrix, length, width, size);
 	floor->modelMatrix = glm::rotate(floor->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1, 0, 0));
 	floor->modelMatrix = glm::scale(floor->modelMatrix, glm::vec3(size, size, size));
@@ -102,6 +117,8 @@ void WorldMap::render(const Shader &shader, const Camera &camera)
 
 void WorldMap::build()
 {
+    fill(1, 0, 0, 0, skyBox);
+
 	putSimpleModel(overground, 0, 50, 50, 8, grassCube);
 	putSimpleModel(overground, 0, 50, 10, 8, grassCube);
 	putSimpleModel(overground, 0, 10, 50, 8, grassCube);
