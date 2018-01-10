@@ -11,7 +11,7 @@
 class GrassCube : public TextureCube {
 public:
 	explicit GrassCube(GLuint top = TextureManager::getTextureManagerInstance()->load("../res/grass_square/grass.jpeg"),
-			  GLuint side = TextureManager::getTextureManagerInstance()->load("grass_square/side.png"),
+			  GLuint side = TextureManager::getTextureManagerInstance()->load("../res/grass_square/side.png"),
 			  GLuint bottom = TextureManager::getTextureManagerInstance()->load("../res/grass_square/global.png")) :
 	TextureCube(top, bottom, side, side, side, side){}
 private:
