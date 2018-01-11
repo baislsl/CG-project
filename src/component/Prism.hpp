@@ -4,7 +4,7 @@
 
 #include <common/BaseShape.h>
 
-// TODO: support top and buttom texture
+// TODO: support texture for top and bottom
 class Prism : public BaseShape
 {
 public:

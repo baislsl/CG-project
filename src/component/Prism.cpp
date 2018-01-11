@@ -8,7 +8,7 @@ Prism::Prism(unsigned dimension, GLuint sideTexture) : BaseShape(true), dimensio
 Prism::Prism(unsigned dimension) : BaseShape(false), dimension(dimension)
 { init(); }
 
-Prism::Prism(unsigned dimension, const std::string &path) : BaseShape(false), dimension(dimension),
+Prism::Prism(unsigned dimension, const std::string &path) : BaseShape(true), dimension(dimension),
 		sideTexture(TextureManager::getTextureManagerInstance()->load(path))
 { init(); }
 
@@ -98,6 +98,7 @@ void Prism::render(const Shader &shader, const Camera &camera)
 	shader.setVec3("material.ambient", material.ambient);
 	shader.setBool("usingTexture", usingTexture);
 	shader.setFloat("material.shininess", material.shininess);
+	if (usingTexture) glBindTexture(GL_TEXTURE_2D, sideTexture);
 	glBindVertexArray(VAO);
 	glDrawArrays(GL_TRIANGLES, 0, 4 * 3 * dimension);
 }
