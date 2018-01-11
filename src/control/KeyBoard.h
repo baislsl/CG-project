@@ -31,6 +31,9 @@ private:
 	GLFWwindow *window;
 	Camera *camera;
 	bool isPress = false;
+	Camera globalViewCamera;	// todo , initialize of this camera
+	Camera lastCamera;
+	bool inGlobalView = false;
 
 	void switchView()
 	{

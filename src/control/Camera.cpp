@@ -1,14 +1,12 @@
 #include "Camera.h"
 
-Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)),
-																		   MovementSpeed(SPEED),
-																		   MouseSensitivity(SENSITIVTY), Zoom(ZOOM)
+Camera::Camera(glm::vec3 position, glm::vec3 up, glm::vec3 front, float zoom, float yaw, float pitch)
+		: Position(position), WorldUp(up), Front(front), Yaw(yaw), Pitch(pitch),
+		MovementSpeed(SPEED),
+		MouseSensitivity(SENSITIVTY),
+		Zoom(zoom)
 {
 	std::cout << "Constructing Camera." << std::endl;
-	Position = position;
-	WorldUp = up;
-	Yaw = yaw;
-	Pitch = pitch;
 	updateCameraVectors();
 	std::cout << "Camera constructed." << std::endl;
 }
@@ -75,6 +73,7 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float delta)
 
 void Camera::updateCameraVectors()
 {
+	// TODO: ??? what, 所以之前初始化的front没意义？ 
 	// Calculate the new Front vector
 	glm::vec3 front;
 	front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
