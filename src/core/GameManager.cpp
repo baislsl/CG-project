@@ -61,7 +61,7 @@ void GameManager::start()
 //	grassCube.modelMatrix = glm::translate(grassCube.modelMatrix, glm::vec3(0, 0.5, 0));
 //	components.push_back(&grassCube);
 
-	Prism *prism = new Prism(4, "../res/grass_square/grass.jpeg");
+	Prism *prism = new Prism(6, "../res/grass_square/grass.jpeg");
 	components.push_back(prism);
 	tob->modelMatrix = glm::scale(tob->modelMatrix,
 								  glm::vec3(0.2f, 0.2f, 0.2f));    // it's a bit too big for our scene, so scale it down
