@@ -21,6 +21,12 @@
  *
  *  注意地底和地上的连接通道, 该通道为underground[0][x][y]
  *	(z, x, y)
+ *
+ *	z [0, height)
+ *	x [0, width)
+ *	y [0, height)
+ *
+ *	中心点(width/2, height/2), 为了避免不必要的麻烦，请保证width和height为偶数
  */
 
 class ComponentInfo;
@@ -35,11 +41,11 @@ public:
 
 	explicit WorldMap(float size = 1.0);
 
-	virtual void fill(bool isOverground, int x, int y, int z, Component *component);
+	void fill(bool isOverground, int x, int y, int z, Component *component);
 
-	virtual void remove(bool isOverground, int x, int y, int z);
+	void remove(bool isOverground, int x, int y, int z);
 
-	virtual ~WorldMap();
+	~WorldMap() override ;
 
 	void render(const Shader &shader, const Camera &camera) override;
 

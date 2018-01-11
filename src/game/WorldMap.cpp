@@ -47,7 +47,6 @@ WorldMap::WorldMap(float size) : size(size), textureManager(TextureManager::getT
 
 	floor = new Grass(this->modelMatrix, length, width, size);
 	floor->modelMatrix = glm::rotate(floor->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1, 0, 0));
-	floor->modelMatrix = glm::scale(floor->modelMatrix, glm::vec3(size, size, size));
 	build();
 }
 
@@ -102,15 +101,14 @@ void WorldMap::render(const Shader &shader, const Camera &camera)
 
 void WorldMap::build()
 {
-	putSimpleModel(overground, 0, 50, 50, 8, grassCube);
-	putSimpleModel(overground, 0, 50, 10, 8, grassCube);
-	putSimpleModel(overground, 0, 10, 50, 8, grassCube);
-	putSimpleModel(overground, 0, 10, 10, 8, grassCube);
+	putSimpleModel(overground, 0, 50, 10, 16, grassCube);
+	putSimpleModel(overground, 0, 10, 50, 16, grassCube);
+	putSimpleModel(overground, 0, 10, 10, 16, grassCube);
 
-	putSimpleModel(underground, 0, 30, 30, 8, waterCube);
-	putSimpleModel(underground, 0, 70, 30, 8, waterCube);
-	putSimpleModel(underground, 0, 30, 70, 8, waterCube);
-	putSimpleModel(underground, 0, 70, 70, 8, waterCube);
+	putSimpleModel(underground, 0, 30, 30, 16, waterCube);
+	putSimpleModel(underground, 0, 70, 30, 16, waterCube);
+	putSimpleModel(underground, 0, 30, 70, 16, waterCube);
+	putSimpleModel(underground, 0, 70, 70, 16, waterCube);
 
 }
 
@@ -148,5 +146,5 @@ glm::mat4 WorldMap::fitMapMatrix(const glm::mat4 &matrix)
 
 glm::vec3 Position::getVector()
 {
-	return glm::vec3(x, isOverground ? z : -z - 1, y);
+	return glm::vec3(x - static_cast<int>(WorldMap::width/2), isOverground ? z : -z - 1, y - static_cast<int>(WorldMap::length / 2));
 }
