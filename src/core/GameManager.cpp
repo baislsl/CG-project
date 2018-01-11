@@ -9,7 +9,7 @@ GameManager::GameManager(int width, int height, GLFWwindow *window)
 		  window(window),
 		  camera(),
 		  cursor(window, &camera),
-//		  keyBoard(window, &camera),
+		  keyBoard(window, &camera),
 		  resizeManager(window),
 		  shader("../res/temp.vert", "../res/temp.frag")
 {
@@ -18,7 +18,7 @@ GameManager::GameManager(int width, int height, GLFWwindow *window)
 void GameManager::start()
 {
 	cursor.install();
-//	keyBoard.install();
+	keyBoard.install();
 	resizeManager.install();
 	InputEngine::install(window);
 
@@ -70,9 +70,7 @@ void GameManager::start()
 		deltaTime = (currentTime - lastTime)*5;
 		lastTime = currentTime;
 		tob->modelMatrix = glm::rotate(tob->modelMatrix, glm::radians(deltaTime * 10), glm::vec3(0, 1, 0));
-//		grassCube.modelMatrix = glm::rotate(grassCube.modelMatrix, glm::radians(deltaTime * 10), glm::vec3(0, 1, 0));
-//		cube->modelMatrix = glm::rotate(cube->modelMatrix, glm::radians(-deltaTime * 10), glm::vec3(0, 1, 0));
-		processInput(window);
+		keyBoard.processInput(deltaTime);
 		setLights(shader);
 		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -112,23 +110,4 @@ void GameManager::renderAll()
 {
 	for (auto &item : components)
 		item->render(shader, camera);
-}
-
-void GameManager::processInput(GLFWwindow *window)
-{
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, true);
-
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		camera.ProcessKeyboard(FORWARD, deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		camera.ProcessKeyboard(BACKWARD, deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		camera.ProcessKeyboard(LEFT, deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		camera.ProcessKeyboard(RIGHT, deltaTime);
-	if(glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
-		camera.ProcessKeyboard(UP, deltaTime);
-	if(glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
-		camera.ProcessKeyboard(DOWN, deltaTime);
 }

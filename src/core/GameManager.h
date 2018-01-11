@@ -13,6 +13,7 @@
 #include <Cube.h>
 #include <Sphere.h>
 #include <Plane.h>
+#include <KeyBoard.h>
 
 class GameManager
 {
@@ -28,6 +29,7 @@ private:
 
 	Camera camera;
 	Cursor cursor;
+	KeyBoard keyBoard;
 	ResizeManager resizeManager;
 
 	Shader shader;
@@ -39,9 +41,6 @@ private:
 	void setLights(const Shader&);
 
 	void renderAll();
-
-	void processInput(GLFWwindow *window);
-
 
 };
 

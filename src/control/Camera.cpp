@@ -69,6 +69,8 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float delta)
 		Position += Up*velocity;
 	if(direction == DOWN)
 		Position -= Up*velocity;
+
+	std::cout << "position=" << Position.x << ":" << Position.y << ":" << Position.z << std::endl;
 }
 
 void Camera::updateCameraVectors()

@@ -78,7 +78,9 @@ set(SOURCE_FILES ${GLAD} ${LINMATH}
         src/game/WorldMap.cpp
         src/game/WorldMap.hpp
         src/component/Skybox.h
-        src/component/Skybox.cpp)
+        src/component/Skybox.cpp
+        src/control/KeyBoard.cpp
+        src/control/KeyBoard.h)
 include_directories(src/control)
 include_directories(src/core)
 include_directories(src/component)
