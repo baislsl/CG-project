@@ -1,6 +1,7 @@
 #include <Floor.h>
 #include <GrassFloor.h>
 #include <GrassCube.h>
+#include <Prism.hpp>
 #include "GameManager.h"
 #include "../game/WorldMap.hpp"
 
@@ -56,9 +57,12 @@ void GameManager::start()
 //	components.push_back(&plane);
 	WorldMap worldMap;
 	components.push_back(&worldMap);
-	GrassCube grassCube;
-	grassCube.modelMatrix = glm::translate(grassCube.modelMatrix, glm::vec3(0, 0.5, 0));
-	components.push_back(&grassCube);
+//	GrassCube grassCube;
+//	grassCube.modelMatrix = glm::translate(grassCube.modelMatrix, glm::vec3(0, 0.5, 0));
+//	components.push_back(&grassCube);
+
+	Prism *prism = new Prism(4, "../res/grass_square/grass.jpeg");
+	components.push_back(prism);
 	tob->modelMatrix = glm::scale(tob->modelMatrix,
 								  glm::vec3(0.2f, 0.2f, 0.2f));    // it's a bit too big for our scene, so scale it down
 
@@ -70,6 +74,7 @@ void GameManager::start()
 		deltaTime = (currentTime - lastTime)*5;
 		lastTime = currentTime;
 		tob->modelMatrix = glm::rotate(tob->modelMatrix, glm::radians(deltaTime * 10), glm::vec3(0, 1, 0));
+		prism->modelMatrix = glm::rotate(prism->modelMatrix, glm::radians(deltaTime * 10), glm::vec3(0, 1, 0));
 		keyBoard.processInput(deltaTime);
 		setLights(shader);
 		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);

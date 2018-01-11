@@ -1,3 +1,4 @@
+#include <Prism.hpp>
 #include "WorldMap.hpp"
 
 bool operator==(const Position &p1, const Position &p2)
