@@ -64,8 +64,8 @@ set(SOURCE_FILES ${GLAD} ${LINMATH}
         src/component/Cylinder.h
         src/component/Cylinder.cpp
         src/component/Plane.h
-        src/component/Grass.cpp
-        src/component/Grass.h
+        src/component/GrassFloor.cpp
+        src/component/GrassFloor.h
         src/component/Plane.cpp
         src/component/Floor.cpp
         src/component/Floor.h

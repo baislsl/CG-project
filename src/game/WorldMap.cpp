@@ -45,7 +45,7 @@ WorldMap::WorldMap(float size) : size(size), textureManager(TextureManager::getT
     skyBox->modelMatrix = glm::translate(grassCube->modelMatrix, glm::vec3(0, 50, 0));
     skyBox->modelMatrix = glm::scale(grassCube->modelMatrix, glm::vec3(100, 100, 100));
 
-	floor = new Grass(this->modelMatrix, length, width, size);
+	floor = new GrassFloor(this->modelMatrix, length, width, size);
 	floor->modelMatrix = glm::rotate(floor->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1, 0, 0));
 	build();
 }

@@ -1,5 +1,5 @@
 #include <Floor.h>
-#include <Grass.h>
+#include <GrassFloor.h>
 #include <GrassCube.h>
 #include "GameManager.h"
 #include "../game/WorldMap.hpp"
@@ -50,7 +50,7 @@ void GameManager::start()
 //	components.push_back(cube);
 
 //	Floor floor(glm::rotate(tob->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1,0,0)), 0);
-//	Grass grass(glm::rotate(tob->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1, 0, 0)));
+//	GrassFloor grass(glm::rotate(tob->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1, 0, 0)));
 //	components.push_back(&grass);
 //	Plane plane("../res/pic/x.png");
 //	components.push_back(&plane);

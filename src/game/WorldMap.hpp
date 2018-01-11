@@ -7,7 +7,7 @@
 #include <TextureManager.h>
 #include <GrassCube.h>
 #include <Skybox.h>
-#include <Grass.h>
+#include <GrassFloor.h>
 
 /**
  *   z, x, y
@@ -45,6 +45,8 @@ public:
 
 	void remove(bool isOverground, int x, int y, int z);
 
+	inline bool hasLake(int x, int y);
+
 	~WorldMap() override ;
 
 	void render(const Shader &shader, const Camera &camera) override;
@@ -58,7 +60,6 @@ private:
 	std::map<Component *, ComponentInfo> componentMap;
 	TextureManager *textureManager;
 	TextureCube *grassCube, *waterCube, *skyBox;
-	Grass* floor;
 
 	void build();
 
