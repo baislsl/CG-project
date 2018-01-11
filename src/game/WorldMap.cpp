@@ -40,12 +40,12 @@ WorldMap::WorldMap(float size) : size(size), textureManager(TextureManager::getT
 	grassCube = new TextureCube(grassTop, grassBottom, grassSide, grassSide, grassSide, grassSide);
 	grassCube->modelMatrix = fitMapMatrix(grassCube->modelMatrix);
 
-    skyBox = new Skybox();
+	skyBox = new Skybox();
 	skyBox->modelMatrix = fitMapMatrix(skyBox->modelMatrix);
-    skyBox->modelMatrix = glm::translate(grassCube->modelMatrix, glm::vec3(0, 50, 0));
-    skyBox->modelMatrix = glm::scale(grassCube->modelMatrix, glm::vec3(100, 100, 100));
+	skyBox->modelMatrix = glm::translate(grassCube->modelMatrix, glm::vec3(0, 50, 0));
+	skyBox->modelMatrix = glm::scale(grassCube->modelMatrix, glm::vec3(100, 100, 100));
 
-	floor = new GrassFloor(this->modelMatrix, length, width, size);
+	floor = new GrassFloor(this->modelMatrix, *this, length, width, size);
 	floor->modelMatrix = glm::rotate(floor->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1, 0, 0));
 	build();
 }
@@ -96,20 +96,19 @@ void WorldMap::render(const Shader &shader, const Camera &camera)
 		}
 	}
 	floor->render(shader, camera);
-	skyBox->render(shader,camera);
+	skyBox->render(shader, camera);
 }
 
 void WorldMap::build()
 {
-	putSimpleModel(overground, 0, 50, 10, 16, grassCube);
-	putSimpleModel(overground, 0, 10, 50, 16, grassCube);
-	putSimpleModel(overground, 0, 10, 10, 16, grassCube);
+	putSimpleModel(overground, 0, 50, 10, 18, grassCube);
+	putSimpleModel(overground, 0, 10, 50, 18, grassCube);
+	putSimpleModel(overground, 0, 10, 10, 18, grassCube);
 
 	putSimpleModel(underground, 0, 30, 30, 16, waterCube);
 	putSimpleModel(underground, 0, 70, 30, 16, waterCube);
 	putSimpleModel(underground, 0, 30, 70, 16, waterCube);
 	putSimpleModel(underground, 0, 70, 70, 16, waterCube);
-
 }
 
 void WorldMap::putSimpleModel(const WorldMap::MapType &map, int beginz, int centerx, int centery, int size,
@@ -140,11 +139,17 @@ WorldMap::~WorldMap()
 glm::mat4 WorldMap::fitMapMatrix(const glm::mat4 &matrix)
 {
 	auto m = glm::scale(matrix, glm::vec3(size, size, size));
-	m = glm::translate(m, glm::vec3(0, 0.5, 0));
+	m = glm::translate(m, glm::vec3(0, 0.5, 1));
 	return m;
+}
+
+bool WorldMap::hasLake(int x, int y) const
+{
+	return underground[0][x][y] != nullptr;
 }
 
 glm::vec3 Position::getVector()
 {
-	return glm::vec3(x - static_cast<int>(WorldMap::width/2), isOverground ? z : -z - 1, y - static_cast<int>(WorldMap::length / 2));
+	return glm::vec3(x - static_cast<int>(WorldMap::width / 2), isOverground ? z : -z - 1,
+					 y - static_cast<int>(WorldMap::length / 2));
 }

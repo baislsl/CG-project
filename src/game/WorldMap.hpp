@@ -24,9 +24,9 @@
  *
  *	z [0, height)
  *	x [0, width)
- *	y [0, height)
+ *	y [0, length)
  *
- *	中心点(width/2, height/2), 为了避免不必要的麻烦，请保证width和height为偶数
+ *	中心点(width/2, length/2), 为了避免不必要的麻烦，请保证width和height为偶数
  */
 
 class ComponentInfo;
@@ -45,7 +45,7 @@ public:
 
 	void remove(bool isOverground, int x, int y, int z);
 
-	inline bool hasLake(int x, int y);
+	bool hasLake(int x, int y) const;
 
 	~WorldMap() override ;
 
@@ -60,6 +60,7 @@ private:
 	std::map<Component *, ComponentInfo> componentMap;
 	TextureManager *textureManager;
 	TextureCube *grassCube, *waterCube, *skyBox;
+	GrassFloor* floor;
 
 	void build();
 

@@ -76,7 +76,9 @@ set(SOURCE_FILES ${GLAD} ${LINMATH}
         src/component/TextureCube.cpp
         src/component/TextureCube.h
         src/game/WorldMap.cpp
-        src/game/WorldMap.hpp src/component/Skybox.h src/component/Skybox.cpp)
+        src/game/WorldMap.hpp
+        src/component/Skybox.h
+        src/component/Skybox.cpp)
 include_directories(src/control)
 include_directories(src/core)
 include_directories(src/component)
@@ -84,6 +86,7 @@ include_directories(src/tool)
 include_directories(lib/glad)
 include_directories(lib/KHR)
 include_directories(src/component/common)
+include_directories(src/game)
 add_executable(demo ${SOURCE_FILES})
 if (APPLE)
     target_link_libraries(demo "/usr/local/lib/libassimp.dylib")
