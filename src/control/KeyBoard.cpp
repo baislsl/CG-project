@@ -1,6 +1,8 @@
 #include <functional>
 #include <map>
+#include <glad/glad.h>
 #include "KeyBoard.h"
+#include <FreeImagePlus.h>
 
 using eventFunc = std::function<void(GLfloat)>;
 
@@ -45,4 +47,33 @@ void KeyBoard::keyCallBack(GLFWwindow *window, int key, int scancode, int action
 		inGlobalView = false;
 	}
 
+	if (action == GLFW_PRESS && key == GLFW_KEY_M)
+		saveScreenShot();
+
+}
+
+
+void KeyBoard::saveScreenShot()
+{
+	int width, height;
+	glfwGetWindowSize(window, &width, &height);
+
+	int n = 3 * width * height;
+	GLubyte *pixels = new GLubyte[n];
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+
+	// Convert to FreeImage format & save to file
+	FIBITMAP *image = FreeImage_ConvertFromRawBits(pixels, width, height, 3 * width, 24, 0xFF0000, 0x00FF00, 0x0000FF,
+												   false);
+	std::hash<double> hash;
+	double time = glfwGetTime();
+	std::string path = std::to_string(hash(time)) + ".bmp";
+	FreeImage_Save(FIF_BMP, image, path.c_str(), 0);
+	std::cout << "save screenshot in " << path << std::endl;
+
+	// Free resources
+	FreeImage_Unload(image);
+	delete[] pixels;
 }

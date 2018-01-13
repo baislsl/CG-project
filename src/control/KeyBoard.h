@@ -35,10 +35,7 @@ private:
 	Camera lastCamera;
 	bool inGlobalView = false;
 
-	void switchView()
-	{
-
-	}
+	void saveScreenShot();
 
 	void keyCallBack(GLFWwindow *window, int key, int scancode, int action, int mods);
 
