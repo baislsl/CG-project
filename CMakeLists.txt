@@ -27,7 +27,7 @@ ELSEIF (UNIX)
     link_libraries(${ASSIMP_LIBRARIES} ${OPENGL_LIBRARIES} freeimage glfw )
 ELSEIF (MINGW)
     message("running on MinGW environment")
-    link_libraries(${OPENGL_LIBRARIES} glfw3 assimp)
+    link_libraries(${OPENGL_LIBRARIES} glfw3 assimp freeimage)
 endif ()
 
 set(GLAD lib/glad/glad.h lib/glad/glad.c)
