@@ -1,5 +1,6 @@
 #include "Floor.h"
 #include <random>
+
 Floor::Floor(const glm::mat4 &up, double z, int length, int width, float size) : Component(up), z(z), length(length),
 		width(width), size(size),
 		squares({FloorSquare(*this, "../res/3ds/floor/grass_1msq_normal_01.3ds", this->modelMatrix, size),
@@ -12,15 +13,32 @@ Floor::Floor(const glm::mat4 &up, double z, int length, int width, float size) :
 	this->modelMatrix = glm::scale(this->modelMatrix, glm::vec3(size, size, size));
 	std::default_random_engine e;
 	std::uniform_int_distribution<unsigned> u(0, squares.size() - 1);
+	std::uniform_int_distribution<unsigned> u2(0, width);
+	std::uniform_int_distribution<unsigned> u3(0, length);
+	squareTypes.resize(width);
+	for(auto& i : squareTypes) i.resize(length);
+	static int mask[][2] = {
+			{0,  1}, {0,  -1}, {0,  0},
+			{1,  1}, {1,  -1}, {1,  0},
+			{-1, 1}, {-1, -1}, {-1, 0},
+	};
 	for (int i = 0; i < width; i++)
 	{
-		std::vector<unsigned> types(static_cast<unsigned>(length));
 		for (int j = 0; j < length; j++)
 		{
-			types[j] = u(e);
+			squareTypes[i][j] = squares.size();
 		}
-		squareTypes.emplace_back(types);
 	}
+	int count = width*length / 100;
+	while (count --){
+		int i = u2(e), j = u3(e), type = u(e);
+		for (int k = 0; k < 9; k++)
+		{
+			if (i + mask[k][0] >= 0 && i + mask[k][0] < width && j + mask[k][0] >= 0 && j + mask[k][0] < length)
+				squareTypes[i + mask[k][0]][j + mask[k][1]] = static_cast<unsigned >(type);
+		}
+	}
+
 }
 
 void Floor::render(const Shader &shader, const Camera &camera)
@@ -30,14 +48,15 @@ void Floor::render(const Shader &shader, const Camera &camera)
 		for (int j = 0; j < length; j++)
 		{
 			double x = i, y = j;
+			if (squareTypes[i][j] == squares.size()) continue;
 			squares.at(squareTypes[i][j]).renderToXY(x, y, shader, camera);
 		}
 	}
 
 }
 
-Floor::FloorSquare::FloorSquare(const Floor &parent, const std::string &filename, const glm::mat4 &up, double size)
-		: Object(filename), parent(parent)
+Floor::FloorSquare::FloorSquare(const Floor &parent, const std::string &filename, const glm::mat4 &up,
+								double size) : Object(filename), parent(parent)
 {
 	material.diffuse = glm::vec3(0.5, 1, 0.5);
 	material.specular = glm::vec3(0.5, 1, 0.5);
@@ -52,6 +71,7 @@ void Floor::FloorSquare::renderToXY(double x, double y, const Shader &shader, co
 	shader.setVec3("material.ambient", material.ambient);
 	shader.setFloat("material.shininess", material.shininess);
 	shader.setBool("usingTexture", usingTexture);
-	shader.setMat4("model", glm::translate(parent.modelMatrix, glm::vec3(x, y, 0)));
+	shader.setMat4("model",
+				   glm::translate(parent.modelMatrix, glm::vec3(x - parent.width / 2, y - parent.length / 2, 0)));
 	model.Draw(shader);
 }

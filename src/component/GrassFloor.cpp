@@ -4,7 +4,7 @@
 const static std::string grassTexturePath = "../res/pic/grass.jpeg";
 
 GrassFloor::GrassFloor(const glm::mat4 &up, const WorldMap& map, int length, int width, float size) : Component(up), length(length), width(width),
-		size(size), plane(grassTexturePath), map(map)
+		size(size), plane(grassTexturePath), map(map), floor(up, 0, length, width, size)
 {
 	plane.material.diffuse = glm::vec3(0.5, 0.1, 0.8);
 	plane.material.specular = glm::vec3(0.5, 0.1, 0.8);
@@ -28,4 +28,6 @@ void GrassFloor::render(const Shader &shader, const Camera &camera)
 			plane.render(shader, camera);
 		}
 	}
+	floor.modelMatrix = this->modelMatrix;
+	floor.render(shader, camera);
 }

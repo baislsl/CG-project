@@ -4,6 +4,8 @@
 
 #include "Component.h"
 #include "Plane.h"
+#include "Floor.h"
+
 class WorldMap;
 
 class GrassFloor : public Component
@@ -19,6 +21,7 @@ private:
 	glm::mat4 up;
 	Plane plane;
 	const WorldMap& map;
+	Floor floor;
 };
 
 
