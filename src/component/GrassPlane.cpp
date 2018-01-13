@@ -1,14 +1,14 @@
-#include "Floor.h"
+#include "GrassPlane.h"
 #include "WorldMap.hpp"
 #include <random>
 
-Floor::Floor(const glm::mat4 &up, const WorldMap& map, double z, int length, int width, float size) : Component(up), map(map), z(z), length(length),
+GrassPlane::GrassPlane(const glm::mat4 &up, const WorldMap& map, double z, int length, int width, float size) : Component(up), map(map), z(z), length(length),
 		width(width), size(size),
-		squares({FloorSquare(*this, "../res/3ds/floor/grass_1msq_normal_01.3ds", this->modelMatrix, size),
-				 FloorSquare(*this, "../res/3ds/floor/grass_1msq_normal_02.3ds", this->modelMatrix, size),
-				 FloorSquare(*this, "../res/3ds/floor/grass_1msq_normal_03.3ds", this->modelMatrix, size),
-				 FloorSquare(*this, "../res/3ds/floor/grass_1msq_normal_04.3ds", this->modelMatrix, size),
-				 FloorSquare(*this, "../res/3ds/floor/grass_1msq_normal_05.3ds", this->modelMatrix, size)})
+		squares({GrassSquare(*this, "../res/3ds/floor/grass_1msq_normal_01.3ds", this->modelMatrix, size),
+				 GrassSquare(*this, "../res/3ds/floor/grass_1msq_normal_02.3ds", this->modelMatrix, size),
+				 GrassSquare(*this, "../res/3ds/floor/grass_1msq_normal_03.3ds", this->modelMatrix, size),
+				 GrassSquare(*this, "../res/3ds/floor/grass_1msq_normal_04.3ds", this->modelMatrix, size),
+				 GrassSquare(*this, "../res/3ds/floor/grass_1msq_normal_05.3ds", this->modelMatrix, size)})
 {
 	this->modelMatrix = glm::translate(this->modelMatrix, glm::vec3(0, 0, z));
 	this->modelMatrix = glm::scale(this->modelMatrix, glm::vec3(size, size, size));
@@ -42,7 +42,7 @@ Floor::Floor(const glm::mat4 &up, const WorldMap& map, double z, int length, int
 
 }
 
-void Floor::render(const Shader &shader, const Camera &camera)
+void GrassPlane::render(const Shader &shader, const Camera &camera)
 {
 	for (int i = 0; i < width; i++)
 	{
@@ -56,7 +56,7 @@ void Floor::render(const Shader &shader, const Camera &camera)
 
 }
 
-Floor::FloorSquare::FloorSquare(const Floor &parent, const std::string &filename, const glm::mat4 &up,
+GrassPlane::GrassSquare::GrassSquare(const GrassPlane &parent, const std::string &filename, const glm::mat4 &up,
 								double size) : Object(filename), parent(parent)
 {
 	material.diffuse = glm::vec3(0.5, 1, 0.5);
@@ -64,7 +64,7 @@ Floor::FloorSquare::FloorSquare(const Floor &parent, const std::string &filename
 	material.ambient = glm::vec3(0.5, 1, 0.5);
 }
 
-void Floor::FloorSquare::renderToXY(double x, double y, const Shader &shader, const Camera &camera)
+void GrassPlane::GrassSquare::renderToXY(double x, double y, const Shader &shader, const Camera &camera)
 {
 	shader.setVec3("viewPos", camera.Position);
 	shader.setVec3("material.diffuse", material.diffuse);

@@ -1,4 +1,4 @@
-#include <Floor.h>
+#include <GrassPlane.h>
 #include <GrassFloor.h>
 #include <GrassCube.h>
 #include <Prism.hpp>
@@ -50,7 +50,7 @@ void GameManager::start()
 //	components.push_back(cube);
 //	components.push_back(cube);
 
-//	Floor floor(glm::rotate(tob->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1,0,0)), 0);
+//	GrassPlane floor(glm::rotate(tob->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1,0,0)), 0);
 //	GrassFloor grass(glm::rotate(tob->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1, 0, 0)));
 //	components.push_back(&grass);
 //	Plane plane("../res/pic/x.png");

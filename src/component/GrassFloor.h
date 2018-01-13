@@ -4,7 +4,7 @@
 
 #include "Component.h"
 #include "Plane.h"
-#include "Floor.h"
+#include "GrassPlane.h"
 
 class WorldMap;
 
@@ -21,7 +21,7 @@ private:
 	glm::mat4 up;
 	Plane plane;
 	const WorldMap& map;
-	Floor floor;
+	GrassPlane floor;
 };
 
 
