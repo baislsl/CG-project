@@ -6,11 +6,12 @@
 #include <array>
 #include "Object.h"
 
+class WorldMap;
 class Floor : public Component
 {
 public:
 	float size;
-	Floor(const glm::mat4 &up, double z, int length = 10, int width = 10, float size = 10.0);
+	Floor(const glm::mat4 &up, const WorldMap& map, double z, int length = 10, int width = 10, float size = 10.0);
 
 	void render(const Shader &shader, const Camera &camera) override;
 
@@ -18,6 +19,7 @@ private:
 	double z;
 	int length, width;
 	std::vector<std::vector<unsigned> > squareTypes;
+	const WorldMap& map;
 
 	class FloorSquare : public Object
 	{
@@ -30,6 +32,7 @@ private:
 		const Floor& parent;
 	};
 	std::array<FloorSquare, 5> squares;
+
 
 };
 

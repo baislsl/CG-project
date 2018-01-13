@@ -1,7 +1,8 @@
 #include "Floor.h"
+#include "WorldMap.hpp"
 #include <random>
 
-Floor::Floor(const glm::mat4 &up, double z, int length, int width, float size) : Component(up), z(z), length(length),
+Floor::Floor(const glm::mat4 &up, const WorldMap& map, double z, int length, int width, float size) : Component(up), map(map), z(z), length(length),
 		width(width), size(size),
 		squares({FloorSquare(*this, "../res/3ds/floor/grass_1msq_normal_01.3ds", this->modelMatrix, size),
 				 FloorSquare(*this, "../res/3ds/floor/grass_1msq_normal_02.3ds", this->modelMatrix, size),
@@ -48,7 +49,7 @@ void Floor::render(const Shader &shader, const Camera &camera)
 		for (int j = 0; j < length; j++)
 		{
 			double x = i, y = j;
-			if (squareTypes[i][j] == squares.size()) continue;
+			if (squareTypes[i][j] == squares.size() || map.hasLake(i, j)) continue;
 			squares.at(squareTypes[i][j]).renderToXY(x, y, shader, camera);
 		}
 	}
