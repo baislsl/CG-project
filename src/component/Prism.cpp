@@ -91,7 +91,7 @@ void Prism::init()
 
 void Prism::render(const Shader &shader, const Camera &camera)
 {
-	shader.setMat4("model", modelMatrix);
+	shader.setMat4("model", glm::rotate(modelMatrix, glm::radians(90.0f), glm::vec3(-1, 0, 0)));
 	shader.setVec3("viewPos", camera.Position);
 	shader.setVec3("material.diffuse", material.diffuse);
 	shader.setVec3("material.specular", material.specular);

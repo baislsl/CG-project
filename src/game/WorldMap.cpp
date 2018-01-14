@@ -41,6 +41,11 @@ WorldMap::WorldMap(float size) : size(size), textureManager(TextureManager::getT
 	grassCube = new TextureCube(grassTop, grassBottom, grassSide, grassSide, grassSide, grassSide);
 	grassCube->modelMatrix = fitMapMatrix(grassCube->modelMatrix);
 
+	prismMap[6] = new Prism(6, "../res/grass_square/grass.jpeg");
+	prismMap[6]->modelMatrix = fitMapMatrix(prismMap[6]->modelMatrix);
+	prismMap[80] = new Prism(80);
+	prismMap[80]->modelMatrix = fitMapMatrix(prismMap[80]->modelMatrix);
+
 	skyBox = new Skybox();
 	skyBox->modelMatrix = fitMapMatrix(skyBox->modelMatrix);
 	skyBox->modelMatrix = glm::translate(grassCube->modelMatrix, glm::vec3(0, 50, 0));
@@ -102,14 +107,20 @@ void WorldMap::render(const Shader &shader, const Camera &camera)
 
 void WorldMap::build()
 {
-	putSimpleModel(overground, 0, 50, 10, 18, grassCube);
-	putSimpleModel(overground, 0, 10, 50, 18, grassCube);
+	putSimpleModel(overground, 0, 50, 10, 18, prismMap[6]);
+	putSimpleModel(overground, 0, 10, 50, 18, prismMap[80]);
 	putSimpleModel(overground, 0, 10, 10, 18, grassCube);
 
 	putSimpleModel(underground, 0, 30, 30, 16, waterCube);
 	putSimpleModel(underground, 0, 70, 30, 16, waterCube);
 	putSimpleModel(underground, 0, 30, 70, 16, waterCube);
 	putSimpleModel(underground, 0, 70, 70, 16, waterCube);
+
+	for(int i = 0;i < 8;i++)
+		fill(true, 54, 54, i, prismMap[6]);
+
+	for(int i =0 ;i < 8;i ++)
+		fill(true, 58, 58, i, prismMap[80]);
 }
 
 void WorldMap::putSimpleModel(const WorldMap::MapType &map, int beginz, int centerx, int centery, int size,
@@ -135,6 +146,9 @@ WorldMap::~WorldMap()
 	delete waterCube;
 	delete floor;
 	delete skyBox;
+	for(auto &i : prismMap){
+		delete i.second;
+	}
 }
 
 glm::mat4 WorldMap::fitMapMatrix(const glm::mat4 &matrix)

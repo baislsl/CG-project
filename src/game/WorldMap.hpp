@@ -8,6 +8,7 @@
 #include <GrassCube.h>
 #include <Skybox.h>
 #include <GrassFloor.h>
+#include "Prism.hpp"
 
 /**
  *   z, x, y
@@ -60,6 +61,7 @@ private:
 	std::map<Component *, ComponentInfo> componentMap;
 	TextureManager *textureManager;
 	TextureCube *grassCube, *waterCube, *skyBox;
+	std::map<unsigned , Prism*> prismMap;
 	GrassFloor* floor;
 
 	void build();
