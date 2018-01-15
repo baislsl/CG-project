@@ -3,7 +3,6 @@ project(cgproject)
 set(CMAKE_CXX_STANDARD 11)
 
 include_directories(lib)
-
 if (APPLE)
     message("runing on mac environment")
     set(INC_DIR /usr/local/include)
@@ -96,6 +95,7 @@ include_directories(src/game)
 add_executable(demo ${SOURCE_FILES})
 if (APPLE)
     target_link_libraries(demo "/usr/local/lib/libassimp.dylib")
+    target_link_libraries(demo "/usr/local/lib/libfreeimageplus.3.17.0.dylib")
 endif ()
 
 add_executable(Test1 test/test.cpp)
