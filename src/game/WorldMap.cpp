@@ -110,7 +110,7 @@ int WorldMap::check(float x, float y, float z)
 	auto &map = overground;
 	Component *component;
 
-	component = map[(int)z][49+(int)x][49+(int)y];
+	component = map[(int)z][width/2+(int)x][length/2+(int)y];
 
 	if(component == nullptr)return 1;
 	else return 0;

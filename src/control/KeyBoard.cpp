@@ -31,8 +31,6 @@ void KeyBoard::processInput(GLfloat deltaTime)
 		camera->ProcessKeyboard(JUMP, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
 		camera->ProcessKeyboard(UP, deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
-		camera->ProcessKeyboard(DOWN, deltaTime);
 }
 
 void KeyBoard::keyCallBack(GLFWwindow *window, int key, int scancode, int action, int mods)

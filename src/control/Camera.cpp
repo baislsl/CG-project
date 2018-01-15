@@ -88,23 +88,36 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float delta)
 	}
 	if (direction == JUMP)
 	{
-
+		Collide = Position + glm::vec3(0, 1, 0) * (velocity*5 + 1);
+		if (map->check(Collide.x, Collide.z, Collide.y - 1))
+		{
+			Position += glm::vec3(0, 1, 0) * (velocity * 5);
+		}
 	}
-	if (direction == UP){
-		Collide = Position + glm::vec3(0, 1, 0)* (velocity+1);
-		if (map->check(Collide.x, Collide.z, Collide.y-1)){
+	if (direction == UP)
+	{
+		Collide = Position + glm::vec3(0, 1, 0) * (velocity + 1);
+		if (map->check(Collide.x, Collide.z, Collide.y - 1))
+		{
 			Position += glm::vec3(0, 1, 0) * velocity;
 		}
 	}
 
-	if (direction == DOWN){
-		Collide = Position + glm::vec3(0, -1, 0) * (velocity+1);
-		if (map->check(Collide.x, Collide.z, Collide.y-1)){
-			Position += glm::vec3(0, -1, 0) * velocity;
-		}
-	}
-
 	std::cout << "position=" << Position.x << ":" << Position.y << ":" << Position.z << std::endl;
+}
+
+void Camera::drop(){
+	Collide = Position + glm::vec3(0, -0.3, 0);
+	if(Position.y <= 2.3){
+		Position.y = 2.0;
+	}
+	else if (map->check(Collide.x, Collide.z, Collide.y - 1))
+	{
+		Position += glm::vec3(0, -0.3, 0);
+	}
+	else{
+		Position += glm::vec3(0, -0.3, 0);
+	}
 }
 
 void Camera::updateCameraVectors()

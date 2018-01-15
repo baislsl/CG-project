@@ -70,6 +70,8 @@ public:
 
 	void setPitch(float pitch);
 
+	void drop();
+
 
 	// Returns the view matrix calculated using Eular Angles and the LookAt Matrix
 	glm::mat4 GetViewMatrix();

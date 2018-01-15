@@ -84,6 +84,8 @@ void GameManager::start()
 		shader.setMat4("projection", projection);
 		shader.setMat4("view", view);
 
+		camera.drop();
+
 		renderAll();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
