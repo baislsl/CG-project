@@ -105,24 +105,28 @@ void WorldMap::render(const Shader &shader, const Camera &camera)
 	skyBox->render(shader, camera);
 }
 
-int WorldMap::check(float x, float y, float z)
+bool WorldMap::check(float x, float y, float z)
 {
 	auto &map = overground;
-	Component *component;
+	if(z < 0) true;
 
-	component = map[(int)z][width/2+(int)x][length/2+(int)y];
+	auto x1 = std::floor(49 + x), x2 = std::ceil(49 + x);
+	auto y1 = std::floor(49 + y), y2 = std::ceil(49 + y);
+	auto z1 = std::floor(z), z2 = std::ceil(z);
+	std::cout << "z1=" << z1 << ", z2=" << z2;
 
-	if(component == nullptr)return 1;
-	else return 0;
+	return !(map[z1][x1][y1] != nullptr || map[z1][x1][y2] != nullptr || map[z1][x2][y1] != nullptr ||
+			 map[z1][x2][y2] != nullptr || map[z2][x1][y1] != nullptr || map[z2][x1][y2] != nullptr ||
+			 map[z2][x2][y1] != nullptr || map[z2][x2][y2] != nullptr);
 }
 
 void WorldMap::build()
 {
-	fill(1, 50, 50, 5, waterCube);
-	fill(1, 51, 51, 5, waterCube);
-	fill(1, 52, 52, 5, waterCube);
-	fill(1, 53, 53, 5, waterCube);
-	fill(1, 54, 54, 5, waterCube);
+	fill(true, 50, 50, 5, waterCube);
+	fill(true, 51, 51, 5, waterCube);
+	fill(true, 52, 52, 5, waterCube);
+	fill(true, 53, 53, 5, waterCube);
+	fill(true, 54, 54, 5, waterCube);
 
 
 	putSimpleModel(overground, 0, 50, 10, 18, prismMap[6]);
