@@ -42,6 +42,7 @@ struct DirLight {
 uniform DirLight dirLight;
 uniform bool usingTexture;
 uniform vec3 viewPos;
+uniform bool selflight;
 
 vec4 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
 {
@@ -57,7 +58,8 @@ vec4 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
     vec4 specular;
     if (usingTexture)
     {
-        ambient  = vec4(light.ambient, 1)  * (texture(texture_diffuse1, TexCoords));
+        if (selflight) ambient = vec4(1, 1, 1, 1) * (texture(texture_diffuse1, TexCoords));
+        else ambient  = vec4(light.ambient, 1)  * (texture(texture_diffuse1, TexCoords));
         diffuse  = vec4(light.diffuse, 1) * diff * (texture(texture_diffuse1, TexCoords));
         specular = vec4(light.specular, 1) * spec * (texture(texture_specular1, TexCoords));
     }
@@ -70,6 +72,7 @@ vec4 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
     ambient = max(ambient, vec4(0, 0, 0, 0));
     diffuse = max(diffuse, vec4(0, 0, 0, 0));
     specular = max(specular, vec4(0, 0, 0, 0));
+    if (selflight) return ambient;
     return (ambient + diffuse + specular);
 }
 
@@ -91,6 +94,7 @@ vec4 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     vec4 specular;
     if (usingTexture)
     {
+        if (selflight) ambient = vec4(1, 1, 1, 1.0) * (texture(texture_diffuse1, TexCoords));
         ambient  = vec4(light.ambient, 1.0) * (texture(texture_diffuse1, TexCoords));
         diffuse  = vec4(light.diffuse, 1.0) * diff * (texture(texture_diffuse1, TexCoords));
         specular = vec4(light.specular, 1.0) * spec * (texture(texture_specular1, TexCoords));
@@ -107,6 +111,7 @@ vec4 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     ambient  *= attenuation;
     diffuse  *= attenuation;
     specular *= attenuation;
+    if (selflight) return ambient;
     return (ambient + diffuse + specular);
 }
 
