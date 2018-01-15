@@ -52,7 +52,7 @@ public:
 
 	void render(const Shader &shader, const Camera &camera) override;
 
-	int check(float x, float y, float z);
+	bool check(float x, float y, float z);
 
 private:
 
