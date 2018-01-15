@@ -1,3 +1,4 @@
+#include <WorldMap.hpp>
 #include "Camera.h"
 
 Camera::Camera(glm::vec3 position, glm::vec3 up, glm::vec3 front, float zoom, float yaw, float pitch)
@@ -15,6 +16,7 @@ Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float u
 		glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVTY), Zoom(ZOOM)
 {
 	Position = glm::vec3(posX, posY, posZ);
+	Collide = glm::vec3(posX, posY, posZ);
 	WorldUp = glm::vec3(upX, upY, upZ);
 	Yaw = yaw;
 	Pitch = pitch;
@@ -55,18 +57,52 @@ glm::mat4 Camera::GetViewMatrix()
 void Camera::ProcessKeyboard(Camera_Movement direction, float delta)
 {
 	float velocity = delta;
+
 	if (direction == FORWARD)
-		Position += Front * velocity;
+	{
+		Collide = Position - Front_mov * (velocity+1);
+		if (map->check(Collide.x, Collide.z, Collide.y-1)){
+		Position -= Front_mov * velocity;
+		}
+	}
 	if (direction == BACKWARD)
-		Position -= Front * velocity;
+	{
+		Collide = Position + Front_mov * (velocity+1);
+		if (map->check(Collide.x, Collide.z, Collide.y-1)){
+			Position += Front_mov * velocity;
+		}
+	}
 	if (direction == LEFT)
-		Position -= Right * velocity;
+	{
+		Collide = Position - Right * (velocity+1);
+		if (map->check(Collide.x, Collide.z, Collide.y-1)){
+			Position -= Right * velocity;
+		}
+	}
 	if (direction == RIGHT)
-		Position += Right * velocity;
-	if(direction == UP)
-		Position += Up*velocity;
-	if(direction == DOWN)
-		Position -= Up*velocity;
+	{
+		Collide = Position + Right * (velocity+1);
+		if (map->check(Collide.x, Collide.z, Collide.y-1)){
+			Position += Right * velocity;
+		}
+	}
+	if (direction == JUMP)
+	{
+
+	}
+	if (direction == UP){
+		Collide = Position + glm::vec3(0, 1, 0)* (velocity+1);
+		if (map->check(Collide.x, Collide.z, Collide.y-1)){
+			Position += glm::vec3(0, 1, 0) * velocity;
+		}
+	}
+
+	if (direction == DOWN){
+		Collide = Position + glm::vec3(0, -1, 0) * (velocity+1);
+		if (map->check(Collide.x, Collide.z, Collide.y-1)){
+			Position += glm::vec3(0, -1, 0) * velocity;
+		}
+	}
 
 	std::cout << "position=" << Position.x << ":" << Position.y << ":" << Position.z << std::endl;
 }
@@ -83,5 +119,9 @@ void Camera::updateCameraVectors()
 	// Also re-calculate the Right and Up vector
 	Right = glm::normalize(glm::cross(Front,
 									  WorldUp));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
+
+	Front_mov = glm::normalize(glm::cross(Right,
+									      WorldUp));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
+
 	Up = glm::normalize(glm::cross(Right, Front));
 }

@@ -56,6 +56,7 @@ void GameManager::start()
 //	Plane plane("../res/pic/x.png");
 //	components.push_back(&plane);
 	WorldMap worldMap;
+	camera.map = &worldMap;
 	components.push_back(&worldMap);
 //	GrassCube grassCube;
 //	grassCube.modelMatrix = glm::translate(grassCube.modelMatrix, glm::vec3(0, 0.5, 0));

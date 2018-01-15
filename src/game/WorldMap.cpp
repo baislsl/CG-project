@@ -105,8 +105,26 @@ void WorldMap::render(const Shader &shader, const Camera &camera)
 	skyBox->render(shader, camera);
 }
 
+int WorldMap::check(float x, float y, float z)
+{
+	auto &map = overground;
+	Component *component;
+
+	component = map[(int)z][49+(int)x][49+(int)y];
+
+	if(component == nullptr)return 1;
+	else return 0;
+}
+
 void WorldMap::build()
 {
+	fill(1, 50, 50, 5, waterCube);
+	fill(1, 51, 51, 5, waterCube);
+	fill(1, 52, 52, 5, waterCube);
+	fill(1, 53, 53, 5, waterCube);
+	fill(1, 54, 54, 5, waterCube);
+
+
 	putSimpleModel(overground, 0, 50, 10, 18, prismMap[6]);
 	putSimpleModel(overground, 0, 10, 50, 18, prismMap[80]);
 	putSimpleModel(overground, 0, 10, 10, 18, grassCube);
