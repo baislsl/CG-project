@@ -1,4 +1,5 @@
 #include <Prism.hpp>
+#include <TranslucenceCube.h>
 #include "WorldMap.hpp"
 
 bool operator==(const Position &p1, const Position &p2)
@@ -50,6 +51,9 @@ WorldMap::WorldMap(float size) : size(size), textureManager(TextureManager::getT
 	skyBox->modelMatrix = fitMapMatrix(skyBox->modelMatrix);
 	skyBox->modelMatrix = glm::translate(grassCube->modelMatrix, glm::vec3(0, 50, 0));
 	skyBox->modelMatrix = glm::scale(grassCube->modelMatrix, glm::vec3(100, 100, 100));
+
+	translucenceCube = new TranslucenceCube();
+	translucenceCube->modelMatrix = fitMapMatrix(translucenceCube->modelMatrix);
 
 	floor = new GrassFloor(this->modelMatrix, *this, length, width, size);
 	floor->modelMatrix = glm::rotate(floor->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1, 0, 0));
@@ -137,6 +141,7 @@ void WorldMap::build()
 	fill(true, 53, 53, 5, waterCube);
 	fill(true, 54, 54, 5, waterCube);
 
+	putSimpleModel(overground, 0, 50, 50, 2, translucenceCube);
 
 	putSimpleModel(overground, 0, 50, 10, 18, prismMap[6]);
 	putSimpleModel(overground, 0, 10, 50, 18, prismMap[80]);
@@ -177,6 +182,7 @@ WorldMap::~WorldMap()
 	delete waterCube;
 	delete floor;
 	delete skyBox;
+	delete translucenceCube;
 	for(auto &i : prismMap){
 		delete i.second;
 	}

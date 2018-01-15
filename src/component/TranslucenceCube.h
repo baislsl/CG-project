@@ -1,0 +1,41 @@
+#ifndef CGPROJECT_TRANSLUCENCECUBE_HPP
+#define CGPROJECT_TRANSLUCENCECUBE_HPP
+
+
+#include <common/BaseShape.h>
+#include <array>
+#include "Plane.h"
+
+
+class TranslucencePlane : public BaseShape
+{
+public:
+	explicit TranslucencePlane(unsigned cc = 14);
+
+	void render(const Shader& shader, const Camera& camera) override ;
+
+private:
+	unsigned cc;
+	const static int div = 4;    // 颜色数目
+	std::vector<Material> materials;
+	Plane plane;
+	std::vector<std::vector<int>> map;	// div表示不画
+
+	void init();
+};
+
+class TranslucenceCube : public BaseShape
+{
+public:
+	TranslucenceCube() = default;
+
+	// TODO: location of this seems to exist great problem
+	void render(const Shader& shader, const Camera& camera) override ;
+
+private:
+	std::array<TranslucencePlane, 6> planes;
+
+};
+
+
+#endif //CGPROJECT_TRANSLUCENCECUBE_HPP

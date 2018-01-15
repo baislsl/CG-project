@@ -31,8 +31,8 @@
  */
 
 class ComponentInfo;
-
 class Position;
+class TranslucenceCube;
 
 class WorldMap : public Component
 {
@@ -65,6 +65,7 @@ private:
 	std::map<Component *, ComponentInfo> componentMap;
 	TextureManager *textureManager;
 	TextureCube *grassCube, *waterCube, *skyBox;
+	TranslucenceCube *translucenceCube;
 	std::map<unsigned , Prism*> prismMap;
 	GrassFloor* floor;
 

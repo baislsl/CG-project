@@ -43,6 +43,7 @@ void Plane::useTexture(unsigned tex)
 
 void Plane::init()
 {
+	// TODO: consider 改边长为1
 	float vertices[] = {-1, -1, 0, 0, 0, 1, 0, 0, -1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, -1, -1, 0, 0, 0, 1,
 						0, 0, 1, -1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1,};
 	glBindVertexArray(VAO);

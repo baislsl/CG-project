@@ -2,6 +2,7 @@
 #include <GrassFloor.h>
 #include <GrassCube.h>
 #include <Prism.hpp>
+#include <TranslucenceCube.h>
 #include "GameManager.h"
 #include "../game/WorldMap.hpp"
 
@@ -40,7 +41,7 @@ void GameManager::start()
 	tob->material.diffuse = glm::vec3(0.5, 0.1, 0.8);
 	tob->material.specular = glm::vec3(0.6, 0, 0);
 	tob->material.ambient = glm::vec3(0, 0, 0.6);
-	components.push_back(tob);
+//	components.push_back(tob);
 //	Plane *cube = new Plane("../res/Crack.bmp");
 //	Sphere *cube = new Sphere(30, 30, "../res/Crack.bmp");
 //	Cube *cube = new Cube("../res/Crack.bmp");
@@ -55,6 +56,9 @@ void GameManager::start()
 //	components.push_back(&grass);
 //	Plane plane("../res/pic/x.png");
 //	components.push_back(&plane);
+//	TranslucenceCube cube;
+////	cube.modelMatrix = glm::translate(cube.modelMatrix, glm::vec3(1, 3, 1));
+//	components.push_back(&cube);
 	WorldMap worldMap;
 	camera.map = &worldMap;
 	components.push_back(&worldMap);
