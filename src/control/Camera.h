@@ -72,6 +72,8 @@ public:
 
 	void drop();
 
+	void place(int key);
+
 
 	// Returns the view matrix calculated using Eular Angles and the LookAt Matrix
 	glm::mat4 GetViewMatrix();

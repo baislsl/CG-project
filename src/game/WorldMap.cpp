@@ -120,6 +120,15 @@ bool WorldMap::check(float x, float y, float z)
 			 map[z2][x2][y1] != nullptr || map[z2][x2][y2] != nullptr);
 }
 
+void WorldMap::placeblock(int x, int y, int z, int key)
+{
+	switch(key){
+		case 49: fill(true,49+x,49+y,z,grassCube);break;
+	}
+
+}
+
+
 void WorldMap::build()
 {
 	fill(true, 50, 50, 5, waterCube);

@@ -108,7 +108,8 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float delta)
 	std::cout << "position=" << Position.x << ":" << Position.y << ":" << Position.z << std::endl;
 }
 
-void Camera::drop(){
+void Camera::drop()
+{
 	Collide = Position + glm::vec3(0, -0.4, 0);
 	if(Position.y <= 2.4){
 		Position.y = 2.0;
@@ -117,6 +118,11 @@ void Camera::drop(){
 	{
 		Position += glm::vec3(0, -0.4, 0);
 	}
+}
+
+void Camera::place(int key)
+{
+	map->placeblock((Position + Front).x, (Position + Front).z,	(Position + Front).y, key);
 }
 
 void Camera::updateCameraVectors()

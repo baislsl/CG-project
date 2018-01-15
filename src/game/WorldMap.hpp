@@ -54,6 +54,8 @@ public:
 
 	bool check(float x, float y, float z);
 
+	void placeblock(int x, int y, int z, int key);
+
 private:
 
 	using MapType = std::vector<std::vector<std::vector<Component *>>>;

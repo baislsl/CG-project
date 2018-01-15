@@ -83,7 +83,8 @@ set(SOURCE_FILES ${GLAD} ${LINMATH}
         src/control/KeyBoard.cpp
         src/control/KeyBoard.h
         src/component/Prism.hpp
-        src/component/Prism.cpp)
+        src/component/Prism.cpp
+        )
 include_directories(src/control)
 include_directories(src/core)
 include_directories(src/component)
