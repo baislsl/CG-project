@@ -93,7 +93,7 @@ struct Position
 
 	Position() = default;
 
-	Position(glm::tvec3<int> v, bool isOverground = true) : x(v.x), y(v.y), z(v.z), isOverground(isOverground)
+	explicit Position(glm::tvec3<int> v, bool isOverground = true) : x(v.x), y(v.y), z(v.z), isOverground(isOverground)
 	{}
 
 	Position(int x, int y, int z, bool isOverground) : x(x), y(y), z(z), isOverground(isOverground)

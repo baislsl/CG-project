@@ -54,8 +54,8 @@ glm::mat4 Camera::GetViewMatrix() const
 
 glm::vec3 Camera::transPosition(glm::vec3 position) const //输入的数据中y是高度，此函数将输入的float四舍五入成int并且返回的数据中z是高度
 {
-	return glm::vec3((int) (position.x + 0.5 + (map->width) / 2), (int) (position.z - 0.5 + (map->length) / 2),
-					 (int) (position.y + 0.5));
+	return glm::vec3(std::round(position.x + map->width / 2), std::round(position.z - 1 + map->length / 2),
+					 std::round(position.y));
 }
 
 void Camera::ProcessKeyboard(Camera_Movement direction, float delta)
@@ -175,9 +175,9 @@ void Camera::updateCameraVectors()
 	// TODO: ??? what, 所以之前初始化的front没意义？
 	// Calculate the new Front vector
 	glm::vec3 front;
-	front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-	front.y = sin(glm::radians(Pitch));
-	front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
+	front.x = cosf(glm::radians(Yaw)) * cosf(glm::radians(Pitch));
+	front.y = sinf(glm::radians(Pitch));
+	front.z = sinf(glm::radians(Yaw)) * cosf(glm::radians(Pitch));
 	Front = glm::normalize(front);
 	// Also re-calculate the Right and Up vector
 	Right = glm::normalize(glm::cross(Front,

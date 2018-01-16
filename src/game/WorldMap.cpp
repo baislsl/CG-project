@@ -143,9 +143,7 @@ void WorldMap::render(const Shader &shader, const Camera &camera)
 bool WorldMap::check(glm::vec3 position)
 {
 	auto &map = overground;
-	int x = position.x;
-	int y = position.y;
-	int z = position.z;
+	auto x = static_cast<int>(position.x), y = static_cast<int>(position.y), z = static_cast<int>(position.z);
 	if (z < 0) return true;
 
 	auto x1 = std::floor(x), x2 = std::ceil(x);
@@ -163,14 +161,16 @@ void WorldMap::placeblock(glm::vec3 position, int key)
 	if (position.x >= 100 || position.x <= 0 || position.y >= 100 || position.y <= 0 || position.z >= 20 ||
 		position.z <= 0)
 		return;
+	auto x = static_cast<int>(position.x), y = static_cast<int>(position.y), z = static_cast<int>(position.z);
 
 	switch(key){
-		case 49: fill(true,position.x,position.y,position.z,grassCube);break;
-		case 50: fill(true,position.x,position.y,position.z,waterCube);break;
-		case 51: fill(true,position.x,position.y,position.z,waterCube);break;
-		case 52: fill(true,position.x,position.y,position.z,prismMap[6]);break;
-		case 53: fill(true,position.x,position.y,position.z,prismMap[6]);break;
-		case 54: fill(true,position.x,position.y,position.z,prismMap[80]);break;
+		case 49: fill(true,x, y, z,grassCube);break;
+		case 50: fill(true,x, y, z,waterCube);break;
+		case 51: fill(true,x, y, z,waterCube);break;
+		case 52: fill(true,x, y, z,prismMap[6]);break;
+		case 53: fill(true,x, y, z,prismMap[6]);break;
+		case 54: fill(true,x, y, z,prismMap[80]);break;
+		default:;
 	}
 }
 
