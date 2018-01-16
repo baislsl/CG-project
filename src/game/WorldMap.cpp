@@ -154,7 +154,7 @@ void WorldMap::placeblock(glm::vec3 position, int key)
 {
 
 	if (position.x >= 100 || position.x <= 0 || position.y >= 100 || position.y <= 0 || position.z >= 20 ||
-		position.z <= 0)
+		position.z < 0)
 		return;
 	auto x = static_cast<int>(position.x), y = static_cast<int>(position.y), z = static_cast<int>(position.z);
 
