@@ -45,6 +45,11 @@ WorldMap::WorldMap(float size) : size(size), textureManager(TextureManager::getT
 	grassCube = new TextureCube(grassTop, grassBottom, grassSide, grassSide, grassSide, grassSide);
 	grassCube->modelMatrix = fitMapMatrix(grassCube->modelMatrix);
 
+	GLuint tntTop = textureManager->load("../res/pic/tnt_top.png"), tntSide = textureManager->load(
+			"../res/pic/tnt_side.png"), tntBottom = textureManager->load("../res/pic/tnt_bottom.png");
+	TNT = new TextureCube(tntTop, tntBottom, tntSide, tntSide, tntSide, tntSide);
+	TNT->modelMatrix = fitMapMatrix(TNT->modelMatrix);
+
 	prismMap[6] = new Prism(6, "../res/grass_square/grass.jpeg");
 	prismMap[6]->modelMatrix = glm::scale(prismMap[6]->modelMatrix, glm::vec3(size, size, size));
 	prismMap[256] = new Prism(256);
@@ -62,7 +67,8 @@ WorldMap::WorldMap(float size) : size(size), textureManager(TextureManager::getT
 	floor->modelMatrix = glm::rotate(floor->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1, 0, 0));
 
 	// TODO: replace target cube
-	targetBox = new TargetBox(blueTexture, blueTexture, blueTexture, blueTexture, blueTexture, blueTexture);
+	GLuint frame = textureManager->load("../res/pic/frame.png");
+	targetBox = new TargetBox(frame, frame, frame, frame, frame, frame);
 	targetBox->modelMatrix = fitMapMatrix(targetBox->modelMatrix);
 	build();
 }
@@ -163,10 +169,11 @@ void WorldMap::placeblock(glm::vec3 position, int key)
 	switch(key){
 		case 49: fill(true, x, y, z, grassCube);break;
 		case 50: fill(true, x, y, z, waterCube);break;
-		case 51: fill(true, x, y, z, waterCube);break;
-		case 52: fill(true, x, y, z, prismMap[6]);break;
+		case 51: fill(true, x, y, z, translucenceCube);break;
+		case 52: fill(true, x, y, z, TNT);break;
 		case 53: fill(true, x, y, z, prismMap[6]);break;
 		case 54: fill(true, x, y, z, prismMap[256]);break;
+		case 258: remove(true, x, y, z);break;
 		default:;
 	}
 }

@@ -70,7 +70,7 @@ private:
 	MapType underground;
 	std::map<Component *, ComponentInfo> componentMap;
 	TextureManager *textureManager;
-	TextureCube *grassCube, *waterCube, *skyBox, *targetBox;
+	TextureCube *grassCube, *waterCube, *skyBox, *targetBox, *TNT;
 	TranslucenceCube *translucenceCube;
 	std::map<unsigned, Prism *> prismMap;
 	GrassFloor *floor;
