@@ -132,11 +132,16 @@ bool WorldMap::check(glm::vec3 position)
 
 void WorldMap::placeblock(glm::vec3 position, int key)
 {
-	switch (key)
-	{
-		case 49:
-			fill(true, position.x, position.y, position.z, grassCube);
-			break;
+
+	if (position.x>=100 || position.x <=0 || position.y>=100 || position.y <=0 || position.z>=20 || position.z <=0);
+
+	switch(key){
+		case 49: fill(true,position.x,position.y,position.z,grassCube);break;
+		case 50: fill(true,position.x,position.y,position.z,waterCube);break;
+		case 51: fill(true,position.x,position.y,position.z,waterCube);break;
+		case 52: fill(true,position.x,position.y,position.z,prismMap[6]);break;
+		case 53: fill(true,position.x,position.y,position.z,prismMap[6]);break;
+		case 54: fill(true,position.x,position.y,position.z,prismMap[80]);break;
 	}
 }
 

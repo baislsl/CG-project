@@ -66,7 +66,8 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float delta)
 	if (direction == FORWARD)
 	{
 		Collide = transPosition(Position - Front_mov * (velocity+1));
-		if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1))){
+		if (Collide.x>=100 || Collide.x <=0 || Collide.y>=100 || Collide.y <=0);
+		else if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1))){
 			Collide = transPosition(Position - Front_mov * velocity);
 			if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1))){
 				Position -= Front_mov * velocity;
@@ -76,7 +77,8 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float delta)
 	if (direction == BACKWARD)
 	{
 		Collide = transPosition(Position + Front_mov * (velocity+1));
-		if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1))){
+		if (Collide.x>=100 || Collide.x <=0 || Collide.y>=100 || Collide.y <=0);
+		else if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1))){
 			Collide = transPosition(Position + Front_mov * velocity);
 			if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1))){
 				Position += Front_mov * velocity;
@@ -86,7 +88,8 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float delta)
 	if (direction == LEFT)
 	{
 		Collide = transPosition(Position - Right * (velocity+1));
-		if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1))){
+		if (Collide.x>=100 || Collide.x <=0 || Collide.y>=100 || Collide.y <=0);
+		else if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1))){
 			Collide = transPosition(Position - Right * velocity);
 			if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1))){
 				Position -= Right * velocity;
@@ -96,7 +99,8 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float delta)
 	if (direction == RIGHT)
 	{
 		Collide = transPosition(Position + Right * (velocity+1));
-		if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1))){
+		if (Collide.x>=100 || Collide.x <=0 || Collide.y>=100 || Collide.y <=0);
+		else if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1))){
 			Collide = transPosition(Position + Right * velocity);
 			if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1))){
 				Position += Right * velocity;
@@ -106,7 +110,8 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float delta)
 	if (direction == JUMP)
 	{
 		Collide = transPosition(Position + glm::vec3(0, 2, 0));
-		if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1)))
+		if (Collide.z>=20);
+		else if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1)))
 		{
 			Position += glm::vec3(0, 2, 0);
 		}
