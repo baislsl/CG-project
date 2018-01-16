@@ -3,15 +3,17 @@
 #include <glad/glad.h>
 #include "KeyBoard.h"
 #include <FreeImagePlus.h>
+#include <WorldMap.hpp>
 
 using eventFunc = std::function<void(GLfloat)>;
 
 KeyBoard::KeyBoard(GLFWwindow *window, Camera *camera) : window(window), camera(camera)
 {
-	globalViewCamera.Position = glm::vec3(0, 40, 0);
+	globalViewCamera.Position = glm::vec3(0, WorldMap::height - 1, 0);
 	globalViewCamera.Front = glm::vec3(0, -1, 0);
 	globalViewCamera.Up = glm::vec3(1, 0, 0);
 	globalViewCamera.Zoom = 105;
+	globalViewCamera.enableDrop = false;
 }
 
 void KeyBoard::processInput(GLfloat deltaTime)
@@ -59,6 +61,8 @@ void KeyBoard::keyCallBack(GLFWwindow *window, int key, int scancode, int action
 	if (!inGlobalView && action == GLFW_PRESS && key == GLFW_KEY_P) // 按下后第一次执行
 	{
 		lastCamera = *camera;
+		globalViewCamera.Position.x = camera->Position.x;
+		globalViewCamera.Position.z = camera->Position.z;
 		*camera = globalViewCamera;
 		inGlobalView = true;
 	}
