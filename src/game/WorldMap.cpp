@@ -46,16 +46,18 @@ WorldMap::WorldMap(float size) : size(size), textureManager(TextureManager::getT
 	grassCube->modelMatrix = fitMapMatrix(grassCube->modelMatrix);
 
 	prismMap[6] = new Prism(6, "../res/grass_square/grass.jpeg");
-	prismMap[6]->modelMatrix = fitMapMatrix(prismMap[6]->modelMatrix);
+//	prismMap[6]->modelMatrix = fitMapMatrix(prismMap[6]->modelMatrix);
+	prismMap[6]->modelMatrix = glm::scale(prismMap[6]->modelMatrix, glm::vec3(size, size, size));
 	prismMap[80] = new Prism(80);
-	prismMap[80]->modelMatrix = fitMapMatrix(prismMap[80]->modelMatrix);
-
+//	prismMap[80]->modelMatrix = fitMapMatrix(prismMap[80]->modelMatrix);
+	prismMap[80]->modelMatrix = glm::scale(prismMap[80]->modelMatrix, glm::vec3(size, size, size));
 	skyBox = new Skybox();
 	skyBox->modelMatrix = fitMapMatrix(skyBox->modelMatrix);
 	skyBox->modelMatrix = glm::scale(skyBox->modelMatrix, glm::vec3(skyBoxWidth, 40, skyBoxLength));
 
 	translucenceCube = new TranslucenceCube();
 	translucenceCube->modelMatrix = fitMapMatrix(translucenceCube->modelMatrix);
+	translucenceCube->modelMatrix = glm::translate(translucenceCube->modelMatrix, glm::vec3(-1, 0, 0));
 
 	floor = new GrassFloor(this->modelMatrix, *this, length, width, size);
 	floor->modelMatrix = glm::rotate(floor->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1, 0, 0));
@@ -173,18 +175,19 @@ void WorldMap::placeblock(glm::vec3 position, int key)
 void WorldMap::build()
 {
 	fill(true, 50, 50, 0, waterCube);
-	fill(true, 51, 50, 0, waterCube);
-	fill(true, 52, 50, 0, waterCube);
-	fill(true, 53, 50, 0, waterCube);
-	fill(true, 54, 50, 0, waterCube);
+	fill(true, 51, 50, 0, translucenceCube);
+	fill(true, 52, 50, 0, prismMap[6]);
+	fill(true, 53, 50, 0,  prismMap[80]);
+	fill(true, 54, 50, 0, translucenceCube);
+//	fill(true, 50, 50, 0, translucenceCube);
 
-	putSimpleModel(overground, 0, 50, 50, 2, translucenceCube);
+//	putSimpleModel(overground, 0, 50, 50, 2, translucenceCube);
 
 	putSimpleModel(overground, 0, 50, 10, 18, prismMap[6]);
 	putSimpleModel(overground, 0, 10, 50, 18, prismMap[80]);
 	putSimpleModel(overground, 0, 10, 10, 18, grassCube);
 
-	putSimpleModel(underground, 0, 30, 30, 16, waterCube);
+	putSimpleModel(overground, 0, 30, 30, 16, grassCube);
 	putSimpleModel(underground, 0, 70, 30, 16, waterCube);
 	putSimpleModel(underground, 0, 30, 70, 16, waterCube);
 	putSimpleModel(underground, 0, 70, 70, 16, waterCube);
@@ -229,7 +232,7 @@ WorldMap::~WorldMap()
 glm::mat4 WorldMap::fitMapMatrix(const glm::mat4 &matrix)
 {
 	auto m = glm::scale(matrix, glm::vec3(size, size, size));
-	m = glm::translate(m, glm::vec3(0, 0.5, 1));
+	m = glm::translate(m, glm::vec3(0, 0.5, 0));
 	return m;
 }
 

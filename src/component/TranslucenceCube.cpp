@@ -56,20 +56,35 @@ void TranslucencePlane::render(const Shader &shader, const Camera &camera)
 void TranslucenceCube::render(const Shader &shader, const Camera &camera)
 {
 	std::array<glm::vec3, 6> r = {{{-1, 0, 0}, {0, 1, 0}, {0, 0, 1}}};
-	std::array<glm::vec3, 2> t = {{{0, 0, -0.5}, {0, 0, 0}}};
 
 	planes[0].modelMatrix = glm::rotate(this->modelMatrix, glm::radians(90.f), r[0]);
-	planes[0].modelMatrix = glm::translate(planes[0].modelMatrix, glm::vec3(-0.5, 0, 0.5));
+	planes[0].modelMatrix = glm::scale(planes[0].modelMatrix, glm::vec3(2, 2, 2));
+	planes[0].modelMatrix = glm::translate(planes[0].modelMatrix, glm::vec3(0.25, -0.25, -0.25));
 	planes[0].render(shader, camera);
+
 	planes[1].modelMatrix = glm::rotate(this->modelMatrix, glm::radians(90.f), r[0]);
-	planes[1].modelMatrix = glm::translate(planes[1].modelMatrix, glm::vec3(-0.5, 0, 0));
+	planes[1].modelMatrix = glm::scale(planes[1].modelMatrix, glm::vec3(2, 2, 2));
+	planes[1].modelMatrix = glm::translate(planes[1].modelMatrix, glm::vec3(0.25, -0.25, 0.25));
 	planes[1].render(shader, camera);
 
-	for (int i = 2; i < 6; i++)
-	{
-		planes[i].modelMatrix = glm::rotate(this->modelMatrix, glm::radians(90.0f), r[i / 2]);
-		planes[i].modelMatrix = glm::translate(planes[i].modelMatrix, t[i % 2]);
-		planes[i].render(shader, camera);
-	}
+	planes[2].modelMatrix = glm::rotate(this->modelMatrix, glm::radians(90.f), r[1]);
+	planes[2].modelMatrix = glm::scale(planes[2].modelMatrix, glm::vec3(2, 2, 2));
+	planes[2].modelMatrix = glm::translate(planes[2].modelMatrix, glm::vec3(-0.25, -0.25, 0.75));
+	planes[2].render(shader, camera);
+
+	planes[3].modelMatrix = glm::rotate(this->modelMatrix, glm::radians(90.f), r[1]);
+	planes[3].modelMatrix = glm::scale(planes[3].modelMatrix, glm::vec3(2, 2, 2));
+	planes[3].modelMatrix = glm::translate(planes[3].modelMatrix, glm::vec3(-0.25, -0.25, 0.25));
+	planes[3].render(shader, camera);
+
+	planes[4].modelMatrix = glm::rotate(this->modelMatrix, glm::radians(90.f), r[2]);
+	planes[4].modelMatrix = glm::scale(planes[4].modelMatrix, glm::vec3(2, 2, 2));
+	planes[4].modelMatrix = glm::translate(planes[4].modelMatrix, glm::vec3(-0.25, -0.75, -0.25));
+	planes[4].render(shader, camera);
+
+	planes[5].modelMatrix = glm::rotate(this->modelMatrix, glm::radians(90.f), r[2]);
+	planes[5].modelMatrix = glm::scale(planes[5].modelMatrix, glm::vec3(2, 2, 2));
+	planes[5].modelMatrix = glm::translate(planes[5].modelMatrix, glm::vec3(-0.25, -0.75, 0.25));
+	planes[5].render(shader, camera);
 
 }
