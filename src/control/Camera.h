@@ -76,6 +76,8 @@ public:
 
 	void place(int key);
 
+	glm::vec3 nextPlacePosition() const ;
+
 
 	// Returns the view matrix calculated using Eular Angles and the LookAt Matrix
 	glm::mat4 GetViewMatrix() const;

@@ -10,6 +10,7 @@
 #include <GrassFloor.h>
 #include "Prism.hpp"
 #include <functional>
+
 /**
  *   z, x, y
  *   z < 0 地下
@@ -81,7 +82,7 @@ private:
 
 	glm::mat4 fitMapMatrix(const glm::mat4 &matrix);
 
-	void conditionRender(const Shader &shader, const Camera &camera, const std::function<bool(Component *)>& filter);
+	void conditionRender(const Shader &shader, const Camera &camera, const std::function<bool(Component *)> &filter);
 
 };
 
@@ -91,6 +92,9 @@ struct Position
 	bool isOverground;
 
 	Position() = default;
+
+	Position(glm::tvec3<int> v, bool isOverground = true) : x(v.x), y(v.y), z(v.z), isOverground(isOverground)
+	{}
 
 	Position(int x, int y, int z, bool isOverground) : x(x), y(y), z(z), isOverground(isOverground)
 	{};

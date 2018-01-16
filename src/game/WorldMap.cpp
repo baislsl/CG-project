@@ -103,10 +103,10 @@ void WorldMap::conditionRender(const Shader &shader, const Camera &camera, const
 		{
 			if (abs((int)(p.x - position.x)) > skyBoxWidth / 2 || abs((int)(p.y - position.y)) > skyBoxLength / 2) continue;
 
-			auto &component = iter.second.component;
+			auto component = iter.second.component;
 			auto vec = component->modelMatrix;
 			component->modelMatrix = glm::translate(component->modelMatrix, position.getVector());
-			iter.second.component->render(shader, camera);
+			component->render(shader, camera);
 			component->modelMatrix = vec;
 		}
 	}
@@ -127,6 +127,17 @@ void WorldMap::render(const Shader &shader, const Camera &camera)
 
 	// TODO: 不知道为什么这个render放在画透明块前面会出问题
 	skyBox->render(shader, camera);
+
+	auto target = camera.nextPlacePosition();
+	target.z -= 2;
+	std::cout << "target: x=" << target.x << ",y=" << target.y << ",z=" << target.z << std::endl;
+
+	auto component = waterCube;
+	auto vec = component->modelMatrix;
+	component->modelMatrix = glm::translate(component->modelMatrix, Position(target).getVector());
+	component->render(shader, camera);
+	component->modelMatrix = vec;
+
 }
 
 bool WorldMap::check(glm::vec3 position)
@@ -150,7 +161,8 @@ void WorldMap::placeblock(glm::vec3 position, int key)
 {
 
 	if (position.x >= 100 || position.x <= 0 || position.y >= 100 || position.y <= 0 || position.z >= 20 ||
-		position.z <= 0);
+		position.z <= 0)
+		return;
 
 	switch(key){
 		case 49: fill(true,position.x,position.y,position.z,grassCube);break;

@@ -1,11 +1,9 @@
 #include <WorldMap.hpp>
 #include "Camera.h"
 
-Camera::Camera(glm::vec3 position, glm::vec3 up, glm::vec3 front, float zoom, float yaw, float pitch)
-		: Position(position), WorldUp(up), Front(front), Yaw(yaw), Pitch(pitch),
-		MovementSpeed(SPEED),
-		MouseSensitivity(SENSITIVTY),
-		Zoom(zoom)
+Camera::Camera(glm::vec3 position, glm::vec3 up, glm::vec3 front, float zoom, float yaw, float pitch) : Position(
+		position), WorldUp(up), Front(front), Yaw(yaw), Pitch(pitch), MovementSpeed(SPEED),
+		MouseSensitivity(SENSITIVTY), Zoom(zoom)
 {
 	std::cout << "Constructing Camera." << std::endl;
 	updateCameraVectors();
@@ -56,7 +54,8 @@ glm::mat4 Camera::GetViewMatrix() const
 
 glm::vec3 Camera::transPosition(glm::vec3 position) const //输入的数据中y是高度，此函数将输入的float四舍五入成int并且返回的数据中z是高度
 {
-	return glm::vec3((int)(position.x+0.5+(map->width)/2),(int)(position.z-0.5+(map->length)/2),(int)(position.y+0.5));
+	return glm::vec3((int) (position.x + 0.5 + (map->width) / 2), (int) (position.z - 0.5 + (map->length) / 2),
+					 (int) (position.y + 0.5));
 }
 
 void Camera::ProcessKeyboard(Camera_Movement direction, float delta)
@@ -65,44 +64,60 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float delta)
 
 	if (direction == FORWARD)
 	{
-		Collide = transPosition(Position - Front_mov * (velocity+1));
-		if (Collide.x>=100 || Collide.x <=0 || Collide.y>=100 || Collide.y <=0);
-		else if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1))&&map->check(Collide+glm::vec3(0,0,-2))){
+		Collide = transPosition(Position - Front_mov * (velocity + 1));
+		if (Collide.x >= 100 || Collide.x <= 0 || Collide.y >= 100 || Collide.y <= 0);
+		else if (map->check(Collide) && map->check(Collide + glm::vec3(0, 0, -1)) &&
+				 map->check(Collide + glm::vec3(0, 0, -2)))
+		{
 			Collide = transPosition(Position - Front_mov * velocity);
-			if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1))&&map->check(Collide+glm::vec3(0,0,-2))){
+			if (map->check(Collide) && map->check(Collide + glm::vec3(0, 0, -1)) &&
+				map->check(Collide + glm::vec3(0, 0, -2)))
+			{
 				Position -= Front_mov * velocity;
 			}
 		}
 	}
 	if (direction == BACKWARD)
 	{
-		Collide = transPosition(Position + Front_mov * (velocity+1));
-		if (Collide.x>=100 || Collide.x <=0 || Collide.y>=100 || Collide.y <=0);
-		else if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1))&&map->check(Collide+glm::vec3(0,0,-2))){
+		Collide = transPosition(Position + Front_mov * (velocity + 1));
+		if (Collide.x >= 100 || Collide.x <= 0 || Collide.y >= 100 || Collide.y <= 0);
+		else if (map->check(Collide) && map->check(Collide + glm::vec3(0, 0, -1)) &&
+				 map->check(Collide + glm::vec3(0, 0, -2)))
+		{
 			Collide = transPosition(Position + Front_mov * velocity);
-			if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1))&&map->check(Collide+glm::vec3(0,0,-2))){
+			if (map->check(Collide) && map->check(Collide + glm::vec3(0, 0, -1)) &&
+				map->check(Collide + glm::vec3(0, 0, -2)))
+			{
 				Position += Front_mov * velocity;
 			}
 		}
 	}
 	if (direction == LEFT)
 	{
-		Collide = transPosition(Position - Right * (velocity+1));
-		if (Collide.x>=100 || Collide.x <=0 || Collide.y>=100 || Collide.y <=0);
-		else if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1))&&map->check(Collide+glm::vec3(0,0,-2))){
+		Collide = transPosition(Position - Right * (velocity + 1));
+		if (Collide.x >= 100 || Collide.x <= 0 || Collide.y >= 100 || Collide.y <= 0);
+		else if (map->check(Collide) && map->check(Collide + glm::vec3(0, 0, -1)) &&
+				 map->check(Collide + glm::vec3(0, 0, -2)))
+		{
 			Collide = transPosition(Position - Right * velocity);
-			if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1))&&map->check(Collide+glm::vec3(0,0,-2))){
+			if (map->check(Collide) && map->check(Collide + glm::vec3(0, 0, -1)) &&
+				map->check(Collide + glm::vec3(0, 0, -2)))
+			{
 				Position -= Right * velocity;
 			}
 		}
 	}
 	if (direction == RIGHT)
 	{
-		Collide = transPosition(Position + Right * (velocity+1));
-		if (Collide.x>=100 || Collide.x <=0 || Collide.y>=100 || Collide.y <=0);
-		else if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1))&&map->check(Collide+glm::vec3(0,0,-2))){
+		Collide = transPosition(Position + Right * (velocity + 1));
+		if (Collide.x >= 100 || Collide.x <= 0 || Collide.y >= 100 || Collide.y <= 0);
+		else if (map->check(Collide) && map->check(Collide + glm::vec3(0, 0, -1)) &&
+				 map->check(Collide + glm::vec3(0, 0, -2)))
+		{
 			Collide = transPosition(Position + Right * velocity);
-			if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1))&&map->check(Collide+glm::vec3(0,0,-2))){
+			if (map->check(Collide) && map->check(Collide + glm::vec3(0, 0, -1)) &&
+				map->check(Collide + glm::vec3(0, 0, -2)))
+			{
 				Position += Right * velocity;
 			}
 		}
@@ -110,8 +125,8 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float delta)
 	if (direction == JUMP)
 	{
 		Collide = transPosition(Position + glm::vec3(0, 2, 0));
-		if (Collide.z>=20);
-		else if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1)))
+		if (Collide.z >= 20);
+		else if (map->check(Collide) && map->check(Collide + glm::vec3(0, 0, -1)))
 		{
 			Position += glm::vec3(0, 2, 0);
 		}
@@ -119,7 +134,7 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float delta)
 	if (direction == UP)
 	{
 		Collide = transPosition(Position + glm::vec3(0, 1, 0) * (velocity + 1));
-		if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1)))
+		if (map->check(Collide) && map->check(Collide + glm::vec3(0, 0, -1)))
 		{
 			Position += glm::vec3(0, 1, 0) * velocity;
 		}
@@ -128,13 +143,14 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float delta)
 
 void Camera::drop()
 {
-	if(!this->enableDrop)
+	if (!this->enableDrop)
 		return;
 	Collide = transPosition(Position + glm::vec3(0, -0.2, 0));
-	if(Position.y <= 2.2){
+	if (Position.y <= 2.2)
+	{
 		Position.y = 2.0;
 	}
-	else if (map->check(Collide+glm::vec3(0,0,-2)) && map->check(Collide+glm::vec3(0,0,-1)))
+	else if (map->check(Collide + glm::vec3(0, 0, -2)) && map->check(Collide + glm::vec3(0, 0, -1)))
 	{
 		Position += glm::vec3(0, -0.2, 0);
 	}
@@ -142,14 +158,21 @@ void Camera::drop()
 
 void Camera::place(int key)
 {
-	glm::vec3 Pos;
-	Pos = transPosition(Position + Front + Front + Front + Front + Front);
-	map->placeblock(Pos, key);
+	glm::vec3 pos;
+	pos = nextPlacePosition();
+	map->placeblock(pos, key);
+	std::cout << "pos: x=" << pos.x << ",y=" << pos.y << ",z=" << pos.z << std::endl;
+}
+
+glm::vec3 Camera::nextPlacePosition() const
+{
+	auto v3 = Position + Front + Front + Front + Front + Front;
+	return transPosition(glm::tvec3<int>(static_cast<int>(v3.x), static_cast<int>(v3.y), static_cast<int>(v3.z)));
 }
 
 void Camera::updateCameraVectors()
 {
-	// TODO: ??? what, 所以之前初始化的front没意义？ 
+	// TODO: ??? what, 所以之前初始化的front没意义？
 	// Calculate the new Front vector
 	glm::vec3 front;
 	front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
@@ -161,7 +184,7 @@ void Camera::updateCameraVectors()
 									  WorldUp));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
 
 	Front_mov = glm::normalize(glm::cross(Right,
-									      WorldUp));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
+										  WorldUp));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
 
 	Up = glm::normalize(glm::cross(Right, Front));
 }
