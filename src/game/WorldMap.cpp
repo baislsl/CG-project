@@ -46,11 +46,10 @@ WorldMap::WorldMap(float size) : size(size), textureManager(TextureManager::getT
 	grassCube->modelMatrix = fitMapMatrix(grassCube->modelMatrix);
 
 	prismMap[6] = new Prism(6, "../res/grass_square/grass.jpeg");
-//	prismMap[6]->modelMatrix = fitMapMatrix(prismMap[6]->modelMatrix);
 	prismMap[6]->modelMatrix = glm::scale(prismMap[6]->modelMatrix, glm::vec3(size, size, size));
-	prismMap[80] = new Prism(80);
-//	prismMap[80]->modelMatrix = fitMapMatrix(prismMap[80]->modelMatrix);
-	prismMap[80]->modelMatrix = glm::scale(prismMap[80]->modelMatrix, glm::vec3(size, size, size));
+	prismMap[256] = new Prism(256);
+	prismMap[256]->modelMatrix = glm::scale(prismMap[256]->modelMatrix, glm::vec3(size, size, size));
+
 	skyBox = new Skybox();
 	skyBox->modelMatrix = fitMapMatrix(skyBox->modelMatrix);
 	skyBox->modelMatrix = glm::scale(skyBox->modelMatrix, glm::vec3(skyBoxWidth, 40, skyBoxLength));
@@ -155,8 +154,9 @@ bool WorldMap::check(glm::vec3 position)
 void WorldMap::placeblock(glm::vec3 position, int key)
 {
 
-	if (position.x >= 100 || position.x <= 0 || position.y >= 100 || position.y <= 0 || position.z >= 20 ||
-		position.z < 0)
+	if (position.x >= WorldMap::width || position.x <= 0
+		|| position.y >= WorldMap::length || position.y <= 0
+		|| position.z >= 20 || position.z < 0)
 		return;
 	auto x = static_cast<int>(position.x), y = static_cast<int>(position.y), z = static_cast<int>(position.z);
 
@@ -166,7 +166,7 @@ void WorldMap::placeblock(glm::vec3 position, int key)
 		case 51: fill(true, x, y, z, waterCube);break;
 		case 52: fill(true, x, y, z, prismMap[6]);break;
 		case 53: fill(true, x, y, z, prismMap[6]);break;
-		case 54: fill(true, x, y, z, prismMap[80]);break;
+		case 54: fill(true, x, y, z, prismMap[256]);break;
 		default:;
 	}
 }
@@ -177,14 +177,14 @@ void WorldMap::build()
 	fill(true, 50, 50, 0, waterCube);
 	fill(true, 51, 50, 0, translucenceCube);
 	fill(true, 52, 50, 0, prismMap[6]);
-	fill(true, 53, 50, 0,  prismMap[80]);
+	fill(true, 53, 50, 0,  prismMap[256]);
 	fill(true, 54, 50, 0, translucenceCube);
 //	fill(true, 50, 50, 0, translucenceCube);
 
 //	putSimpleModel(overground, 0, 50, 50, 2, translucenceCube);
 
 	putSimpleModel(overground, 0, 50, 10, 18, prismMap[6]);
-	putSimpleModel(overground, 0, 10, 50, 18, prismMap[80]);
+	putSimpleModel(overground, 0, 10, 50, 18, prismMap[256]);
 	putSimpleModel(overground, 0, 10, 10, 18, grassCube);
 
 	putSimpleModel(overground, 0, 30, 30, 16, grassCube);
@@ -196,7 +196,7 @@ void WorldMap::build()
 		fill(true, 54, 54, i, prismMap[6]);
 
 	for (int i = 0; i < 8; i++)
-		fill(true, 58, 58, i, prismMap[80]);
+		fill(true, 58, 58, i, prismMap[256]);
 }
 
 void WorldMap::putSimpleModel(const WorldMap::MapType &map, int beginz, int centerx, int centery, int size,
