@@ -100,7 +100,7 @@ void WorldMap::render(const Shader &shader, const Camera &camera)
 	{
 		for (auto &position : iter.second.positions)
 		{
-			if (abs(p.x - position.x) > skyBoxWidth / 2 || abs(p.y - position.y) > skyBoxLength / 2) continue;
+			if (abs((int)(p.x - position.x)) > skyBoxWidth / 2 || abs((int)(p.y - position.y)) > skyBoxLength / 2) continue;
 
 			auto &component = iter.second.component;
 			auto vec = component->modelMatrix;

@@ -128,13 +128,13 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float delta)
 
 void Camera::drop()
 {
-	Collide = transPosition(Position + glm::vec3(0, -0.4, 0));
-	if(Position.y <= 2.4){
+	Collide = transPosition(Position + glm::vec3(0, -0.2, 0));
+	if(Position.y <= 2.2){
 		Position.y = 2.0;
 	}
 	else if (map->check(Collide+glm::vec3(0,0,-2)))
 	{
-		Position += glm::vec3(0, -0.4, 0);
+		Position += glm::vec3(0, -0.2, 0);
 	}
 	else
 		Position.y = (int)Position.y;
