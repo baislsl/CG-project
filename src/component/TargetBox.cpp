@@ -2,7 +2,7 @@
 
 void TargetBox::render(const Shader &shader, const Camera &camera)
 {
-	Position pos(camera.nextPlacePosition());
+	Position pos(camera.targetboxPosition());
 	std::cout << "pos: x=" << pos.x << ",y=" << pos.y << ",z=" << pos.z << std::endl;
 
 	glm::mat4 vec = modelMatrix;
