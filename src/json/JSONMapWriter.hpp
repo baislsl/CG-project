@@ -1,7 +1,7 @@
 #ifndef CGPROJECT_JSONMAP_HPP
 #define CGPROJECT_JSONMAP_HPP
 
-#include "rapidjson/document.h"
+#include <rapidjson/document.h>
 
 #include <vector>
 #include <common/Component.h>

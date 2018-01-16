@@ -87,7 +87,13 @@ set(SOURCE_FILES ${GLAD} ${LINMATH}
         src/component/TargetBox.hpp
         src/json/JSONMapWriter.cpp
         src/json/JSONMapWriter.hpp
-        src/json/JSONUtil.hpp src/component/drawable/Drawable.hpp src/component/drawable/WaterCube.hpp src/component/drawable/GrassCube.hpp src/component/drawable/TNTCube.hpp)
+        src/component/drawable/Drawable.hpp
+        src/component/drawable/WaterCube.hpp
+        src/component/drawable/GrassCube.hpp
+        src/component/drawable/TNTCube.hpp
+        src/json/JSONMapReader.cpp
+        src/json/JSONMapReader.hpp
+        )
 include_directories(src/control)
 include_directories(src/core)
 include_directories(src/component)

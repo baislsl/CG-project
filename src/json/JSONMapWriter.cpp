@@ -1,6 +1,6 @@
 #include "JSONMapWriter.hpp"
-#include "rapidjson/writer.h"
-#include "rapidjson/filewritestream.h"
+#include <rapidjson/writer.h>
+#include <rapidjson/filewritestream.h>
 
 using namespace rapidjson;
 
@@ -30,10 +30,6 @@ rapidjson::Document JSONMapWriter::dump()
 		{
 			Component *c = m.first;
 			const ComponentInfo &info = m.second;
-			std::cout << "begin=";
-			std::cout << info.positions[0].x << " ";
-			std::cout << info.positions[0].y << " ";
-			std::cout << info.positions[0].z << std::endl;
 			Value ele(kObjectType);
 			{
 				Value id;

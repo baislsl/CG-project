@@ -59,7 +59,7 @@ void KeyBoard::processInput(GLfloat deltaTime)
 	if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
 		camera->map->onSave();
 	if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS)
-		camera->map->onSave();
+		camera->map->onLoad();
 }
 
 void KeyBoard::keyCallBack(GLFWwindow *window, int key, int scancode, int action, int mods)

@@ -1,3 +1,4 @@
+#include "WorldMap.hpp"
 #include <drawable/Prism.hpp>
 #include <drawable/TranslucenceCube.h>
 #include <functional>
@@ -5,7 +6,8 @@
 #include <drawable/WaterCube.hpp>
 #include <drawable/TNTCube.hpp>
 #include <JSONMapWriter.hpp>
-#include "WorldMap.hpp"
+#include <JSONMapReader.hpp>
+
 
 bool operator==(const Position &p1, const Position &p2)
 {
@@ -17,7 +19,8 @@ bool operator!=(const Position &p1, const Position &p2)
 	return !(p1 == p2);
 }
 
-WorldMap::WorldMap(float size) : size(size), textureManager(TextureManager::getTextureManagerInstance())
+WorldMap::WorldMap(float size, std::string defaultSavePath) : size(size), defaultSavePath(defaultSavePath),
+		textureManager(TextureManager::getTextureManagerInstance())
 {
 	overground.resize(height);
 	for (auto &i : overground)
@@ -105,7 +108,8 @@ void WorldMap::remove(bool isOverground, int x, int y, int z)
 	}
 }
 
-void WorldMap::conditionRender(const Shader &shader, const Camera &camera, const std::function<bool(Component *)>& filter)
+void
+WorldMap::conditionRender(const Shader &shader, const Camera &camera, const std::function<bool(Component *)> &filter)
 {
 	auto p = camera.getCurrentPosition();
 	for (auto &iter : componentMap)
@@ -113,7 +117,8 @@ void WorldMap::conditionRender(const Shader &shader, const Camera &camera, const
 		if (filter(iter.first)) continue;
 		for (auto &position : iter.second.positions)
 		{
-			if (abs((int)(p.x - position.x)) > skyBoxWidth / 2 || abs((int)(p.y - position.y)) > skyBoxLength / 2) continue;
+			if (abs((int) (p.x - position.x)) > skyBoxWidth / 2 || abs((int) (p.y - position.y)) > skyBoxLength / 2)
+				continue;
 
 			auto component = iter.second.component;
 			auto vec = component->modelMatrix;
@@ -160,21 +165,36 @@ bool WorldMap::check(glm::vec3 position)
 void WorldMap::placeblock(glm::vec3 position, int key)
 {
 
-	if (position.x >= WorldMap::width || position.x <= 0
-		|| position.y >= WorldMap::length || position.y <= 0
-		|| position.z >= 20 || position.z < 0)
+	if (position.x >= WorldMap::width || position.x <= 0 || position.y >= WorldMap::length || position.y <= 0 ||
+		position.z >= 20 || position.z < 0)
 		return;
 	auto x = static_cast<int>(position.x), y = static_cast<int>(position.y), z = static_cast<int>(position.z);
 
-	switch(key){
-		case 49: fill(true, x, y, z, grassCube);break;
-		case 50: fill(true, x, y, z, waterCube);break;
-		case 51: fill(true, x, y, z, translucenceCube);break;
-		case 52: fill(true, x, y, z, TNT);break;
-		case 53: fill(true, x, y, z, prismMap[6]);break;
-		case 54: fill(true, x, y, z, prismMap[256]);break;
-		case 261: remove(true, x, y, z);break;
-		default:;
+	switch (key)
+	{
+		case 49:
+			fill(true, x, y, z, grassCube);
+			break;
+		case 50:
+			fill(true, x, y, z, waterCube);
+			break;
+		case 51:
+			fill(true, x, y, z, translucenceCube);
+			break;
+		case 52:
+			fill(true, x, y, z, TNT);
+			break;
+		case 53:
+			fill(true, x, y, z, prismMap[6]);
+			break;
+		case 54:
+			fill(true, x, y, z, prismMap[256]);
+			break;
+		case 261:
+			remove(true, x, y, z);
+			break;
+		default:
+			break;
 	}
 }
 
@@ -184,7 +204,7 @@ void WorldMap::build()
 	fill(true, 50, 50, 0, waterCube);
 	fill(true, 51, 50, 0, translucenceCube);
 	fill(true, 52, 50, 0, prismMap[6]);
-	fill(true, 53, 50, 0,  prismMap[256]);
+	fill(true, 53, 50, 0, prismMap[256]);
 	fill(true, 54, 50, 0, translucenceCube);
 //	fill(true, 50, 50, 0, translucenceCube);
 
@@ -248,12 +268,72 @@ bool WorldMap::hasLake(int x, int y) const
 	return underground[0][x][y] != nullptr;
 }
 
-void WorldMap::onSave()
+void WorldMap::onSave(std::string path)
 {
+	if (path.empty()) path = defaultSavePath;
 	JSONMapWriter writer(this->componentMap);
-	writer.save("./data.json");
-	writer.save("./data.json");
-	std::cout << "save map data success!" << std::endl;
+	writer.save(path);
+	std::cout << "save worldMap data success in " << defaultSavePath << std::endl;
+}
+
+void WorldMap::onLoad(std::string path)
+{
+	if (path.empty()) path = defaultSavePath;
+	JSONMapReader reader(*this);
+	clearAll();
+	reader.read(path);
+	std::cout << "load worldMap data success from " << defaultSavePath << std::endl;
+}
+
+void WorldMap::clearAll()
+{
+	for (int i = 0; i < WorldMap::width; i++)
+	{
+		for (int j = 0; j < WorldMap::length; j++)
+		{
+			for (int k = 0; k < height; k++)
+			{
+				remove(true, i, j, k);
+				remove(false, i, j, k);
+			}
+		}
+	}
+}
+
+Component *WorldMap::decodeComponentId(const std::string &id)
+{
+	if (id == dynamic_cast<Drawable *>(waterCube)->getDrawableId())
+	{
+		return waterCube;
+	}
+	else if (id == dynamic_cast<Drawable *>(TNT)->getDrawableId())
+	{
+		return TNT;
+	}
+	else if (id == dynamic_cast<Drawable *>(grassCube)->getDrawableId())
+	{
+		return grassCube;
+	}
+	else if (id == dynamic_cast<Drawable *>(translucenceCube)->getDrawableId())
+	{
+		return translucenceCube;
+	}
+	else
+	{        // prism
+		auto header = id.substr(0, 5);
+		auto count = id.substr(5);
+
+		if (header != "prism") return nullptr;
+
+		unsigned cc = static_cast<unsigned >(strtol(count.c_str(), nullptr, 10));
+		if (prismMap[cc] == nullptr)
+		{
+			prismMap[cc] = new Prism(cc);
+		}
+		return prismMap[cc];
+	}
+
+
 }
 
 glm::vec3 Position::getVector()

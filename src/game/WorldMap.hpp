@@ -46,7 +46,7 @@ public:
 	};
 	float size;
 
-	explicit WorldMap(float size = 1.0);
+	explicit WorldMap(float size = 1.0, std::string defaultSavePath = "./data.json");
 
 	void fill(bool isOverground, int x, int y, int z, Component *component);
 
@@ -62,10 +62,16 @@ public:
 
 	void placeblock(glm::vec3 position, int key);
 
-	void onSave();
+	void onSave(std::string path = "");
+
+	void onLoad(std::string path = "");
+
+	void clearAll();
+
+	Component* decodeComponentId(const std::string& id);
 
 private:
-
+	std::string defaultSavePath;
 	using MapType = std::vector<std::vector<std::vector<Component *>>>;
 
 	MapType overground;
@@ -85,6 +91,7 @@ private:
 	glm::mat4 fitMapMatrix(const glm::mat4 &matrix);
 
 	void conditionRender(const Shader &shader, const Camera &camera, const std::function<bool(Component *)> &filter);
+
 
 };
 
