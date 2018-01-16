@@ -78,6 +78,7 @@ public:
 
 	glm::vec3 nextPlacePosition() const ;
 
+	glm::vec3 targetboxPosition() const ;
 
 	// Returns the view matrix calculated using Eular Angles and the LookAt Matrix
 	glm::mat4 GetViewMatrix() const;

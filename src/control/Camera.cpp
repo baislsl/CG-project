@@ -170,6 +170,13 @@ glm::vec3 Camera::nextPlacePosition() const
 	return transPosition(glm::tvec3<int>(static_cast<int>(v3.x), static_cast<int>(v3.y), static_cast<int>(v3.z)));
 }
 
+glm::vec3 Camera::targetboxPosition() const
+{
+	auto v3 = Front + Front + Front + Front + Front;
+	return transPosition(glm::tvec3<int>(static_cast<int>(v3.x), static_cast<int>(v3.y), static_cast<int>(v3.z)));
+}
+
+
 void Camera::updateCameraVectors()
 {
 	// TODO: ??? what, 所以之前初始化的front没意义？
