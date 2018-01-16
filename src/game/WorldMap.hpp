@@ -9,7 +9,7 @@
 #include <Skybox.h>
 #include <GrassFloor.h>
 #include "Prism.hpp"
-
+#include <functional>
 /**
  *   z, x, y
  *   z < 0 地下
@@ -31,18 +31,17 @@
  */
 
 class ComponentInfo;
+
 class aaPosition;
+
 class TranslucenceCube;
 
 class WorldMap : public Component
 {
 public:
-	enum {
-		width = 100,
-		length = 100,
-		height = 20,
-		skyBoxWidth = 50,
-		skyBoxLength = 50
+	enum
+	{
+		width = 100, length = 100, height = 20, skyBoxWidth = 50, skyBoxLength = 50
 	};
 	float size;
 
@@ -54,7 +53,7 @@ public:
 
 	bool hasLake(int x, int y) const;
 
-	~WorldMap() override ;
+	~WorldMap() override;
 
 	void render(const Shader &shader, const Camera &camera) override;
 
@@ -72,8 +71,8 @@ private:
 	TextureManager *textureManager;
 	TextureCube *grassCube, *waterCube, *skyBox;
 	TranslucenceCube *translucenceCube;
-	std::map<unsigned , Prism*> prismMap;
-	GrassFloor* floor;
+	std::map<unsigned, Prism *> prismMap;
+	GrassFloor *floor;
 
 	void build();
 
@@ -81,6 +80,8 @@ private:
 	void putSimpleModel(const MapType &map, int beginz, int centerx, int centery, int size, Component *target);
 
 	glm::mat4 fitMapMatrix(const glm::mat4 &matrix);
+
+	void conditionRender(const Shader &shader, const Camera &camera, const std::function<bool(Component *)>& filter);
 
 };
 

@@ -44,6 +44,7 @@ public:
 	float MovementSpeed;
 	float MouseSensitivity;
 	float Zoom;
+	bool enableDrop = true;
 
 	WorldMap *map;
 
