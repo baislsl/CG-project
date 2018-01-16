@@ -119,14 +119,14 @@ bool WorldMap::check(glm::vec3 position)
 	int x = position.x;
 	int y = position.y;
 	int z = position.z;
-	if (z < 0) true;
+	if (z < 0) return true;
 
 	auto x1 = std::floor(x), x2 = std::ceil(x);
 	auto y1 = std::floor(y), y2 = std::ceil(y);
 	auto z1 = std::floor(z), z2 = std::ceil(z);
 
-	return !(map[z1][x1][y1] != nullptr || map[z1][x1][y2] != nullptr || map[z1][x2][y1] != nullptr ||
-			 map[z1][x2][y2] != nullptr || map[z2][x1][y1] != nullptr || map[z2][x1][y2] != nullptr ||
+	return !(map[z][x1][y1] != nullptr || map[z][x1][y2] != nullptr || map[z][x2][y1] != nullptr ||
+			 map[z][x2][y2] != nullptr || map[z2][x1][y1] != nullptr || map[z2][x1][y2] != nullptr ||
 			 map[z2][x2][y1] != nullptr || map[z2][x2][y2] != nullptr);
 }
 
@@ -139,20 +139,20 @@ void WorldMap::placeblock(glm::vec3 position, int key)
 		case 49: fill(true,position.x,position.y,position.z,grassCube);break;
 		case 50: fill(true,position.x,position.y,position.z,waterCube);break;
 		case 51: fill(true,position.x,position.y,position.z,waterCube);break;
-		case 52: fill(true,position.x,position.y,position.z-0.5,prismMap[6]);break;
-		case 53: fill(true,position.x,position.y,position.z-0.5,prismMap[6]);break;
-		case 54: fill(true,position.x,position.y,position.z-0.5,prismMap[80]);break;
+		case 52: fill(true,position.x,position.y,position.z,prismMap[6]);break;
+		case 53: fill(true,position.x,position.y,position.z,prismMap[6]);break;
+		case 54: fill(true,position.x,position.y,position.z,prismMap[80]);break;
 	}
 }
 
 
 void WorldMap::build()
 {
-	fill(true, 50, 50, 5, waterCube);
-	fill(true, 51, 50, 5, waterCube);
-	fill(true, 52, 50, 5, waterCube);
-	fill(true, 53, 50, 5, waterCube);
-	fill(true, 54, 50, 5, waterCube);
+	fill(true, 50, 50, 0, waterCube);
+	fill(true, 51, 50, 0, waterCube);
+	fill(true, 52, 50, 0, waterCube);
+	fill(true, 53, 50, 0, waterCube);
+	fill(true, 54, 50, 0, waterCube);
 
 	putSimpleModel(overground, 0, 50, 50, 2, translucenceCube);
 
