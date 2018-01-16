@@ -50,7 +50,7 @@ WorldMap::WorldMap(float size) : size(size), textureManager(TextureManager::getT
 
 	skyBox = new Skybox();
 	skyBox->modelMatrix = fitMapMatrix(skyBox->modelMatrix);
-	skyBox->modelMatrix = glm::scale(skyBox->modelMatrix, glm::vec3(40, 40, 40));
+	skyBox->modelMatrix = glm::scale(skyBox->modelMatrix, glm::vec3(skyBoxWidth, 40, skyBoxLength));
 
 	translucenceCube = new TranslucenceCube();
 	translucenceCube->modelMatrix = fitMapMatrix(translucenceCube->modelMatrix);
@@ -94,10 +94,14 @@ void WorldMap::remove(bool isOverground, int x, int y, int z)
 
 void WorldMap::render(const Shader &shader, const Camera &camera)
 {
+	auto p = camera.getCurrentPosition();
+
 	for (auto &iter : componentMap)
 	{
 		for (auto &position : iter.second.positions)
 		{
+			if (abs(p.x - position.x) > skyBoxWidth / 2 || abs(p.y - position.y) > skyBoxLength / 2) continue;
+
 			auto &component = iter.second.component;
 			auto vec = component->modelMatrix;
 			component->modelMatrix = glm::translate(component->modelMatrix, position.getVector());
@@ -115,12 +119,11 @@ bool WorldMap::check(glm::vec3 position)
 	int x = position.x;
 	int y = position.y;
 	int z = position.z;
-	if(z < 0) true;
+	if (z < 0) true;
 
 	auto x1 = std::floor(x), x2 = std::ceil(x);
 	auto y1 = std::floor(y), y2 = std::ceil(y);
 	auto z1 = std::floor(z), z2 = std::ceil(z);
-	std::cout << "z1=" << z1 << ", z2=" << z2;
 
 	return !(map[z1][x1][y1] != nullptr || map[z1][x1][y2] != nullptr || map[z1][x2][y1] != nullptr ||
 			 map[z1][x2][y2] != nullptr || map[z2][x1][y1] != nullptr || map[z2][x1][y2] != nullptr ||
@@ -129,8 +132,11 @@ bool WorldMap::check(glm::vec3 position)
 
 void WorldMap::placeblock(int x, int y, int z, int key)
 {
-	switch(key){
-		case 49: fill(true,width/2+x,length/2+y,z,grassCube);break;
+	switch (key)
+	{
+		case 49:
+			fill(true, width / 2 + x, length / 2 + y, z, grassCube);
+			break;
 	}
 
 }
@@ -155,10 +161,10 @@ void WorldMap::build()
 	putSimpleModel(underground, 0, 30, 70, 16, waterCube);
 	putSimpleModel(underground, 0, 70, 70, 16, waterCube);
 
-	for(int i = 0;i < 8;i++)
+	for (int i = 0; i < 8; i++)
 		fill(true, 54, 54, i, prismMap[6]);
 
-	for(int i =0 ;i < 8;i ++)
+	for (int i = 0; i < 8; i++)
 		fill(true, 58, 58, i, prismMap[80]);
 }
 
@@ -186,7 +192,8 @@ WorldMap::~WorldMap()
 	delete floor;
 	delete skyBox;
 	delete translucenceCube;
-	for(auto &i : prismMap){
+	for (auto &i : prismMap)
+	{
 		delete i.second;
 	}
 }
@@ -205,6 +212,7 @@ bool WorldMap::hasLake(int x, int y) const
 
 glm::vec3 Position::getVector()
 {
+	// TODO: camera y 变负值, 应该从camera视觉方向大范围改动
 	return glm::vec3(x - static_cast<int>(WorldMap::width / 2), isOverground ? z : -z - 1,
 					 y - static_cast<int>(WorldMap::length / 2));
 }

@@ -14,13 +14,7 @@ class WorldMap;
 // Defines several possible options for camera movement. Used as abstraction to stay away from window-system specific input methods
 enum Camera_Movement
 {
-	FORWARD,
-	BACKWARD,
-	LEFT,
-	RIGHT,
-	JUMP,
-	UP,
-	DOWN
+	FORWARD, BACKWARD, LEFT, RIGHT, JUMP, UP, DOWN
 };
 
 // Default camera values
@@ -66,7 +60,12 @@ public:
 
 	void movePosition(float dx, float dy, float dz);
 
-	glm::vec3 transPosition(glm::vec3 position);
+	glm::vec3 transPosition(glm::vec3 position) const ;
+
+	glm::tvec3<size_t > getCurrentPosition() const
+	{
+		return transPosition(Position);
+	}
 
 	void setYaw(float yaw);
 

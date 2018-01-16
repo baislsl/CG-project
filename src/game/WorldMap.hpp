@@ -31,13 +31,19 @@
  */
 
 class ComponentInfo;
-class Position;
+class aaPosition;
 class TranslucenceCube;
 
 class WorldMap : public Component
 {
 public:
-	static const size_t width = 100, length = 100, height = 20;
+	enum {
+		width = 100,
+		length = 100,
+		height = 20,
+		skyBoxWidth = 50,
+		skyBoxLength = 50
+	};
 	float size;
 
 	explicit WorldMap(float size = 1.0);

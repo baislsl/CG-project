@@ -54,7 +54,7 @@ glm::mat4 Camera::GetViewMatrix() const
 	return glm::lookAt(Position, Position + Front, Up);
 }
 
-glm::vec3 Camera::transPosition(glm::vec3 position)//输入的数据中y是高度，此函数将输入的float四舍五入成int并且返回的数据中z是高度
+glm::vec3 Camera::transPosition(glm::vec3 position) const //输入的数据中y是高度，此函数将输入的float四舍五入成int并且返回的数据中z是高度
 {
 	return glm::vec3((int)(position.x+50.5),(int)(position.z+50.5),(int)(position.y+0.5));
 }
@@ -109,8 +109,6 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float delta)
 			Position += glm::vec3(0, 1, 0) * velocity;
 		}
 	}
-
-	std::cout << "position=" << Position.x << ":" << Position.y << ":" << Position.z << std::endl;
 }
 
 void Camera::drop()
