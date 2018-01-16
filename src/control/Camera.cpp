@@ -3,7 +3,7 @@
 
 Camera::Camera(glm::vec3 position, glm::vec3 up, glm::vec3 front, float zoom, float yaw, float pitch) : Position(
 		position), WorldUp(up), Front(front), Yaw(yaw), Pitch(pitch), MovementSpeed(SPEED),
-		MouseSensitivity(SENSITIVTY), Zoom(zoom)
+		MouseSensitivity(SENSITIVTY), Zoom(zoom), speed(0)
 {
 	std::cout << "Constructing Camera." << std::endl;
 	updateCameraVectors();
@@ -124,12 +124,14 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float delta)
 	}
 	if (direction == JUMP)
 	{
-		Collide = transPosition(Position + glm::vec3(0, 2, 0));
-		if (Collide.z >= 20);
-		else if (map->check(Collide) && map->check(Collide + glm::vec3(0, 0, -1)))
-		{
-			Position += glm::vec3(0, 2, 0);
-		}
+//		Collide = transPosition(Position + glm::vec3(0, 2, 0));
+//		if (Collide.z >= 20);
+//		else if (map->check(Collide) && map->check(Collide + glm::vec3(0, 0, -1)))
+//		{
+//			Position += glm::vec3(0, 2, 0);
+//		}
+		if (map->check(Position + glm::vec3(0, -1, 0))) speed += 1;
+		std::cout << "jump, speed:" << speed << std::endl;
 	}
 	if (direction == UP)
 	{
@@ -145,15 +147,20 @@ void Camera::drop()
 {
 	if (!this->enableDrop)
 		return;
-	Collide = transPosition(Position + glm::vec3(0, -0.2, 0));
+//	Collide = transPosition(Position + glm::vec3(0, -0.2, 0));
+	speed -= 0.1;
+	if (Position.y <= 2.2 && speed < 0) speed = 0;
+	std::cout << "speed:" << speed << std::endl;
+	Collide = transPosition(Position + glm::vec3(0, speed, 0));
+	if (map->check(Collide)) Position += glm::vec3(0, speed, 0);
 	if (Position.y <= 2.2)
 	{
 		Position.y = 2.0;
 	}
-	else if (map->check(Collide + glm::vec3(0, 0, -2)) && map->check(Collide + glm::vec3(0, 0, -1)))
-	{
-		Position += glm::vec3(0, -0.2, 0);
-	}
+//	else if (map->check(Collide + glm::vec3(0, 0, -2)) && map->check(Collide + glm::vec3(0, 0, -1)))
+//	{
+//		Position += glm::vec3(0, -0.2, 0);
+//	}
 }
 
 void Camera::place(int key)
@@ -161,7 +168,7 @@ void Camera::place(int key)
 	glm::vec3 pos;
 	pos = nextPlacePosition();
 	map->placeblock(pos, key);
-	std::cout << "pos: x=" << pos.x << ",y=" << pos.y << ",z=" << pos.z << std::endl;
+//	std::cout << "pos: x=" << pos.x << ",y=" << pos.y << ",z=" << pos.z << std::endl;
 }
 
 glm::vec3 Camera::nextPlacePosition() const
