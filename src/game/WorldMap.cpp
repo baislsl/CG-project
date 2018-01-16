@@ -108,13 +108,16 @@ void WorldMap::render(const Shader &shader, const Camera &camera)
 	skyBox->render(shader, camera);
 }
 
-bool WorldMap::check(float x, float y, float z)
+bool WorldMap::check(glm::vec3 position)
 {
 	auto &map = overground;
+	int x = position.x;
+	int y = position.y;
+	int z = position.z;
 	if(z < 0) true;
 
-	auto x1 = std::floor(49 + x), x2 = std::ceil(49 + x);
-	auto y1 = std::floor(49 + y), y2 = std::ceil(49 + y);
+	auto x1 = std::floor(x), x2 = std::ceil(x);
+	auto y1 = std::floor(y), y2 = std::ceil(y);
 	auto z1 = std::floor(z), z2 = std::ceil(z);
 	std::cout << "z1=" << z1 << ", z2=" << z2;
 
@@ -126,7 +129,7 @@ bool WorldMap::check(float x, float y, float z)
 void WorldMap::placeblock(int x, int y, int z, int key)
 {
 	switch(key){
-		case 49: fill(true,49+x,49+y,z,grassCube);break;
+		case 49: fill(true,width/2+x,length/2+y,z,grassCube);break;
 	}
 
 }

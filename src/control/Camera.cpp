@@ -54,43 +54,48 @@ glm::mat4 Camera::GetViewMatrix() const
 	return glm::lookAt(Position, Position + Front, Up);
 }
 
+glm::vec3 Camera::transPosition(glm::vec3 position)//输入的数据中y是高度，此函数将输入的float四舍五入成int并且返回的数据中z是高度
+{
+	return glm::vec3((int)(position.x+50.5),(int)(position.z+50.5),(int)(position.y+0.5));
+}
+
 void Camera::ProcessKeyboard(Camera_Movement direction, float delta)
 {
 	float velocity = delta;
 
 	if (direction == FORWARD)
 	{
-		Collide = Position - Front_mov * (velocity+1);
-		if (map->check(Collide.x, Collide.z, Collide.y-1)){
-		Position -= Front_mov * velocity;
+		Collide = transPosition(Position - Front_mov * (velocity+1));
+		if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1))){
+		    Position -= Front_mov * velocity;
 		}
 	}
 	if (direction == BACKWARD)
 	{
-		Collide = Position + Front_mov * (velocity+1);
-		if (map->check(Collide.x, Collide.z, Collide.y-1)){
+		Collide = transPosition(Position + Front_mov * (velocity+1));
+		if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1))){
 			Position += Front_mov * velocity;
 		}
 	}
 	if (direction == LEFT)
 	{
-		Collide = Position - Right * (velocity+1);
-		if (map->check(Collide.x, Collide.z, Collide.y-1)){
+		Collide = transPosition(Position - Right * (velocity+1));
+		if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1))){
 			Position -= Right * velocity;
 		}
 	}
 	if (direction == RIGHT)
 	{
-		Collide = Position + Right * (velocity+1);
-		if (map->check(Collide.x, Collide.z, Collide.y-1)){
+		Collide = transPosition(Position + Right * (velocity+1));
+		if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1))){
 			Position += Right * velocity;
 		}
 	}
 	if (direction == JUMP)
 	{
 		for(int i = 0; i<5; i++){
-			Collide = Position + glm::vec3(0, 1, 0) * (velocity + 1);
-			if (map->check(Collide.x, Collide.z, Collide.y - 1))
+			Collide = transPosition(Position + glm::vec3(0, 1, 0) * (velocity + 1));
+			if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1)))
 			{
 				Position += glm::vec3(0, 1, 0) * (velocity);
 			}
@@ -98,8 +103,8 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float delta)
 	}
 	if (direction == UP)
 	{
-		Collide = Position + glm::vec3(0, 1, 0) * (velocity + 1);
-		if (map->check(Collide.x, Collide.z, Collide.y - 1))
+		Collide = transPosition(Position + glm::vec3(0, 1, 0) * (velocity + 1));
+		if (map->check(Collide)&&map->check(Collide+glm::vec3(0,0,-1)))
 		{
 			Position += glm::vec3(0, 1, 0) * velocity;
 		}
@@ -114,7 +119,7 @@ void Camera::drop()
 	if(Position.y <= 2.4){
 		Position.y = 2.0;
 	}
-	else if (map->check(Collide.x, Collide.z, Collide.y - 2))
+	else if (map->check(Collide+glm::vec3(0,0,-2)))
 	{
 		Position += glm::vec3(0, -0.4, 0);
 	}

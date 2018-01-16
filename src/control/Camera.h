@@ -66,6 +66,8 @@ public:
 
 	void movePosition(float dx, float dy, float dz);
 
+	glm::vec3 transPosition(glm::vec3 position);
+
 	void setYaw(float yaw);
 
 	void setPitch(float pitch);

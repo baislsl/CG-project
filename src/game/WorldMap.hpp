@@ -52,7 +52,7 @@ public:
 
 	void render(const Shader &shader, const Camera &camera) override;
 
-	bool check(float x, float y, float z);
+	bool check(glm::vec3 position);
 
 	void placeblock(int x, int y, int z, int key);
 
