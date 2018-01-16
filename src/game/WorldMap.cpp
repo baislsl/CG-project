@@ -70,6 +70,8 @@ WorldMap::WorldMap(float size) : size(size), textureManager(TextureManager::getT
 	GLuint frame = textureManager->load("../res/pic/frame.png");
 	targetBox = new TargetBox(frame, frame, frame, frame, frame, frame);
 	targetBox->modelMatrix = fitMapMatrix(targetBox->modelMatrix);
+	targetBox->modelMatrix = glm::scale(targetBox->modelMatrix, glm::vec3(1.05, 1.05, 1.05));
+
 	build();
 }
 
