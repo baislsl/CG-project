@@ -17,12 +17,12 @@ void GrassFloor::render(const Shader &shader, const Camera &camera)
 	glm::tvec3<int> p = camera.getCurrentPosition();
 
 	glm::mat4 mat = glm::scale(this->modelMatrix, glm::vec3(size, size, size));
-	for (auto i = std::max(0, p.x - WorldMap::skyBoxWidth / 2 - 2);
-		 i < std::min(width, p.x + WorldMap::skyBoxWidth / 2 + 2); i++)
+	for (auto i =  p.x - WorldMap::skyBoxWidth / 2 - 2;
+		 i < p.x + WorldMap::skyBoxWidth / 2 + 2; i++)
 	{
 
-		for (auto j = std::max(0, p.y - WorldMap::skyBoxLength / 2 - 2);
-			 j < std::min(length, p.y + WorldMap::skyBoxLength / 2 + 2); j++)
+		for (auto j = p.y - WorldMap::skyBoxLength / 2 - 2;
+			 j < p.y + WorldMap::skyBoxLength / 2 + 2; j++)
 		{
 			plane.modelMatrix = glm::scale(mat, glm::vec3(size, size, 1));
 			// TODO: camera y 变负值, 应该从camera视觉方向大范围改动
