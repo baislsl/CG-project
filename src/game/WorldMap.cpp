@@ -173,7 +173,7 @@ void WorldMap::placeblock(glm::vec3 position, int key)
 		case 52: fill(true, x, y, z, TNT);break;
 		case 53: fill(true, x, y, z, prismMap[6]);break;
 		case 54: fill(true, x, y, z, prismMap[256]);break;
-		case 258: remove(true, x, y, z);break;
+		case 261: remove(true, x, y, z);break;
 		default:;
 	}
 }

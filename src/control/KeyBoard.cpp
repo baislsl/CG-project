@@ -53,8 +53,8 @@ void KeyBoard::processInput(GLfloat deltaTime)
 		camera->place(GLFW_KEY_5);
 	if (glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS)
 		camera->place(GLFW_KEY_6);
-	if (glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS)
-		camera->place(GLFW_KEY_TAB);
+	if (glfwGetKey(window, GLFW_KEY_DELETE) == GLFW_PRESS)
+		camera->place(GLFW_KEY_DELETE);
 }
 
 void KeyBoard::keyCallBack(GLFWwindow *window, int key, int scancode, int action, int mods)
