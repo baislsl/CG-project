@@ -1,5 +1,6 @@
 #include <Prism.hpp>
 #include <TranslucenceCube.h>
+#include <functional>
 #include "WorldMap.hpp"
 
 bool operator==(const Position &p1, const Position &p2)
@@ -92,12 +93,12 @@ void WorldMap::remove(bool isOverground, int x, int y, int z)
 	}
 }
 
-void WorldMap::render(const Shader &shader, const Camera &camera)
+void WorldMap::conditionRender(const Shader &shader, const Camera &camera, const std::function<bool(Component *)>& filter)
 {
 	auto p = camera.getCurrentPosition();
-
 	for (auto &iter : componentMap)
 	{
+		if (filter(iter.first)) continue;
 		for (auto &position : iter.second.positions)
 		{
 			if (abs((int)(p.x - position.x)) > skyBoxWidth / 2 || abs((int)(p.y - position.y)) > skyBoxLength / 2) continue;
@@ -109,7 +110,22 @@ void WorldMap::render(const Shader &shader, const Camera &camera)
 			component->modelMatrix = vec;
 		}
 	}
+}
+
+void WorldMap::render(const Shader &shader, const Camera &camera)
+{
+	auto p = camera.getCurrentPosition();
 	floor->render(shader, camera);
+	conditionRender(shader, camera, [=](Component *c)
+	{
+		return c == waterCube;
+	});
+	conditionRender(shader, camera, [=](Component *c)
+	{
+		return c != waterCube;
+	});
+
+	// TODO: 不知道为什么这个render放在画透明块前面会出问题
 	skyBox->render(shader, camera);
 }
 
@@ -133,7 +149,8 @@ bool WorldMap::check(glm::vec3 position)
 void WorldMap::placeblock(glm::vec3 position, int key)
 {
 
-	if (position.x>=100 || position.x <=0 || position.y>=100 || position.y <=0 || position.z>=20 || position.z <=0);
+	if (position.x >= 100 || position.x <= 0 || position.y >= 100 || position.y <= 0 || position.z >= 20 ||
+		position.z <= 0);
 
 	switch(key){
 		case 49: fill(true,position.x,position.y,position.z,grassCube);break;
