@@ -1,6 +1,7 @@
 #include <Prism.hpp>
 #include <TranslucenceCube.h>
 #include <functional>
+#include <TargetBox.hpp>
 #include "WorldMap.hpp"
 
 bool operator==(const Position &p1, const Position &p2)
@@ -58,6 +59,10 @@ WorldMap::WorldMap(float size) : size(size), textureManager(TextureManager::getT
 
 	floor = new GrassFloor(this->modelMatrix, *this, length, width, size);
 	floor->modelMatrix = glm::rotate(floor->modelMatrix, glm::radians(static_cast<float >(90.0f)), glm::vec3(-1, 0, 0));
+
+	// TODO: replace target cube
+	targetBox = new TargetBox(blueTexture, blueTexture, blueTexture, blueTexture, blueTexture, blueTexture);
+	targetBox->modelMatrix = fitMapMatrix(targetBox->modelMatrix);
 	build();
 }
 
@@ -127,17 +132,7 @@ void WorldMap::render(const Shader &shader, const Camera &camera)
 
 	// TODO: 不知道为什么这个render放在画透明块前面会出问题
 	skyBox->render(shader, camera);
-
-	auto target = camera.nextPlacePosition();
-	target.z -= 2;
-	std::cout << "target: x=" << target.x << ",y=" << target.y << ",z=" << target.z << std::endl;
-
-	auto component = waterCube;
-	auto vec = component->modelMatrix;
-	component->modelMatrix = glm::translate(component->modelMatrix, Position(target).getVector());
-	component->render(shader, camera);
-	component->modelMatrix = vec;
-
+	targetBox->render(shader, camera);
 }
 
 bool WorldMap::check(glm::vec3 position)
@@ -164,12 +159,12 @@ void WorldMap::placeblock(glm::vec3 position, int key)
 	auto x = static_cast<int>(position.x), y = static_cast<int>(position.y), z = static_cast<int>(position.z);
 
 	switch(key){
-		case 49: fill(true,x, y, z,grassCube);break;
-		case 50: fill(true,x, y, z,waterCube);break;
-		case 51: fill(true,x, y, z,waterCube);break;
-		case 52: fill(true,x, y, z,prismMap[6]);break;
-		case 53: fill(true,x, y, z,prismMap[6]);break;
-		case 54: fill(true,x, y, z,prismMap[80]);break;
+		case 49: fill(true, x, y, z, grassCube);break;
+		case 50: fill(true, x, y, z, waterCube);break;
+		case 51: fill(true, x, y, z, waterCube);break;
+		case 52: fill(true, x, y, z, prismMap[6]);break;
+		case 53: fill(true, x, y, z, prismMap[6]);break;
+		case 54: fill(true, x, y, z, prismMap[80]);break;
 		default:;
 	}
 }
