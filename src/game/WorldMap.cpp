@@ -139,9 +139,9 @@ void WorldMap::placeblock(glm::vec3 position, int key)
 		case 49: fill(true,position.x,position.y,position.z,grassCube);break;
 		case 50: fill(true,position.x,position.y,position.z,waterCube);break;
 		case 51: fill(true,position.x,position.y,position.z,waterCube);break;
-		case 52: fill(true,position.x,position.y,position.z,prismMap[6]);break;
-		case 53: fill(true,position.x,position.y,position.z,prismMap[6]);break;
-		case 54: fill(true,position.x,position.y,position.z,prismMap[80]);break;
+		case 52: fill(true,position.x,position.y,position.z-0.5,prismMap[6]);break;
+		case 53: fill(true,position.x,position.y,position.z-0.5,prismMap[6]);break;
+		case 54: fill(true,position.x,position.y,position.z-0.5,prismMap[80]);break;
 	}
 }
 
