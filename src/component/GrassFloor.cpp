@@ -34,5 +34,5 @@ void GrassFloor::render(const Shader &shader, const Camera &camera)
 		}
 	}
 	floor.modelMatrix = this->modelMatrix;
-	floor.render(shader, camera);
+//	floor.render(shader, camera);
 }
