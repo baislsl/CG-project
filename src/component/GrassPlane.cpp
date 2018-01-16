@@ -44,9 +44,15 @@ GrassPlane::GrassPlane(const glm::mat4 &up, const WorldMap& map, double z, int l
 
 void GrassPlane::render(const Shader &shader, const Camera &camera)
 {
-	for (int i = 0; i < width; i++)
+	glm::tvec3<int> p = camera.getCurrentPosition();
+
+	glm::mat4 mat = glm::scale(this->modelMatrix, glm::vec3(size, size, size));
+	for (auto i =  p.x - WorldMap::skyBoxWidth / 2 - 2;
+		 i < p.x + WorldMap::skyBoxWidth / 2 + 2; i++)
 	{
-		for (int j = 0; j < length; j++)
+
+		for (auto j = p.y - WorldMap::skyBoxLength / 2 - 2;
+			 j < p.y + WorldMap::skyBoxLength / 2 + 2; j++)
 		{
 			double x = i, y = j;
 			if (squareTypes[i][j] == squares.size() || map.hasLake(i, j)) continue;
@@ -73,6 +79,6 @@ void GrassPlane::GrassSquare::renderToXY(double x, double y, const Shader &shade
 	shader.setFloat("material.shininess", material.shininess);
 	shader.setBool("usingTexture", usingTexture);
 	shader.setMat4("model",
-				   glm::translate(parent.modelMatrix, glm::vec3(x - parent.width / 2, y - parent.length / 2, 0)));
+				   glm::translate(parent.modelMatrix, glm::vec3(x - parent.width / 2, - y + parent.length / 2, 0)));
 	model.Draw(shader);
 }
