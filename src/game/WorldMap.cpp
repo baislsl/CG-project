@@ -130,25 +130,24 @@ bool WorldMap::check(glm::vec3 position)
 			 map[z2][x2][y1] != nullptr || map[z2][x2][y2] != nullptr);
 }
 
-void WorldMap::placeblock(int x, int y, int z, int key)
+void WorldMap::placeblock(glm::vec3 position, int key)
 {
 	switch (key)
 	{
 		case 49:
-			fill(true, width / 2 + x, length / 2 + y, z, grassCube);
+			fill(true, position.x, position.y, position.z, grassCube);
 			break;
 	}
-
 }
 
 
 void WorldMap::build()
 {
 	fill(true, 50, 50, 5, waterCube);
-	fill(true, 51, 51, 5, waterCube);
-	fill(true, 52, 52, 5, waterCube);
-	fill(true, 53, 53, 5, waterCube);
-	fill(true, 54, 54, 5, waterCube);
+	fill(true, 51, 50, 5, waterCube);
+	fill(true, 52, 50, 5, waterCube);
+	fill(true, 53, 50, 5, waterCube);
+	fill(true, 54, 50, 5, waterCube);
 
 	putSimpleModel(overground, 0, 50, 50, 2, translucenceCube);
 

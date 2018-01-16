@@ -60,7 +60,7 @@ public:
 
 	bool check(glm::vec3 position);
 
-	void placeblock(int x, int y, int z, int key);
+	void placeblock(glm::vec3 position, int key);
 
 private:
 
