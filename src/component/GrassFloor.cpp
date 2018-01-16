@@ -19,7 +19,6 @@ void GrassFloor::render(const Shader &shader, const Camera &camera)
 	{
 		for (int j = 0; j < length; j++)
 		{
-			if(map.hasLake(i, j))continue;
 			plane.modelMatrix = glm::scale(mat, glm::vec3(size, size, 1));
 			plane.modelMatrix = glm::translate(plane.modelMatrix, glm::vec3(i - width / 2, j - length / 2, 0));
 

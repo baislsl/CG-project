@@ -36,6 +36,7 @@ WorldMap::WorldMap(float size) : size(size), textureManager(TextureManager::getT
 	GLuint blueTexture = textureManager->load("../res/pic/x.png");
 	waterCube = new TextureCube(blueTexture, blueTexture, blueTexture, blueTexture, blueTexture, blueTexture);
 	waterCube->modelMatrix = fitMapMatrix(waterCube->modelMatrix);
+	waterCube->modelMatrix = glm::translate(waterCube->modelMatrix, glm::vec3(0, 0.01, 0));
 
 	GLuint grassTop = textureManager->load("../res/grass_square/grass.jpeg"), grassSide = textureManager->load(
 			"../res/grass_square/side.png"), grassBottom = textureManager->load("../res/grass_square/global.png");
