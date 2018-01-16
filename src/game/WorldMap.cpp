@@ -49,8 +49,7 @@ WorldMap::WorldMap(float size) : size(size), textureManager(TextureManager::getT
 
 	skyBox = new Skybox();
 	skyBox->modelMatrix = fitMapMatrix(skyBox->modelMatrix);
-	skyBox->modelMatrix = glm::translate(grassCube->modelMatrix, glm::vec3(0, 50, 0));
-	skyBox->modelMatrix = glm::scale(grassCube->modelMatrix, glm::vec3(100, 100, 100));
+	skyBox->modelMatrix = glm::scale(skyBox->modelMatrix, glm::vec3(40, 40, 40));
 
 	translucenceCube = new TranslucenceCube();
 	translucenceCube->modelMatrix = fitMapMatrix(translucenceCube->modelMatrix);

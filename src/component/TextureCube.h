@@ -13,7 +13,7 @@ public:
 
 	virtual ~TextureCube() = default;
 
-private:
+protected:
 	GLuint top, bottom, left, right, front, back;
 };
 

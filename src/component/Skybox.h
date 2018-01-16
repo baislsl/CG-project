@@ -17,6 +17,9 @@ public:
                     GLuint back = TextureManager::getTextureManagerInstance()->load("../res/skybox/siege_back.jpg")
     ):
             TextureCube(top, 0, left, right, front, back){}
+
+	void render(const Shader& shader, const Camera& camera) override ;
+
 private:
 
 };
