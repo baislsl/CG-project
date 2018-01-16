@@ -5,6 +5,7 @@
 
 void Skybox::render(const Shader &shader, const Camera &camera)
 {
+	shader.setBool("selflight", true);
 	shader.setMat4("view",  glm::mat4(glm::mat3(camera.GetViewMatrix())));
 	shader.setMat4("model", modelMatrix);
 	shader.setVec3("material.diffuse", material.diffuse);
@@ -32,4 +33,5 @@ void Skybox::render(const Shader &shader, const Camera &camera)
 
 	glBindTexture(GL_TEXTURE_2D, bottom);    // bottom
 	glDrawArrays(GL_TRIANGLES, 24, 6);
+	shader.setBool("selflight", false);
 }
