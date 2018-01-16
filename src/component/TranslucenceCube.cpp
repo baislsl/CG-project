@@ -6,9 +6,6 @@ TranslucencePlane::TranslucencePlane(unsigned int cc) : cc(cc)
 
 void TranslucencePlane::init()
 {
-	// plane 默认长度为2,缩为1
-	plane.modelMatrix = glm::scale(plane.modelMatrix, glm::vec3(0.5, 0.5, 1));
-
 	std::array<glm::vec3, div> ms{
 			{{0.5, 0.7, 0.2}, {0.4, 0.8, 0.2},{0.24, 0.52, 0.09}, {0.16, 0.34, 0.06}}
 	};
@@ -45,6 +42,10 @@ void TranslucencePlane::render(const Shader &shader, const Camera &camera)
 			plane.material = materials[map[i][j]];
 			plane.modelMatrix = glm::scale(this->modelMatrix, glm::vec3(1.0 / cc, 1.0 / cc, 1.0 / cc));
 			plane.modelMatrix = glm::translate(plane.modelMatrix, glm::vec3(i - cc / 2 + 0.5, j - cc / 2 + 0.5, 0));
+
+			// plane 默认长度为2,缩为1
+			plane.modelMatrix = glm::scale(plane.modelMatrix, glm::vec3(0.5, 0.5, 1));
+
 			plane.render(shader, camera);
 
 		}
