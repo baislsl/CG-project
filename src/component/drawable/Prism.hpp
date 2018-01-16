@@ -3,9 +3,10 @@
 
 
 #include <common/BaseShape.h>
+#include "Drawable.hpp"
 
 // TODO: support texture for top and bottom
-class Prism : public BaseShape
+class Prism : public BaseShape, public Drawable
 {
 public:
 	Prism(unsigned dimension, GLuint sideTexture);
@@ -15,6 +16,10 @@ public:
 	explicit Prism(unsigned dimension);
 
 	void render(const Shader &shader, const Camera &camera) override;
+
+	std::string getDrawableId() override {
+		return "prism" + dimension;
+	}
 
 private:
 	unsigned dimension;

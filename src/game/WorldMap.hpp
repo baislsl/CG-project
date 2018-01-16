@@ -8,7 +8,7 @@
 #include <GrassCube.h>
 #include <Skybox.h>
 #include <GrassFloor.h>
-#include "Prism.hpp"
+#include "drawable/Prism.hpp"
 #include <functional>
 
 /**

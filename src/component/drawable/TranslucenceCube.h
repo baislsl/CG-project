@@ -5,14 +5,19 @@
 #include <common/BaseShape.h>
 #include <array>
 #include "Plane.h"
+#include "Drawable.hpp"
 
 
-class TranslucencePlane : public BaseShape
+class TranslucencePlane : public BaseShape, public Drawable
 {
 public:
 	explicit TranslucencePlane(unsigned cc = 14);
 
 	void render(const Shader& shader, const Camera& camera) override ;
+
+	std::string getDrawableId() override {
+		return "translucence";
+	}
 
 private:
 	unsigned cc;

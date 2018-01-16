@@ -1,7 +1,9 @@
-#include <Prism.hpp>
-#include <TranslucenceCube.h>
+#include <drawable/Prism.hpp>
+#include <drawable/TranslucenceCube.h>
 #include <functional>
 #include <TargetBox.hpp>
+#include <drawable/WaterCube.hpp>
+#include <drawable/TNTCube.hpp>
 #include "WorldMap.hpp"
 
 bool operator==(const Position &p1, const Position &p2)
@@ -35,25 +37,20 @@ WorldMap::WorldMap(float size) : size(size), textureManager(TextureManager::getT
 		}
 	}
 
-	GLuint blueTexture = textureManager->load("../res/pic/x.png");
-	waterCube = new TextureCube(blueTexture, blueTexture, blueTexture, blueTexture, blueTexture, blueTexture);
+	waterCube = new WaterCube();
 	waterCube->modelMatrix = fitMapMatrix(waterCube->modelMatrix);
 	waterCube->modelMatrix = glm::translate(waterCube->modelMatrix, glm::vec3(0, 0.01, 0));
 
-	GLuint grassTop = textureManager->load("../res/grass_square/grass.jpeg"), grassSide = textureManager->load(
-			"../res/grass_square/side.png"), grassBottom = textureManager->load("../res/grass_square/global.png");
-	grassCube = new TextureCube(grassTop, grassBottom, grassSide, grassSide, grassSide, grassSide);
+	grassCube = new GrassCube();
 	grassCube->modelMatrix = fitMapMatrix(grassCube->modelMatrix);
 
-	GLuint tntTop = textureManager->load("../res/pic/tnt_top.png"), tntSide = textureManager->load(
-			"../res/pic/tnt_side.png"), tntBottom = textureManager->load("../res/pic/tnt_bottom.png");
-	TNT = new TextureCube(tntTop, tntBottom, tntSide, tntSide, tntSide, tntSide);
+	TNT = new TNTCube();
 	TNT->modelMatrix = fitMapMatrix(TNT->modelMatrix);
 
 	prismMap[6] = new Prism(6, "../res/grass_square/grass.jpeg");
-	prismMap[6]->modelMatrix = glm::scale(prismMap[6]->modelMatrix, glm::vec3(size, size, size));
+//	prismMap[6]->modelMatrix = glm::scale(prismMap[6]->modelMatrix, glm::vec3(size, size, size));
 	prismMap[256] = new Prism(256);
-	prismMap[256]->modelMatrix = glm::scale(prismMap[256]->modelMatrix, glm::vec3(size, size, size));
+//	prismMap[256]->modelMatrix = glm::scale(prismMap[256]->modelMatrix, glm::vec3(size, size, size));
 
 	skyBox = new Skybox();
 	skyBox->modelMatrix = fitMapMatrix(skyBox->modelMatrix);

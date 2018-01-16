@@ -81,13 +81,15 @@ set(SOURCE_FILES ${GLAD} ${LINMATH}
         src/component/Skybox.cpp
         src/control/KeyBoard.cpp
         src/control/KeyBoard.h
-        src/component/Prism.hpp
-        src/component/Prism.cpp
-        src/component/TranslucenceCube.cpp
-        src/component/TranslucenceCube.h
+        src/component/drawable/Prism.hpp
+        src/component/drawable/Prism.cpp
+        src/component/drawable/TranslucenceCube.cpp
+        src/component/drawable/TranslucenceCube.h
         src/component/TargetBox.cpp
         src/component/TargetBox.hpp
-        )
+        src/json/JSONMapWriter.cpp
+        src/json/JSONMapWriter.hpp
+        src/json/JSONUtil.hpp src/component/drawable/Drawable.hpp src/component/drawable/WaterCube.hpp src/component/drawable/GrassCube.hpp src/component/drawable/TNTCube.hpp)
 include_directories(src/control)
 include_directories(src/core)
 include_directories(src/component)
@@ -96,6 +98,7 @@ include_directories(lib/glad)
 include_directories(lib/KHR)
 include_directories(src/component/common)
 include_directories(src/game)
+include_directories(src/json)
 add_executable(demo ${SOURCE_FILES})
 if (APPLE)
     target_link_libraries(demo "/usr/local/lib/libassimp.dylib")
