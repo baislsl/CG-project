@@ -18,7 +18,7 @@ public:
 	void render(const Shader &shader, const Camera &camera) override;
 
 	std::string getDrawableId() override {
-		return "prism" + dimension;
+		return "prism" + std::to_string(dimension);
 	}
 
 private:

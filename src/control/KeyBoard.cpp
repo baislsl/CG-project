@@ -29,8 +29,9 @@ void KeyBoard::processInput(GLfloat deltaTime)
 		camera->ProcessKeyboard(LEFT, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		camera->ProcessKeyboard(RIGHT, deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
-		if(isPress == false)
+	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+	{
+		if (isPress == false)
 		{
 			isPress = true;
 			camera->ProcessKeyboard(JUMP, deltaTime);
@@ -55,6 +56,10 @@ void KeyBoard::processInput(GLfloat deltaTime)
 		camera->place(GLFW_KEY_6);
 	if (glfwGetKey(window, GLFW_KEY_DELETE) == GLFW_PRESS)
 		camera->place(GLFW_KEY_DELETE);
+	if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
+		camera->map->onSave();
+	if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS)
+		camera->map->onSave();
 }
 
 void KeyBoard::keyCallBack(GLFWwindow *window, int key, int scancode, int action, int mods)

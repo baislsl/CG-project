@@ -5,7 +5,7 @@
 #include <Component.h>
 #include <map>
 #include <TextureManager.h>
-#include <GrassCube.h>
+#include "drawable/GrassCube.hpp"
 #include <Skybox.h>
 #include <GrassFloor.h>
 #include "drawable/Prism.hpp"
@@ -61,6 +61,8 @@ public:
 	bool check(glm::vec3 position);
 
 	void placeblock(glm::vec3 position, int key);
+
+	void onSave();
 
 private:
 

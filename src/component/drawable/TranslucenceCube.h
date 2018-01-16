@@ -8,16 +8,12 @@
 #include "Drawable.hpp"
 
 
-class TranslucencePlane : public BaseShape, public Drawable
+class TranslucencePlane : public BaseShape
 {
 public:
 	explicit TranslucencePlane(unsigned cc = 14);
 
 	void render(const Shader& shader, const Camera& camera) override ;
-
-	std::string getDrawableId() override {
-		return "translucence";
-	}
 
 private:
 	unsigned cc;
@@ -29,7 +25,7 @@ private:
 	void init();
 };
 
-class TranslucenceCube : public BaseShape
+class TranslucenceCube : public BaseShape, public Drawable
 {
 public:
 	TranslucenceCube() = default;
@@ -37,6 +33,9 @@ public:
 	// TODO: location of this seems to exist great problem
 	void render(const Shader& shader, const Camera& camera) override ;
 
+	std::string getDrawableId() override {
+		return "translucence";
+	}
 private:
 	std::array<TranslucencePlane, 6> planes;
 

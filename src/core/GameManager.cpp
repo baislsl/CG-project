@@ -1,6 +1,5 @@
 #include <GrassPlane.h>
 #include <GrassFloor.h>
-#include <GrassCube.h>
 #include <drawable/Prism.hpp>
 #include <drawable/TranslucenceCube.h>
 #include "GameManager.h"

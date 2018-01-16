@@ -4,6 +4,7 @@
 #include <TargetBox.hpp>
 #include <drawable/WaterCube.hpp>
 #include <drawable/TNTCube.hpp>
+#include <JSONMapWriter.hpp>
 #include "WorldMap.hpp"
 
 bool operator==(const Position &p1, const Position &p2)
@@ -245,6 +246,14 @@ glm::mat4 WorldMap::fitMapMatrix(const glm::mat4 &matrix)
 bool WorldMap::hasLake(int x, int y) const
 {
 	return underground[0][x][y] != nullptr;
+}
+
+void WorldMap::onSave()
+{
+	JSONMapWriter writer(this->componentMap);
+	writer.save("./data.json");
+	writer.save("./data.json");
+	std::cout << "save map data success!" << std::endl;
 }
 
 glm::vec3 Position::getVector()
