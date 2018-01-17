@@ -7,6 +7,7 @@
 #include <drawable/TNTCube.hpp>
 #include <JSONMapWriter.hpp>
 #include <JSONMapReader.hpp>
+#include <drawable/StoneCube.h>
 
 
 bool operator==(const Position &p1, const Position &p2)
@@ -50,6 +51,9 @@ WorldMap::WorldMap(float size, std::string defaultSavePath) : size(size), defaul
 
 	TNT = new TNTCube();
 	TNT->modelMatrix = fitMapMatrix(TNT->modelMatrix);
+
+	stoneCube = new StoneCube();
+	stoneCube->modelMatrix = fitMapMatrix(stoneCube->modelMatrix);
 
 	prismMap[6] = new Prism(6, "../res/grass_square/grass.jpeg");
 //	prismMap[6]->modelMatrix = glm::scale(prismMap[6]->modelMatrix, glm::vec3(size, size, size));
@@ -185,9 +189,12 @@ void WorldMap::placeblock(glm::vec3 position, int key)
 			fill(true, x, y, z, TNT);
 			break;
 		case 53:
-			fill(true, x, y, z, prismMap[6]);
+			fill(true, x, y, z, stoneCube);
 			break;
 		case 54:
+			fill(true, x, y, z, prismMap[6]);
+			break;
+		case 55:
 			fill(true, x, y, z, prismMap[256]);
 			break;
 		case 261:
@@ -317,6 +324,10 @@ Component *WorldMap::decodeComponentId(const std::string &id)
 	else if (id == dynamic_cast<Drawable *>(translucenceCube)->getDrawableId())
 	{
 		return translucenceCube;
+	}
+	else if (id == dynamic_cast<Drawable *>(stoneCube)->getDrawableId())
+	{
+		return stoneCube;
 	}
 	else
 	{        // prism

@@ -54,6 +54,8 @@ void KeyBoard::processInput(GLfloat deltaTime)
 		camera->place(GLFW_KEY_5);
 	if (glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS)
 		camera->place(GLFW_KEY_6);
+	if (glfwGetKey(window, GLFW_KEY_7) == GLFW_PRESS)
+		camera->place(GLFW_KEY_7);
 	if (glfwGetKey(window, GLFW_KEY_DELETE) == GLFW_PRESS)
 		camera->place(GLFW_KEY_DELETE);
 	if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)

@@ -93,7 +93,7 @@ set(SOURCE_FILES ${GLAD} ${LINMATH}
         src/component/drawable/TNTCube.hpp
         src/json/JSONMapReader.cpp
         src/json/JSONMapReader.hpp
-        )
+        src/component/drawable/StoneCube.h)
 include_directories(src/control)
 include_directories(src/core)
 include_directories(src/component)
