@@ -124,14 +124,14 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float delta)
 	}
 	if (direction == JUMP)
 	{
-//		Collide = transPosition(Position + glm::vec3(0, 3, 0));
-//		if (Collide.z >= 20);
-//		else if (map->check(Collide) && map->check(Collide + glm::vec3(0, 0, -1)))
-//		{
-//			Position += glm::vec3(0, 3, 0);
-//		}
-		if (map->check(Position + glm::vec3(0, 1, 0))) speed += 1;
-		std::cout << "jump, speed:" << speed << std::endl;
+		Collide = transPosition(Position + glm::vec3(0, 3, 0));
+		if (Collide.z >= 20);
+		else if (map->check(Collide) && map->check(Collide + glm::vec3(0, 0, -1)))
+		{
+			Position += glm::vec3(0, 3, 0);
+		}
+		/*if (map->check(Position + glm::vec3(0, 1, 0))) speed += 1;
+		std::cout << "jump, speed:" << speed << std::endl;*/
 	}
 	if (direction == UP)
 	{
@@ -147,8 +147,8 @@ void Camera::drop()
 {
 	if (!this->enableDrop)
 		return;
-//	Collide = transPosition(Position + glm::vec3(0, -0.2, 0));
-	speed -= 0.1;
+	Collide = transPosition(Position + glm::vec3(0, -0.2, 0));
+	/*speed -= 0.1;
 	if (speed < -1) speed = -1;
 	if (Position.y <= 2.2 && speed < 0) speed = 0;
 
@@ -157,15 +157,15 @@ void Camera::drop()
 	if (map->check(Collide)&&map->check(Collide + glm::vec3(0, 0, -2)) && map->check(Collide + glm::vec3(0, 0, -1)))
 		Position += glm::vec3(0, speed, 0);
 	else
-		Position.y = (int)Position.y;
+		Position.y = (int)Position.y;*/
 	if (Position.y <= 2.2)
 	{
 		Position.y = 2.0;
 	}
-//	else if (map->check(Collide + glm::vec3(0, 0, -2)) && map->check(Collide + glm::vec3(0, 0, -1)))
-//	{
-//		Position += glm::vec3(0, -0.2, 0);
-//	}
+	else if (map->check(Collide + glm::vec3(0, 0, -2)) && map->check(Collide + glm::vec3(0, 0, -1)))
+	{
+		Position += glm::vec3(0, -0.2, 0);
+	}
 }
 
 void Camera::place(int key)
