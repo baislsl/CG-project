@@ -101,7 +101,7 @@ void GameManager::start()
 void GameManager::setLights(const Shader &shader)
 {
 	light.dirLight.direction = glm::vec3(-1, -1, -1);
-	light.dirLight.ambient = glm::vec3(0.05, 0.05, 0.05);
+	light.dirLight.ambient = glm::vec3(0.2, 0.2, 0.2);
 	light.dirLight.diffuse = glm::vec3(1, 1, 1);
 	light.dirLight.specular = glm::vec3(1, 1, 1);
 
