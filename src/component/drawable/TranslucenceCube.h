@@ -11,7 +11,7 @@
 class TranslucencePlane : public BaseShape
 {
 public:
-	explicit TranslucencePlane(unsigned cc = 14);
+	explicit TranslucencePlane(unsigned cc = 10);
 
 	void render(const Shader& shader, const Camera& camera) override ;
 
