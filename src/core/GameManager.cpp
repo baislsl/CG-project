@@ -12,7 +12,7 @@ GameManager::GameManager(int width, int height, GLFWwindow *window)
 		  cursor(window, &camera),
 		  keyBoard(window, &camera),
 		  resizeManager(window),
-		  shader("../res/temp.vert", "../res/temp.frag")
+		  shader("../res/game.vert", "../res/game.frag")
 {
 }
 
